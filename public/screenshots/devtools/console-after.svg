@@ -15,8 +15,4 @@
   <text x="20" y="140" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">> document.title = 'DevTools Урок - Изучаем!'</text>
   <text x="20" y="160" fill="#4ade80" font-family="Arial, sans-serif" font-size="12">"DevTools Урок - Изучаем!"</text>
   
-  <!-- Заголовок -->
-  <text x="200" y="25" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">
-    ПОСЛЕ: Консоль с результатами
-  </text>
 </svg>

@@ -23,8 +23,4 @@
     Обновите страницу для записи
   </text>
   
-  <!-- Заголовок -->
-  <text x="200" y="25" text-anchor="middle" fill="#374151" font-family="Arial, sans-serif" font-size="14" font-weight="bold">
-    ДО: Пустая Network панель
-  </text>
 </svg>

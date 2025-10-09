@@ -21,8 +21,4 @@
   <rect x="60" y="150" width="80" height="15" fill="#10b981" rx="2"/>
   <text x="100" y="160" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10">Кнопка</text>
   
-  <!-- Заголовок -->
-  <text x="200" y="25" text-anchor="middle" fill="#374151" font-family="Arial, sans-serif" font-size="14" font-weight="bold">
-    ДО: Десктопный вид
-  </text>
 </svg>

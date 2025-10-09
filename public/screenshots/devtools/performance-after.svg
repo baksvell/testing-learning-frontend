@@ -28,8 +28,4 @@
   <rect x="280" y="95" width="60" height="15" fill="#10b981" opacity="0.7"/>
   <text x="310" y="105" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="8">Layout</text>
   
-  <!-- Заголовок -->
-  <text x="200" y="25" text-anchor="middle" fill="#374151" font-family="Arial, sans-serif" font-size="14" font-weight="bold">
-    ПОСЛЕ: Performance с результатами
-  </text>
 </svg>

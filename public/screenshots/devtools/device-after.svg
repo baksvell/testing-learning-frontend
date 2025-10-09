@@ -24,8 +24,4 @@
   <!-- Устройство -->
   <text x="200" y="180" text-anchor="middle" fill="#6b7280" font-family="Arial, sans-serif" font-size="10">iPhone 12</text>
   
-  <!-- Заголовок -->
-  <text x="200" y="25" text-anchor="middle" fill="#374151" font-family="Arial, sans-serif" font-size="14" font-weight="bold">
-    ПОСЛЕ: Мобильный вид
-  </text>
 </svg>
