@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '../../contexts/AuthContext';
-import APITester from '../components/APITester';
+import PostmanTester from '../components/PostmanTester';
 import { 
   Globe, Send, Folder, Settings, History, Zap, CheckCircle, 
   AlertTriangle, Clock, Download, Copy, Save, Play, ChevronRight,
@@ -407,7 +407,7 @@ export default function PostmanLessonsPage() {
                 Используйте встроенный API тестер для выполнения практических заданий. 
                 Он работает как Postman, но интегрирован прямо в урок!
               </p>
-              <APITester />
+              <PostmanTester />
             </div>
 
             {currentLesson.tasks.map((task) => (

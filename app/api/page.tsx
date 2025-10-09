@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Globe, Database, Shield, Zap, CheckCircle, AlertTriangle } from 'lucide-react';
-import APITester from '../components/APITester';
+import PostmanTester from '../components/PostmanTester';
 
 interface APITask {
   id: number;
@@ -429,7 +429,7 @@ export default function APIPage() {
                 Используйте встроенный API тестер для выполнения практических заданий. 
                 Он работает как Postman, но интегрирован прямо в урок!
               </p>
-              <APITester />
+              <PostmanTester />
             </div>
 
             {currentLesson.tasks.map((task) => (
