@@ -358,12 +358,6 @@ export default function DevToolsPage() {
     console.log('📋 Demo steps:', demoSteps);
     
     for (let i = 0; i < demoSteps.length; i++) {
-      // Проверяем, не остановлена ли демонстрация
-      if (!demoState[taskId]?.isRunning || demoState[taskId]?.isPaused) {
-        console.log('⏸️ Demo paused or stopped at step:', i);
-        break;
-      }
-
       console.log('🎯 Executing step:', i, demoSteps[i]);
 
       setDemoState(prev => ({
