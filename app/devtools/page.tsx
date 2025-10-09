@@ -493,10 +493,49 @@ export default function DevToolsPage() {
     }
   };
 
+  const isDevToolsOpen = (): boolean => {
+    if (typeof window === 'undefined') return false;
+    
+    // Проверяем несколько способов определения открытых DevTools
+    const threshold = 160;
+    
+    // Способ 1: Проверка высоты окна
+    if (window.outerHeight - window.innerHeight > threshold || 
+        window.outerWidth - window.innerWidth > threshold) {
+      return true;
+    }
+    
+    // Способ 2: Проверка через console
+    let devtools = false;
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+      get: function() {
+        devtools = true;
+        throw new Error('DevTools detected');
+      }
+    });
+    
+    try {
+      console.log(element);
+      console.clear();
+    } catch (e) {
+      // DevTools открыты
+    }
+    
+    return devtools;
+  };
+
   const showDevToolsInstruction = () => {
     if (typeof window === 'undefined') return;
     
-    // Создаем модальное окно с инструкцией
+    // Проверяем, открыты ли DevTools
+    if (isDevToolsOpen()) {
+      // DevTools открыты, запускаем демонстрацию
+      showDemoMessage('🎬 DevTools открыты! Демонстрация началась!');
+      return;
+    }
+    
+    // DevTools не открыты, показываем инструкцию
     const modal = document.createElement('div');
     modal.style.cssText = `
       position: fixed;
@@ -523,7 +562,7 @@ export default function DevToolsPage() {
     `;
     
     content.innerHTML = `
-      <h3 style="margin: 0 0 20px 0; color: #1f2937; font-size: 20px;">🔧 Откройте DevTools</h3>
+      <h3 style="margin: 0 0 20px 0; color: #1f2937; font-size: 20px;">🔧 DevTools не открыты</h3>
       <p style="margin: 0 0 20px 0; color: #4b5563; line-height: 1.6;">
         Для демонстрации нужно открыть инструменты разработчика:
       </p>
@@ -531,9 +570,9 @@ export default function DevToolsPage() {
         <strong style="color: #1f2937;">Нажмите F12 или Ctrl+Shift+I</strong>
       </div>
       <p style="margin: 0 0 20px 0; color: #6b7280; font-size: 14px;">
-        После открытия DevTools демонстрация продолжится автоматически
+        После открытия DevTools нажмите "Проверить снова"
       </p>
-      <button id="devtools-continue" style="
+      <button id="devtools-check" style="
         background: #3b82f6;
         color: white;
         border: none;
@@ -542,7 +581,7 @@ export default function DevToolsPage() {
         font-size: 16px;
         cursor: pointer;
         margin-right: 10px;
-      ">Продолжить демонстрацию</button>
+      ">Проверить снова</button>
       <button id="devtools-cancel" style="
         background: #6b7280;
         color: white;
@@ -558,12 +597,19 @@ export default function DevToolsPage() {
     document.body.appendChild(modal);
     
     // Обработчики кнопок
-    const continueBtn = content.querySelector('#devtools-continue');
+    const checkBtn = content.querySelector('#devtools-check');
     const cancelBtn = content.querySelector('#devtools-cancel');
     
-    continueBtn?.addEventListener('click', () => {
+    checkBtn?.addEventListener('click', () => {
       modal.remove();
-      showDemoMessage('🎬 Демонстрация началась! Следите за подсветкой элементов и сообщениями.');
+      // Проверяем снова
+      setTimeout(() => {
+        if (isDevToolsOpen()) {
+          showDemoMessage('🎬 DevTools открыты! Демонстрация началась!');
+        } else {
+          showDevToolsInstruction();
+        }
+      }, 100);
     });
     
     cancelBtn?.addEventListener('click', () => {
