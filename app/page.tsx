@@ -63,9 +63,9 @@ export default function HomePage() {
 
   const categories = [
     { name: "DevTools", icon: <Code />, count: 6, color: "bg-indigo-500", href: "/devtools" },
-    { name: "Функциональное", icon: <Bug />, count: 15, color: "bg-primary-500" },
-    { name: "UI/UX", icon: <BookOpen />, count: 12, color: "bg-success-500" },
-    { name: "API", icon: <Code />, count: 10, color: "bg-warning-500" },
+    { name: "Функциональное", icon: <Bug />, count: 5, color: "bg-primary-500", href: "/functional" },
+    { name: "UI/UX", icon: <BookOpen />, count: 5, color: "bg-success-500", href: "/ui-ux" },
+    { name: "API", icon: <Code />, count: 5, color: "bg-warning-500", href: "/api" },
     { name: "Безопасность", icon: <Shield />, count: 8, color: "bg-danger-500" }
   ]
 
