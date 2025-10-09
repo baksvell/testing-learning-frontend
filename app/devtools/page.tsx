@@ -336,6 +336,8 @@ export default function DevToolsPage() {
   };
 
   const runDemoForTask = async (taskId: number) => {
+    if (typeof window === 'undefined') return;
+    
     const task = currentLesson?.tasks.find(t => t.id === taskId);
     if (!task) return;
 
@@ -391,6 +393,8 @@ export default function DevToolsPage() {
   };
 
   const executeDemoStep = async (step: any, taskId: number) => {
+    if (typeof window === 'undefined') return;
+    
     switch (step.type) {
       case 'highlight':
         await highlightElement(step.selector, step.message);
@@ -402,6 +406,8 @@ export default function DevToolsPage() {
   };
 
   const highlightElement = async (selector: string, message: string) => {
+    if (typeof window === 'undefined') return;
+    
     const element = document.querySelector(selector) as HTMLElement;
     if (element) {
       // Добавляем подсветку
@@ -418,6 +424,8 @@ export default function DevToolsPage() {
   };
 
   const simulateAction = async (action: string, step: any, taskId: number) => {
+    if (typeof window === 'undefined') return;
+    
     switch (action) {
       case 'openDevTools':
         showDemoMessage(step.message);
@@ -448,6 +456,8 @@ export default function DevToolsPage() {
   };
 
   const showDemoMessage = (message: string) => {
+    if (typeof window === 'undefined') return;
+    
     // Создаем временное сообщение
     const messageEl = document.createElement('div');
     messageEl.className = 'demo-message';
