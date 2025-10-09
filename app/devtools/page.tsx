@@ -421,7 +421,7 @@ export default function DevToolsPage() {
             type: 'simulate', 
             action: 'openSearch', 
             message: '🔍 Шаг 3: Открываем поиск в DevTools',
-            details: 'Нажмите Ctrl+F в DevTools'
+            details: 'ВАЖНО: Нажмите Ctrl+F именно В DevTools (справа), а НЕ в браузере!'
           },
           { 
             type: 'simulate', 
@@ -712,7 +712,7 @@ export default function DevToolsPage() {
     switch (action) {
       case 'ctrl+f':
         message = '⌨️ Откройте поиск в DevTools';
-        details = 'Нажмите Ctrl+F в DevTools или кнопку "Продолжить" ниже';
+        details = 'ВАЖНО: Нажмите Ctrl+F именно В DevTools (справа), а НЕ в браузере!';
         break;
     }
     
@@ -742,9 +742,15 @@ export default function DevToolsPage() {
         <span>⌨️</span>
         <span>${message}</span>
       </div>
-      <div style="opacity: 0.9; font-size: 14px; margin-bottom: 16px;">${details}</div>
+      <div style="opacity: 0.9; font-size: 14px; margin-bottom: 12px;">${details}</div>
+      <div style="background: rgba(255,255,255,0.1); padding: 8px; border-radius: 4px; margin-bottom: 12px; font-size: 12px;">
+        <strong>📋 Пошаговая инструкция:</strong><br>
+        1. Кликните мышкой в панель DevTools (справа)<br>
+        2. Убедитесь, что DevTools активны<br>
+        3. Нажмите <kbd style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Ctrl+F</kbd> в DevTools
+      </div>
       <div style="margin-bottom: 12px; font-size: 12px; opacity: 0.8;">
-        💡 Нажмите <kbd style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Ctrl+F</kbd> в DevTools
+        💡 Если не получается, просто нажмите кнопку "Продолжить" ниже
       </div>
       <button id="continue-demo" style="
         background: rgba(255,255,255,0.2);
