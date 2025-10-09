@@ -1,0 +1,10 @@
+<svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#f8fafc"/>
+  <rect x="20" y="20" width="360" height="160" fill="white" stroke="#e2e8f0" stroke-width="2" rx="8"/>
+  <text x="40" y="50" fill="#1e293b" font-family="Arial" font-size="14" font-weight="bold">Swagger UI Documentation</text>
+  <rect x="30" y="70" width="340" height="80" fill="#f0fdf4" stroke="#22c55e" rx="4"/>
+  <text x="40" y="90" fill="#166534" font-family="Arial" font-size="12" font-weight="bold">✅ Documentation Explored</text>
+  <text x="40" y="110" fill="#166534" font-family="Arial" font-size="10">• Tested all endpoints interactively</text>
+  <text x="40" y="125" fill="#166534" font-family="Arial" font-size="10">• Reviewed schema definitions</text>
+  <text x="40" y="140" fill="#166534" font-family="Arial" font-size="10">• Created comprehensive API documentation</text>
+</svg>

@@ -13,7 +13,8 @@ import {
   Code,
   Play,
   Star,
-  Globe
+  Globe,
+  File
 } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '../contexts/AuthContext'
@@ -65,6 +66,7 @@ export default function HomePage() {
       const categories = [
         { name: "DevTools", icon: <Code />, count: 6, color: "bg-indigo-500", href: "/devtools" },
         { name: "Postman", icon: <Globe />, count: 5, color: "bg-blue-500", href: "/postman-lessons" },
+        { name: "OpenAPI", icon: <File />, count: 5, color: "bg-emerald-500", href: "/openapi" },
         { name: "Функциональное", icon: <Bug />, count: 5, color: "bg-primary-500", href: "/functional" },
         { name: "UI/UX", icon: <BookOpen />, count: 5, color: "bg-success-500", href: "/ui-ux" },
         { name: "API", icon: <Code />, count: 5, color: "bg-warning-500", href: "/api" },
@@ -239,7 +241,7 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category, index) => (
               <motion.div
                 key={index}
@@ -260,6 +262,7 @@ export default function HomePage() {
                 <p className="text-sm text-gray-500 mb-4">
                   {category.name === 'DevTools' && 'Изучение инструментов разработчика браузера'}
                   {category.name === 'Postman' && 'Профессиональное тестирование API'}
+                  {category.name === 'OpenAPI' && 'Документация и тестирование API с Swagger'}
                   {category.name === 'Функциональное' && 'Тестирование функциональности приложения'}
                   {category.name === 'UI/UX' && 'Тестирование пользовательского интерфейса'}
                   {category.name === 'API' && 'Тестирование REST API и веб-сервисов'}
