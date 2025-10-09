@@ -46,8 +46,8 @@ export default function DevToolsPage() {
           category: "Elements",
           completed: false,
           challenge: "Найдите элемент с классом 'devtools-demo' на этой странице и измените его внешний вид: сделайте текст красным и добавьте синюю рамку толщиной 2px.",
-          beforeImage: "/screenshots/devtools/elements-before.png",
-          afterImage: "/screenshots/devtools/elements-after.png",
+          beforeImage: "/screenshots/devtools/elements-before.svg",
+          afterImage: "/screenshots/devtools/elements-after.svg",
           solution: {
             steps: [
               "Откройте DevTools (F12 или Ctrl+Shift+I)",
@@ -82,8 +82,8 @@ export default function DevToolsPage() {
           category: "Console",
           completed: false,
           challenge: "Используйте консоль для выполнения JavaScript команд: выведите сообщение в консоль, найдите элемент на странице и измените заголовок страницы.",
-          beforeImage: "/screenshots/devtools/console-before.png",
-          afterImage: "/screenshots/devtools/console-after.png",
+          beforeImage: "/screenshots/devtools/console-before.svg",
+          afterImage: "/screenshots/devtools/console-after.svg",
           solution: {
             steps: [
               "Откройте вкладку Console в DevTools (рядом с Elements)",
@@ -117,8 +117,8 @@ export default function DevToolsPage() {
           category: "Network",
           completed: false,
           challenge: "Изучите сетевые запросы страницы: найдите API запросы, проверьте их статус и время загрузки, изучите заголовки и содержимое ответов.",
-          beforeImage: "/screenshots/devtools/network-before.png",
-          afterImage: "/screenshots/devtools/network-after.png",
+          beforeImage: "/screenshots/devtools/network-before.svg",
+          afterImage: "/screenshots/devtools/network-after.svg",
           solution: {
             steps: [
               "Откройте вкладку Network в DevTools",
@@ -150,8 +150,8 @@ export default function DevToolsPage() {
           category: "Sources",
           completed: false,
           challenge: "Используйте отладчик JavaScript: найдите файл с кодом, поставьте breakpoint и пошагово выполните код, изучив переменные в процессе.",
-          beforeImage: "/screenshots/devtools/sources-before.png",
-          afterImage: "/screenshots/devtools/sources-after.png",
+          beforeImage: "/screenshots/devtools/sources-before.svg",
+          afterImage: "/screenshots/devtools/sources-after.svg",
           solution: {
             steps: [
               "Откройте вкладку Sources в DevTools",
@@ -187,8 +187,8 @@ export default function DevToolsPage() {
           category: "Performance",
           completed: false,
           challenge: "Запишите и проанализируйте производительность страницы: выполните различные действия и изучите временную шкалу для поиска узких мест.",
-          beforeImage: "/screenshots/devtools/performance-before.png",
-          afterImage: "/screenshots/devtools/performance-after.png",
+          beforeImage: "/screenshots/devtools/performance-before.svg",
+          afterImage: "/screenshots/devtools/performance-after.svg",
           solution: {
             steps: [
               "Откройте вкладку Performance в DevTools",
@@ -224,8 +224,8 @@ export default function DevToolsPage() {
           category: "Device",
           completed: false,
           challenge: "Протестируйте адаптивность сайта: включите мобильную эмуляцию, выберите устройство, проверьте разные ориентации экрана и настройте медленную сеть.",
-          beforeImage: "/screenshots/devtools/device-before.png",
-          afterImage: "/screenshots/devtools/device-after.png",
+          beforeImage: "/screenshots/devtools/device-before.svg",
+          afterImage: "/screenshots/devtools/device-after.svg",
           solution: {
             steps: [
               "Включите Device Mode:",

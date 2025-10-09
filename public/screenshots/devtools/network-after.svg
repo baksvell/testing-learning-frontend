@@ -1,0 +1,41 @@
+<svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#ffffff" stroke="#d1d5db" stroke-width="2" rx="8"/>
+  
+  <!-- Заголовок Network -->
+  <rect x="0" y="0" width="400" height="30" fill="#f8f9fa" rx="8"/>
+  <text x="20" y="20" fill="#374151" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Network</text>
+  
+  <!-- Заголовки таблицы -->
+  <text x="20" y="50" fill="#6b7280" font-family="Arial, sans-serif" font-size="12">Name</text>
+  <text x="100" y="50" fill="#6b7280" font-family="Arial, sans-serif" font-size="12">Status</text>
+  <text x="150" y="50" fill="#6b7280" font-family="Arial, sans-serif" font-size="12">Type</text>
+  <text x="200" y="50" fill="#6b7280" font-family="Arial, sans-serif" font-size="12">Size</text>
+  <text x="250" y="50" fill="#6b7280" font-family="Arial, sans-serif" font-size="12">Time</text>
+  
+  <!-- Разделитель -->
+  <line x1="0" y1="60" x2="400" y2="60" stroke="#e5e7eb" stroke-width="1"/>
+  
+  <!-- Запросы -->
+  <text x="20" y="80" fill="#374151" font-family="Arial, sans-serif" font-size="12">devtools</text>
+  <text x="100" y="80" fill="#16a34a" font-family="Arial, sans-serif" font-size="12">200</text>
+  <text x="150" y="80" fill="#374151" font-family="Arial, sans-serif" font-size="12">document</text>
+  <text x="200" y="80" fill="#374151" font-family="Arial, sans-serif" font-size="12">15.2 kB</text>
+  <text x="250" y="80" fill="#374151" font-family="Arial, sans-serif" font-size="12">45ms</text>
+  
+  <text x="20" y="100" fill="#374151" font-family="Arial, sans-serif" font-size="12">api/tasks</text>
+  <text x="100" y="100" fill="#16a34a" font-family="Arial, sans-serif" font-size="12">200</text>
+  <text x="150" y="100" fill="#374151" font-family="Arial, sans-serif" font-size="12">xhr</text>
+  <text x="200" y="100" fill="#374151" font-family="Arial, sans-serif" font-size="12">1.2 kB</text>
+  <text x="250" y="100" fill="#374151" font-family="Arial, sans-serif" font-size="12">120ms</text>
+  
+  <text x="20" y="120" fill="#374151" font-family="Arial, sans-serif" font-size="12">api/stats</text>
+  <text x="100" y="120" fill="#16a34a" font-family="Arial, sans-serif" font-size="12">200</text>
+  <text x="150" y="120" fill="#374151" font-family="Arial, sans-serif" font-size="12">xhr</text>
+  <text x="200" y="120" fill="#374151" font-family="Arial, sans-serif" font-size="12">0.8 kB</text>
+  <text x="250" y="120" fill="#374151" font-family="Arial, sans-serif" font-size="12">95ms</text>
+  
+  <!-- Заголовок -->
+  <text x="200" y="25" text-anchor="middle" fill="#374151" font-family="Arial, sans-serif" font-size="14" font-weight="bold">
+    ПОСЛЕ: Network с запросами
+  </text>
+</svg>

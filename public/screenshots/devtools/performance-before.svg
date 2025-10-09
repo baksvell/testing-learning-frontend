@@ -1,0 +1,30 @@
+<svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#ffffff" stroke="#d1d5db" stroke-width="2" rx="8"/>
+  
+  <!-- Заголовок Performance -->
+  <rect x="0" y="0" width="400" height="30" fill="#f8f9fa" rx="8"/>
+  <text x="20" y="20" fill="#374151" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Performance</text>
+  
+  <!-- Кнопка записи -->
+  <circle cx="350" cy="15" r="8" fill="#dc2626"/>
+  <text x="350" y="19" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="8">●</text>
+  
+  <!-- Пустая временная шкала -->
+  <rect x="20" y="50" width="360" height="100" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1" rx="4"/>
+  
+  <!-- Подпись -->
+  <text x="200" y="80" text-anchor="middle" fill="#6b7280" font-family="Arial, sans-serif" font-size="14">
+    Нажмите Record для начала записи
+  </text>
+  <text x="200" y="100" text-anchor="middle" fill="#6b7280" font-family="Arial, sans-serif" font-size="12">
+    Выполните действия на странице
+  </text>
+  <text x="200" y="120" text-anchor="middle" fill="#6b7280" font-family="Arial, sans-serif" font-size="12">
+    Остановите запись для анализа
+  </text>
+  
+  <!-- Заголовок -->
+  <text x="200" y="25" text-anchor="middle" fill="#374151" font-family="Arial, sans-serif" font-size="14" font-weight="bold">
+    ДО: Performance готова к записи
+  </text>
+</svg>

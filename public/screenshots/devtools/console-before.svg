@@ -1,0 +1,17 @@
+<svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#1e1e1e" stroke="#d1d5db" stroke-width="2" rx="8"/>
+  
+  <!-- Заголовок консоли -->
+  <rect x="0" y="0" width="400" height="30" fill="#2d2d2d" rx="8"/>
+  <text x="20" y="20" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">Console</text>
+  
+  <!-- Пустая консоль -->
+  <text x="20" y="60" fill="#888888" font-family="Arial, sans-serif" font-size="12">></text>
+  <text x="20" y="80" fill="#888888" font-family="Arial, sans-serif" font-size="12">></text>
+  <text x="20" y="100" fill="#888888" font-family="Arial, sans-serif" font-size="12">></text>
+  
+  <!-- Заголовок -->
+  <text x="200" y="25" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">
+    ДО: Пустая консоль
+  </text>
+</svg>

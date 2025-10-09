@@ -1,0 +1,27 @@
+<svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9333ea;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Фон -->
+  <rect width="400" height="200" fill="#f3f4f6" stroke="#d1d5db" stroke-width="2" rx="8"/>
+  
+  <!-- Демо элемент -->
+  <rect x="50" y="50" width="300" height="100" fill="url(#grad1)" rx="8"/>
+  
+  <!-- Текст -->
+  <text x="200" y="90" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">
+    🎯 Демо элемент для практики
+  </text>
+  <text x="200" y="115" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">
+    Белый текст на градиентном фоне
+  </text>
+  
+  <!-- Заголовок -->
+  <text x="200" y="25" text-anchor="middle" fill="#374151" font-family="Arial, sans-serif" font-size="14" font-weight="bold">
+    ДО: Исходный вид элемента
+  </text>
+</svg>
