@@ -291,8 +291,8 @@ export default function DevToolsPage() {
   const startDemo = async (taskId: number) => {
     console.log('🎬 Starting demo for task:', taskId);
     
-    // Показываем инструкцию
-    showDemoMessage('🎬 Демонстрация началась! Следите за подсветкой элементов и сообщениями.');
+    // Показываем инструкцию по открытию DevTools
+    showDevToolsInstruction();
     
     setDemoState(prev => ({
       ...prev,
@@ -491,6 +491,93 @@ export default function DevToolsPage() {
         }
         break;
     }
+  };
+
+  const showDevToolsInstruction = () => {
+    if (typeof window === 'undefined') return;
+    
+    // Создаем модальное окно с инструкцией
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `;
+    
+    const content = document.createElement('div');
+    content.style.cssText = `
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 500px;
+      margin: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      text-align: center;
+    `;
+    
+    content.innerHTML = `
+      <h3 style="margin: 0 0 20px 0; color: #1f2937; font-size: 20px;">🔧 Откройте DevTools</h3>
+      <p style="margin: 0 0 20px 0; color: #4b5563; line-height: 1.6;">
+        Для демонстрации нужно открыть инструменты разработчика:
+      </p>
+      <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+        <strong style="color: #1f2937;">Нажмите F12 или Ctrl+Shift+I</strong>
+      </div>
+      <p style="margin: 0 0 20px 0; color: #6b7280; font-size: 14px;">
+        После открытия DevTools демонстрация продолжится автоматически
+      </p>
+      <button id="devtools-continue" style="
+        background: #3b82f6;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-right: 10px;
+      ">Продолжить демонстрацию</button>
+      <button id="devtools-cancel" style="
+        background: #6b7280;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+      ">Отмена</button>
+    `;
+    
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+    
+    // Обработчики кнопок
+    const continueBtn = content.querySelector('#devtools-continue');
+    const cancelBtn = content.querySelector('#devtools-cancel');
+    
+    continueBtn?.addEventListener('click', () => {
+      modal.remove();
+      showDemoMessage('🎬 Демонстрация началась! Следите за подсветкой элементов и сообщениями.');
+    });
+    
+    cancelBtn?.addEventListener('click', () => {
+      modal.remove();
+      // Останавливаем демонстрацию
+      setDemoState(prev => ({
+        ...prev,
+        [1]: {
+          ...prev[1],
+          isRunning: false,
+          isPaused: false
+        }
+      }));
+    });
   };
 
   const showDemoMessage = (message: string) => {
