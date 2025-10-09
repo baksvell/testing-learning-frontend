@@ -406,11 +406,6 @@ export default function DevToolsPage() {
       case 1: // Elements
         return [
           { 
-            type: 'instruction', 
-            message: '📋 Задание: Найдите элемент с классом "devtools-demo" и измените его внешний вид',
-            details: 'Сделайте текст красным и добавьте синюю рамку толщиной 2px'
-          },
-          { 
             type: 'highlight', 
             selector: '.devtools-demo', 
             message: '🎯 Шаг 1: Находим элемент с классом "devtools-demo" на странице',
@@ -418,38 +413,32 @@ export default function DevToolsPage() {
           },
           { 
             type: 'simulate', 
-            action: 'openDevTools', 
-            message: '🔧 Шаг 2: Открываем DevTools',
-            details: 'Нажмите F12 или Ctrl+Shift+I'
-          },
-          { 
-            type: 'simulate', 
             action: 'navigateToElements', 
-            message: '📋 Шаг 3: Переходим на вкладку Elements',
+            message: '📋 Шаг 2: Переходим на вкладку Elements',
             details: 'В DevTools нажмите на вкладку "Elements"'
           },
           { 
             type: 'simulate', 
             action: 'openSearch', 
-            message: '🔍 Шаг 4: Открываем поиск в DevTools',
+            message: '🔍 Шаг 3: Открываем поиск в DevTools',
             details: 'Нажмите Ctrl+F в DevTools'
           },
           { 
             type: 'simulate', 
             action: 'searchElement', 
-            message: '🔍 Шаг 5: Ищем элемент "devtools-demo"',
+            message: '🔍 Шаг 4: Ищем элемент "devtools-demo"',
             details: 'В поле поиска введите: devtools-demo'
           },
           { 
             type: 'simulate', 
             action: 'selectElement', 
-            message: '👆 Шаг 6: Выбираем найденный элемент',
+            message: '👆 Шаг 5: Выбираем найденный элемент',
             details: 'Кликните на найденный элемент в HTML'
           },
           { 
             type: 'simulate', 
             action: 'clickElementStyle', 
-            message: '👆 Шаг 7: Кликаем в element.style',
+            message: '👆 Шаг 6: Кликаем в element.style',
             details: 'В панели Styles найдите блок element.style и кликните в него'
           },
           { 
@@ -457,7 +446,7 @@ export default function DevToolsPage() {
             action: 'addCSS', 
             property: 'color', 
             value: 'red', 
-            message: '🎨 Шаг 8: Добавляем красный цвет',
+            message: '🎨 Шаг 7: Добавляем красный цвет',
             details: 'В element.style введите: color: red;'
           },
           { 
@@ -465,7 +454,7 @@ export default function DevToolsPage() {
             action: 'addCSS', 
             property: 'border', 
             value: '2px solid blue', 
-            message: '🎨 Шаг 9: Добавляем синюю рамку',
+            message: '🎨 Шаг 8: Добавляем синюю рамку',
             details: 'В element.style введите: border: 2px solid blue;'
           },
           { 
@@ -702,17 +691,6 @@ export default function DevToolsPage() {
     showDetailedMessage(step.message, step.details);
     
     switch (action) {
-      case 'openDevTools':
-        // Пытаемся открыть DevTools программно (работает не во всех браузерах)
-        try {
-          if (window.console && (window.console as any).clear) {
-            (window.console as any).clear();
-          }
-        } catch (e) {
-          console.log('DevTools cannot be opened programmatically');
-        }
-        break;
-        
       case 'navigateToElements':
         // Симулируем переход на вкладку Elements
         console.log('Navigating to Elements tab');
