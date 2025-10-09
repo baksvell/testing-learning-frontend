@@ -1406,6 +1406,29 @@ export default function DevToolsPage() {
                   </div>
                 </div>
 
+                {/* Видео-демонстрация для Elements */}
+                {task.id === 1 && (
+                  <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                    <h4 className="text-lg font-semibold mb-3 text-blue-800">🎥 Видео-демонстрация</h4>
+                    <p className="text-blue-600 mb-4">
+                      Посмотрите, как правильно выполнить это задание:
+                    </p>
+                    <video 
+                      width="800" 
+                      height="450" 
+                      controls 
+                      className="rounded-lg shadow-lg w-full max-w-4xl"
+                    >
+                      <source src="/videos/2025-10-09 14-54-15.mkv" type="video/x-matroska" />
+                      <source src="/videos/2025-10-09 14-54-15.mkv" type="video/mp4" />
+                      Ваш браузер не поддерживает видео.
+                    </video>
+                    <p className="text-sm text-gray-600 mt-2">
+                      💡 В видео показаны все шаги: открытие DevTools, поиск элемента, изменение стилей
+                    </p>
+                  </div>
+                )}
+
                 {/* Кнопки управления */}
                 <div className="text-center mb-4 space-y-3">
                   <div className="flex gap-3 justify-center">
