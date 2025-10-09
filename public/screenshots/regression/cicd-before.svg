@@ -1,0 +1,10 @@
+<svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#f8fafc"/>
+  <rect x="20" y="20" width="360" height="160" fill="white" stroke="#e2e8f0" stroke-width="2" rx="8"/>
+  <text x="40" y="50" fill="#1e293b" font-family="Arial" font-size="14" font-weight="bold">CI/CD Интеграция</text>
+  <text x="40" y="80" fill="#64748b" font-family="Arial" font-size="12">Пайплайн:</text>
+  <text x="50" y="100" fill="#64748b" font-family="Arial" font-size="10">• Commit → Build → Test → Deploy</text>
+  <text x="50" y="115" fill="#64748b" font-family="Arial" font-size="10">• Автоматический запуск тестов</text>
+  <text x="50" y="130" fill="#64748b" font-family="Arial" font-size="10">• Уведомления о результатах</text>
+  <text x="40" y="155" fill="#64748b" font-family="Arial" font-size="12">Инструменты: Jenkins, GitHub Actions</text>
+</svg>

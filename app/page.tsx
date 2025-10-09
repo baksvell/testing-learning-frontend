@@ -67,9 +67,10 @@ export default function HomePage() {
         { name: "DevTools", icon: <Code />, count: 6, color: "bg-indigo-500", href: "/devtools" },
         { name: "Postman", icon: <Globe />, count: 5, color: "bg-blue-500", href: "/postman-lessons" },
         { name: "OpenAPI", icon: <File />, count: 5, color: "bg-emerald-500", href: "/openapi" },
-        { name: "Функциональное", icon: <Bug />, count: 5, color: "bg-primary-500", href: "/functional" },
+        { name: "Функциональное", icon: <Bug />, count: 6, color: "bg-primary-500", href: "/functional" },
         { name: "UI/UX", icon: <BookOpen />, count: 5, color: "bg-success-500", href: "/ui-ux" },
         { name: "API", icon: <Code />, count: 5, color: "bg-warning-500", href: "/api" },
+        { name: "Регрессионное", icon: <Zap />, count: 5, color: "bg-purple-500", href: "/regression" },
         { name: "Безопасность", icon: <Shield />, count: 8, color: "bg-danger-500" }
       ]
 
@@ -266,6 +267,7 @@ export default function HomePage() {
                   {category.name === 'Функциональное' && 'Тестирование функциональности приложения'}
                   {category.name === 'UI/UX' && 'Тестирование пользовательского интерфейса'}
                   {category.name === 'API' && 'Тестирование REST API и веб-сервисов'}
+                  {category.name === 'Регрессионное' && 'Автоматизированное тестирование изменений'}
                   {category.name === 'Безопасность' && 'Тестирование безопасности веб-приложений'}
                 </p>
                 <Link 
