@@ -1161,9 +1161,18 @@ export default function DevToolsPage() {
       <div className="container mx-auto px-4 py-8">
         {/* Заголовок */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            {currentLesson.title}
-          </h1>
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-3xl font-bold text-gray-900">
+              {currentLesson.title}
+            </h1>
+            <a
+              href="/"
+              className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
+            >
+              <span>←</span>
+              Главное меню
+            </a>
+          </div>
           <p className="text-gray-600 mb-4">{currentLesson.description}</p>
           
           {/* Прогресс бар */}
