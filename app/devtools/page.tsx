@@ -413,9 +413,9 @@ export default function DevToolsPage() {
           },
           { 
             type: 'simulate', 
-            action: 'navigateToElements', 
-            message: '📋 Шаг 2: Переходим на вкладку Elements',
-            details: 'В DevTools нажмите на вкладку "Elements"'
+            action: 'navigateToConsole', 
+            message: '📋 Шаг 2: Переходим на вкладку Console',
+            details: 'В DevTools нажмите на вкладку "Console"'
           },
           { 
             type: 'simulate', 
@@ -749,8 +749,9 @@ export default function DevToolsPage() {
       <div style="background: rgba(255,255,255,0.1); padding: 8px; border-radius: 4px; margin-bottom: 12px; font-size: 12px;">
         <strong>📋 Пошаговая инструкция:</strong><br>
         1. Кликните мышкой в панель DevTools (справа)<br>
-        2. Убедитесь, что DevTools активны<br>
-        3. Нажмите <kbd style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Ctrl+F</kbd> в DevTools
+        2. Перейдите на вкладку <strong style="color: #007acc;">Console</strong><br>
+        3. Убедитесь, что DevTools активны<br>
+        4. Нажмите <kbd style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Ctrl+F</kbd> в DevTools
       </div>
       <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 12px;">
         <strong>🔍 Где искать поиск:</strong><br>
@@ -766,7 +767,7 @@ export default function DevToolsPage() {
           ">
             <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
               <span style="background: #007acc; color: white; padding: 2px 6px; border-radius: 2px; font-size: 10px;">DevTools</span>
-              <span style="opacity: 0.7;">Elements | Console | Sources | Network</span>
+              <span style="opacity: 0.7;">Elements | <strong style="color: #007acc;">Console</strong> | Sources | Network</span>
             </div>
             <div style="
               background: white;
@@ -904,9 +905,9 @@ export default function DevToolsPage() {
     showDetailedMessage(step.message, step.details);
     
     switch (action) {
-      case 'navigateToElements':
-        // Симулируем переход на вкладку Elements
-        console.log('Navigating to Elements tab');
+      case 'navigateToConsole':
+        // Симулируем переход на вкладку Console
+        console.log('Navigating to Console tab');
         break;
         
       case 'openSearch':
