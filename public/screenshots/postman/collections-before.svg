@@ -1,0 +1,19 @@
+<svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#f8fafc"/>
+  <rect x="20" y="20" width="360" height="160" fill="white" stroke="#e2e8f0" stroke-width="2" rx="8"/>
+  
+  <!-- Sidebar -->
+  <rect x="30" y="30" width="120" height="140" fill="#f8fafc" stroke="#e2e8f0" rx="4"/>
+  <text x="40" y="50" fill="#1e293b" font-family="Arial" font-size="12" font-weight="bold">Коллекции</text>
+  <text x="40" y="70" fill="#64748b" font-family="Arial" font-size="10">📁 My Collection</text>
+  <text x="50" y="85" fill="#64748b" font-family="Arial" font-size="9">GET /users</text>
+  <text x="50" y="95" fill="#64748b" font-family="Arial" font-size="9">POST /users</text>
+  
+  <!-- Main area -->
+  <rect x="160" y="30" width="220" height="140" fill="#f8fafc" stroke="#e2e8f0" rx="4"/>
+  <text x="170" y="50" fill="#1e293b" font-family="Arial" font-size="12" font-weight="bold">Создать коллекцию</text>
+  <text x="170" y="70" fill="#64748b" font-family="Arial" font-size="10">Название: API Testing</text>
+  <text x="170" y="85" fill="#64748b" font-family="Arial" font-size="10">Описание: Коллекция для изучения API</text>
+  <rect x="170" y="100" width="80" height="20" fill="#3b82f6" rx="2"/>
+  <text x="190" y="112" fill="white" font-family="Arial" font-size="10" font-weight="bold">Создать</text>
+</svg>

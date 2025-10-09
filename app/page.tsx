@@ -12,7 +12,8 @@ import {
   Shield,
   Code,
   Play,
-  Star
+  Star,
+  Globe
 } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '../contexts/AuthContext'
@@ -61,13 +62,14 @@ export default function HomePage() {
     }
   ]
 
-  const categories = [
-    { name: "DevTools", icon: <Code />, count: 6, color: "bg-indigo-500", href: "/devtools" },
-    { name: "Функциональное", icon: <Bug />, count: 5, color: "bg-primary-500", href: "/functional" },
-    { name: "UI/UX", icon: <BookOpen />, count: 5, color: "bg-success-500", href: "/ui-ux" },
-    { name: "API", icon: <Code />, count: 5, color: "bg-warning-500", href: "/api" },
-    { name: "Безопасность", icon: <Shield />, count: 8, color: "bg-danger-500" }
-  ]
+      const categories = [
+        { name: "DevTools", icon: <Code />, count: 6, color: "bg-indigo-500", href: "/devtools" },
+        { name: "Postman", icon: <Globe />, count: 5, color: "bg-blue-500", href: "/postman-lessons" },
+        { name: "Функциональное", icon: <Bug />, count: 5, color: "bg-primary-500", href: "/functional" },
+        { name: "UI/UX", icon: <BookOpen />, count: 5, color: "bg-success-500", href: "/ui-ux" },
+        { name: "API", icon: <Code />, count: 5, color: "bg-warning-500", href: "/api" },
+        { name: "Безопасность", icon: <Shield />, count: 8, color: "bg-danger-500" }
+      ]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
