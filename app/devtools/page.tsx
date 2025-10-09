@@ -572,8 +572,8 @@ export default function DevToolsPage() {
       
       document.addEventListener('keydown', handleKeyDown);
       
-      // Показываем интерактивное сообщение
-      showInteractiveMessage(action);
+      // Показываем интерактивное сообщение с кнопкой
+      showInteractiveMessageWithButton(action, resolve);
     });
   };
 
@@ -605,17 +605,42 @@ export default function DevToolsPage() {
           <span>🔍</span>
           <span>Введите "devtools-demo" в поиск</span>
         </div>
-        <div style="opacity: 0.9; font-size: 14px; margin-bottom: 12px;">
+        <div style="opacity: 0.9; font-size: 14px; margin-bottom: 16px;">
           В поле поиска DevTools введите: <code style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">devtools-demo</code>
         </div>
-        <div style="font-size: 12px; opacity: 0.8;">
+        <div style="margin-bottom: 12px; font-size: 12px; opacity: 0.8;">
           💡 После ввода нажмите Enter или кликните на найденный элемент
         </div>
+        <button id="continue-search" style="
+          background: rgba(255,255,255,0.2);
+          color: white;
+          border: 1px solid rgba(255,255,255,0.3);
+          padding: 8px 16px;
+          border-radius: 6px;
+          font-size: 14px;
+          cursor: pointer;
+          width: 100%;
+          transition: background 0.2s ease;
+        " onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+          Продолжить
+        </button>
       `;
       
       document.body.appendChild(messageEl);
       
-      // Ждем 10 секунд, затем продолжаем (предполагаем, что пользователь ввел текст)
+      // Обработчик кнопки "Продолжить"
+      const continueBtn = messageEl.querySelector('#continue-search');
+      continueBtn?.addEventListener('click', () => {
+        console.log('✅ User clicked Continue button for search');
+        messageEl.remove();
+        
+        // Показываем подтверждение
+        showDetailedMessage('✅ Отлично! Элемент найден', 'Теперь кликните на найденный элемент в HTML');
+        
+        resolve();
+      });
+      
+      // Ждем 15 секунд, затем продолжаем (предполагаем, что пользователь ввел текст)
       setTimeout(() => {
         if (messageEl.parentNode) {
           messageEl.remove();
@@ -625,8 +650,88 @@ export default function DevToolsPage() {
         showDetailedMessage('✅ Отлично! Элемент найден', 'Теперь кликните на найденный элемент в HTML');
         
         resolve();
-      }, 10000);
+      }, 15000);
     });
+  };
+
+  const showInteractiveMessageWithButton = (action: string, resolve: () => void) => {
+    if (typeof window === 'undefined') return;
+    
+    let message = '';
+    let details = '';
+    
+    switch (action) {
+      case 'ctrl+f':
+        message = '⌨️ Откройте поиск в DevTools';
+        details = 'Нажмите Ctrl+F в DevTools или кнопку "Продолжить" ниже';
+        break;
+    }
+    
+    // Создаем интерактивное сообщение с кнопкой
+    const messageEl = document.createElement('div');
+    messageEl.className = 'demo-message interactive';
+    messageEl.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 20px 24px;
+      border-radius: 12px;
+      z-index: 10000;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      animation: pulse 2s infinite;
+      max-width: 400px;
+      line-height: 1.4;
+      border: 2px solid #059669;
+    `;
+    
+    messageEl.innerHTML = `
+      <div style="font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+        <span>⌨️</span>
+        <span>${message}</span>
+      </div>
+      <div style="opacity: 0.9; font-size: 14px; margin-bottom: 16px;">${details}</div>
+      <div style="margin-bottom: 12px; font-size: 12px; opacity: 0.8;">
+        💡 Нажмите <kbd style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Ctrl+F</kbd> в DevTools
+      </div>
+      <button id="continue-demo" style="
+        background: rgba(255,255,255,0.2);
+        color: white;
+        border: 1px solid rgba(255,255,255,0.3);
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.2s ease;
+      " onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+        Продолжить
+      </button>
+    `;
+    
+    document.body.appendChild(messageEl);
+    
+    // Обработчик кнопки "Продолжить"
+    const continueBtn = messageEl.querySelector('#continue-demo');
+    continueBtn?.addEventListener('click', () => {
+      console.log('✅ User clicked Continue button');
+      messageEl.remove();
+      
+      // Показываем подтверждение
+      showDetailedMessage('✅ Отлично! Поиск открыт', 'Теперь введите "devtools-demo" в поле поиска');
+      
+      resolve();
+    });
+    
+    // Убираем сообщение через 60 секунд (если пользователь не нажал)
+    setTimeout(() => {
+      if (messageEl.parentNode) {
+        messageEl.remove();
+      }
+    }, 60000);
   };
 
   const showInteractiveMessage = (action: string) => {
