@@ -561,6 +561,140 @@ export default function DevToolsPage() {
     }
   };
 
+  const waitForUserAction = (action: string): Promise<void> => {
+    return new Promise((resolve) => {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (action === 'ctrl+f' && event.ctrlKey && event.key === 'f') {
+          console.log('✅ User pressed Ctrl+F');
+          document.removeEventListener('keydown', handleKeyDown);
+          
+          // Убираем интерактивное сообщение
+          const interactiveMessage = document.querySelector('.demo-message.interactive');
+          if (interactiveMessage) {
+            interactiveMessage.remove();
+          }
+          
+          // Показываем подтверждение
+          showDetailedMessage('✅ Отлично! Поиск открыт', 'Теперь введите "devtools-demo" в поле поиска');
+          
+          resolve();
+        }
+      };
+      
+      document.addEventListener('keydown', handleKeyDown);
+      
+      // Показываем интерактивное сообщение
+      showInteractiveMessage(action);
+    });
+  };
+
+  const waitForSearchInput = (): Promise<void> => {
+    return new Promise((resolve) => {
+      // Показываем интерактивное сообщение для ввода текста
+      const messageEl = document.createElement('div');
+      messageEl.className = 'demo-message interactive';
+      messageEl.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #f59e0b;
+        color: white;
+        padding: 20px 24px;
+        border-radius: 12px;
+        z-index: 10000;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        animation: pulse 2s infinite;
+        max-width: 400px;
+        line-height: 1.4;
+        border: 2px solid #d97706;
+      `;
+      
+      messageEl.innerHTML = `
+        <div style="font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+          <span>🔍</span>
+          <span>Введите "devtools-demo" в поиск</span>
+        </div>
+        <div style="opacity: 0.9; font-size: 14px; margin-bottom: 12px;">
+          В поле поиска DevTools введите: <code style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">devtools-demo</code>
+        </div>
+        <div style="font-size: 12px; opacity: 0.8;">
+          💡 После ввода нажмите Enter или кликните на найденный элемент
+        </div>
+      `;
+      
+      document.body.appendChild(messageEl);
+      
+      // Ждем 10 секунд, затем продолжаем (предполагаем, что пользователь ввел текст)
+      setTimeout(() => {
+        if (messageEl.parentNode) {
+          messageEl.remove();
+        }
+        
+        // Показываем подтверждение
+        showDetailedMessage('✅ Отлично! Элемент найден', 'Теперь кликните на найденный элемент в HTML');
+        
+        resolve();
+      }, 10000);
+    });
+  };
+
+  const showInteractiveMessage = (action: string) => {
+    if (typeof window === 'undefined') return;
+    
+    let message = '';
+    let details = '';
+    
+    switch (action) {
+      case 'ctrl+f':
+        message = '⌨️ Нажмите Ctrl+F в DevTools';
+        details = 'Программа ждет, пока вы откроете поиск в DevTools...';
+        break;
+    }
+    
+    // Создаем интерактивное сообщение
+    const messageEl = document.createElement('div');
+    messageEl.className = 'demo-message interactive';
+    messageEl.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 20px 24px;
+      border-radius: 12px;
+      z-index: 10000;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      animation: pulse 2s infinite;
+      max-width: 400px;
+      line-height: 1.4;
+      border: 2px solid #059669;
+    `;
+    
+    messageEl.innerHTML = `
+      <div style="font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+        <span>⌨️</span>
+        <span>${message}</span>
+      </div>
+      <div style="opacity: 0.9; font-size: 14px;">${details}</div>
+      <div style="margin-top: 12px; font-size: 12px; opacity: 0.8;">
+        💡 Нажмите <kbd style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Ctrl+F</kbd> в DevTools
+      </div>
+    `;
+    
+    document.body.appendChild(messageEl);
+    
+    // Убираем сообщение через 30 секунд (если пользователь не нажал)
+    setTimeout(() => {
+      if (messageEl.parentNode) {
+        messageEl.remove();
+      }
+    }, 30000);
+  };
+
   const simulateAction = async (action: string, step: any, taskId: number) => {
     if (typeof window === 'undefined') return;
     
@@ -585,13 +719,15 @@ export default function DevToolsPage() {
         break;
         
       case 'openSearch':
-        // Показываем инструкцию по открытию поиска
-        console.log('Showing instruction to open search with Ctrl+F');
+        // Ждем, пока пользователь нажмет Ctrl+F
+        console.log('Waiting for user to press Ctrl+F');
+        await waitForUserAction('ctrl+f');
         break;
         
       case 'searchElement':
-        // Показываем инструкцию по поиску
-        console.log('Showing instruction to search for devtools-demo');
+        // Ждем, пока пользователь введет "devtools-demo" в поиск
+        console.log('Waiting for user to search for devtools-demo');
+        await waitForSearchInput();
         break;
         
       case 'selectElement':
