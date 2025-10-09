@@ -307,7 +307,7 @@ export default function DevToolsPage() {
         isRunning: true,
         isPaused: false,
         currentStep: 0,
-        speed: prev[taskId]?.speed || 1
+        speed: prev[taskId]?.speed || 0.5  // Медленнее по умолчанию
       }
     }));
 
@@ -380,8 +380,8 @@ export default function DevToolsPage() {
 
       await executeDemoStep(demoSteps[i], taskId);
       
-      // Пауза между шагами (зависит от скорости)
-      const delay = 2000 / (demoState[taskId]?.speed || 1);
+      // Пауза между шагами (зависит от скорости) - увеличена для лучшего понимания
+      const delay = 4000 / (demoState[taskId]?.speed || 1);
       await new Promise(resolve => setTimeout(resolve, delay));
     }
 
@@ -451,10 +451,10 @@ export default function DevToolsPage() {
       // Прокручиваем к элементу
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       
-      // Убираем подсветку через 2 секунды
+      // Убираем подсветку через 3 секунды (увеличено для лучшего восприятия)
       setTimeout(() => {
         element.classList.remove('demo-highlight');
-      }, 2000);
+      }, 3000);
     }
   };
 
@@ -614,7 +614,7 @@ export default function DevToolsPage() {
               isRunning: true,
               isPaused: false,
               currentStep: 0,
-              speed: prev[1]?.speed || 1
+              speed: prev[1]?.speed || 0.5  // Медленнее по умолчанию
             }
           }));
 
@@ -664,10 +664,10 @@ export default function DevToolsPage() {
     
     document.body.appendChild(messageEl);
     
-    // Убираем сообщение через 2 секунды
+    // Убираем сообщение через 3 секунды (увеличено для лучшего чтения)
     setTimeout(() => {
       messageEl.remove();
-    }, 2000);
+    }, 3000);
   };
 
   const getProgressPercentage = () => {
