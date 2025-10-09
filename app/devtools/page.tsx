@@ -563,14 +563,6 @@ export default function DevToolsPage() {
       // Прокручиваем к элементу
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       
-      // Показываем дополнительное сообщение с информацией об элементе
-      setTimeout(() => {
-        showDetailedMessage(
-          '🎯 Элемент найден и подсвечен!', 
-          `Тег: ${element.tagName}, Классы: ${element.className}, Текст: "${element.textContent?.substring(0, 30)}..."`
-        );
-      }, 2000);
-      
       // Убираем подсветку через 8 секунд (еще медленнее)
       setTimeout(() => {
         element.classList.remove('demo-highlight');
