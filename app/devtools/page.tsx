@@ -307,7 +307,7 @@ export default function DevToolsPage() {
         isRunning: true,
         isPaused: false,
         currentStep: 0,
-        speed: prev[taskId]?.speed || 0.5  // Медленнее по умолчанию
+        speed: prev[taskId]?.speed || 0.25  // Очень медленно по умолчанию
       }
     }));
 
@@ -380,8 +380,8 @@ export default function DevToolsPage() {
 
       await executeDemoStep(demoSteps[i], taskId);
       
-      // Пауза между шагами (зависит от скорости) - увеличена для лучшего понимания
-      const delay = 4000 / (demoState[taskId]?.speed || 1);
+      // Пауза между шагами (зависит от скорости) - еще больше увеличена
+      const delay = 8000 / (demoState[taskId]?.speed || 1);
       await new Promise(resolve => setTimeout(resolve, delay));
     }
 
@@ -511,32 +511,50 @@ export default function DevToolsPage() {
     if (typeof window === 'undefined') return;
     
     console.log('🔍 Looking for element with selector:', selector);
+    
+    // Показываем детальное сообщение сначала
+    showDetailedMessage(message, details);
+    
+    // Ждем немного, чтобы пользователь прочитал сообщение
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
     const element = document.querySelector(selector) as HTMLElement;
     
     if (element) {
       console.log('✅ Element found:', element);
-      // Показываем детальное сообщение
-      showDetailedMessage(message, details);
+      console.log('Element classes:', element.className);
+      console.log('Element text:', element.textContent?.substring(0, 50));
       
-      // Добавляем подсветку
+      // Убираем подсветку с других элементов
+      document.querySelectorAll('.demo-highlight').forEach(el => {
+        el.classList.remove('demo-highlight');
+        (el as HTMLElement).style.boxShadow = '';
+        (el as HTMLElement).style.transform = '';
+        (el as HTMLElement).style.transition = '';
+      });
+      
+      // Добавляем очень заметную подсветку
       element.classList.add('demo-highlight');
-      
-      // Добавляем дополнительную подсветку через стили
-      element.style.boxShadow = '0 0 20px rgba(59, 130, 246, 0.8)';
-      element.style.transform = 'scale(1.02)';
-      element.style.transition = 'all 0.3s ease';
+      element.style.boxShadow = '0 0 30px rgba(255, 0, 0, 1), 0 0 60px rgba(255, 0, 0, 0.5)';
+      element.style.transform = 'scale(1.05)';
+      element.style.transition = 'all 0.5s ease';
+      element.style.border = '5px solid #ff0000';
+      element.style.zIndex = '9999';
+      element.style.position = 'relative';
       
       // Прокручиваем к элементу
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       
-      // Убираем подсветку через 4 секунды (увеличено для лучшего восприятия)
+      // Убираем подсветку через 6 секунд (еще медленнее)
       setTimeout(() => {
         element.classList.remove('demo-highlight');
-        // Убираем дополнительные стили
         element.style.boxShadow = '';
         element.style.transform = '';
         element.style.transition = '';
-      }, 4000);
+        element.style.border = '';
+        element.style.zIndex = '';
+        element.style.position = '';
+      }, 6000);
     } else {
       console.log('❌ Element not found with selector:', selector);
       showDetailedMessage(`❌ Элемент не найден: ${selector}`, 'Проверьте, что элемент существует на странице');
@@ -567,39 +585,13 @@ export default function DevToolsPage() {
         break;
         
       case 'openSearch':
-        // Пытаемся симулировать Ctrl+F в DevTools
-        try {
-          const ctrlFEvent = new KeyboardEvent('keydown', {
-            key: 'f',
-            code: 'KeyF',
-            ctrlKey: true,
-            bubbles: true,
-            cancelable: true
-          });
-          
-          document.dispatchEvent(ctrlFEvent);
-          console.log('Ctrl+F event dispatched');
-        } catch (e) {
-          console.log('Could not simulate Ctrl+F:', e);
-        }
+        // Показываем инструкцию по открытию поиска
+        console.log('Showing instruction to open search with Ctrl+F');
         break;
         
       case 'searchElement':
-        // Пытаемся ввести текст в поле поиска
-        try {
-          setTimeout(() => {
-            const activeElement = document.activeElement as HTMLInputElement;
-            if (activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA')) {
-              activeElement.value = 'devtools-demo';
-              activeElement.dispatchEvent(new Event('input', { bubbles: true }));
-              console.log('Text entered in search field');
-            } else {
-              console.log('No active input field found');
-            }
-          }, 200);
-        } catch (e) {
-          console.log('Could not enter search text:', e);
-        }
+        // Показываем инструкцию по поиску
+        console.log('Showing instruction to search for devtools-demo');
         break;
         
       case 'selectElement':
@@ -746,7 +738,7 @@ export default function DevToolsPage() {
               isRunning: true,
               isPaused: false,
               currentStep: 0,
-              speed: prev[1]?.speed || 0.5  // Медленнее по умолчанию
+              speed: prev[1]?.speed || 0.25  // Очень медленно по умолчанию
             }
           }));
 
@@ -806,10 +798,10 @@ export default function DevToolsPage() {
     
     document.body.appendChild(messageEl);
     
-    // Убираем сообщение через 4 секунды (увеличено для чтения деталей)
+    // Убираем сообщение через 6 секунд (еще больше увеличено для чтения деталей)
     setTimeout(() => {
       messageEl.remove();
-    }, 4000);
+    }, 6000);
   };
 
   const showDemoMessage = (message: string) => {
