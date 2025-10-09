@@ -63,6 +63,7 @@ export default function HomePage() {
     }
   ]
 
+      // Categories for testing lessons
       const categories = [
         { name: "DevTools", icon: <Code />, count: 6, color: "bg-indigo-500", href: "/devtools" },
         { name: "Postman", icon: <Globe />, count: 5, color: "bg-blue-500", href: "/postman-lessons" },
