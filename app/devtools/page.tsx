@@ -31,6 +31,7 @@ export default function DevToolsPage() {
   const [completedTasks, setCompletedTasks] = useState<number[]>([]);
   const [activeTab, setActiveTab] = useState<'theory' | 'practice'>('theory');
   const [showSolutions, setShowSolutions] = useState<{[key: number]: boolean}>({});
+  const [showVideos, setShowVideos] = useState<{[key: number]: boolean}>({});
   const [demoState, setDemoState] = useState<{[key: number]: {
     isRunning: boolean;
     isPaused: boolean;
@@ -283,6 +284,13 @@ export default function DevToolsPage() {
 
   const toggleSolution = (taskId: number) => {
     setShowSolutions(prev => ({
+      ...prev,
+      [taskId]: !prev[taskId]
+    }));
+  };
+
+  const toggleVideo = (taskId: number) => {
+    setShowVideos(prev => ({
       ...prev,
       [taskId]: !prev[taskId]
     }));
@@ -1406,32 +1414,10 @@ export default function DevToolsPage() {
                   </div>
                 </div>
 
-                {/* Видео-демонстрация для Elements */}
-                {task.id === 1 && (
-                  <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                    <h4 className="text-lg font-semibold mb-3 text-blue-800">🎥 Видео-демонстрация</h4>
-                    <p className="text-blue-600 mb-4">
-                      Посмотрите, как правильно выполнить это задание:
-                    </p>
-                    <video 
-                      width="800" 
-                      height="450" 
-                      controls 
-                      className="rounded-lg shadow-lg w-full max-w-4xl"
-                    >
-                      <source src="/videos/2025-10-09 14-54-15.mkv" type="video/x-matroska" />
-                      <source src="/videos/2025-10-09 14-54-15.mkv" type="video/mp4" />
-                      Ваш браузер не поддерживает видео.
-                    </video>
-                    <p className="text-sm text-gray-600 mt-2">
-                      💡 В видео показаны все шаги: открытие DevTools, поиск элемента, изменение стилей
-                    </p>
-                  </div>
-                )}
 
                 {/* Кнопки управления */}
                 <div className="text-center mb-4 space-y-3">
-                  <div className="flex gap-3 justify-center">
+                  <div className="flex gap-3 justify-center flex-wrap">
                     <button
                       onClick={() => toggleSolution(task.id)}
                       className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
@@ -1449,8 +1435,26 @@ export default function DevToolsPage() {
                       )}
                     </button>
                     
+                    {/* Кнопка видео только для Elements */}
+                    {task.id === 1 && (
+                      <button
+                        onClick={() => toggleVideo(task.id)}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
+                      >
+                        {showVideos[task.id] ? (
+                          <>
+                            <span>🔒</span>
+                            Скрыть видео
+                          </>
+                        ) : (
+                          <>
+                            <span>🎥</span>
+                            Посмотреть видео
+                          </>
+                        )}
+                      </button>
+                    )}
                   </div>
-
                 </div>
 
                 {/* Решение (скрыто по умолчанию) */}
@@ -1483,6 +1487,29 @@ export default function DevToolsPage() {
                       </ul>
                     </div>
                   </>
+                )}
+
+                {/* Видео-демонстрация (скрыто по умолчанию) */}
+                {showVideos[task.id] && task.id === 1 && (
+                  <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                    <h4 className="text-lg font-semibold mb-3 text-blue-800">🎥 Видео-демонстрация</h4>
+                    <p className="text-blue-600 mb-4">
+                      Посмотрите, как правильно выполнить это задание:
+                    </p>
+                    <video 
+                      width="800" 
+                      height="450" 
+                      controls 
+                      className="rounded-lg shadow-lg w-full max-w-4xl"
+                    >
+                      <source src="/videos/2025-10-09 14-54-15.mkv" type="video/x-matroska" />
+                      <source src="/videos/2025-10-09 14-54-15.mkv" type="video/mp4" />
+                      Ваш браузер не поддерживает видео.
+                    </video>
+                    <p className="text-sm text-gray-600 mt-2">
+                      💡 В видео показаны все шаги: открытие DevTools, поиск элемента, изменение стилей
+                    </p>
+                  </div>
                 )}
               </div>
             ))}
