@@ -40,6 +40,77 @@
   .btn-indigo {
     @apply bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500;
   }
+}
+
+/* Demo styles */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+}
+
+.demo-highlight {
+  animation: pulse 1.5s infinite;
+  border: 3px solid #3b82f6 !important;
+  border-radius: 8px !important;
+  position: relative;
+}
+
+.demo-highlight::before {
+  content: "🎯";
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #3b82f6;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  z-index: 1000;
+}
+
+.demo-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.demo-progress {
+  width: 100%;
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.demo-progress-bar {
+  height: 100%;
+  background: #3b82f6;
+  transition: width 0.3s ease;
   
   .card {
     @apply bg-white rounded-lg shadow-md border border-gray-200;

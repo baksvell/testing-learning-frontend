@@ -31,6 +31,12 @@ export default function DevToolsPage() {
   const [completedTasks, setCompletedTasks] = useState<number[]>([]);
   const [activeTab, setActiveTab] = useState<'theory' | 'practice'>('theory');
   const [showSolutions, setShowSolutions] = useState<{[key: number]: boolean}>({});
+  const [demoState, setDemoState] = useState<{[key: number]: {
+    isRunning: boolean;
+    isPaused: boolean;
+    currentStep: number;
+    speed: number;
+  }}>({});
 
   useEffect(() => {
     // Загружаем урок по DevTools
@@ -280,6 +286,193 @@ export default function DevToolsPage() {
       ...prev,
       [taskId]: !prev[taskId]
     }));
+  };
+
+  const startDemo = async (taskId: number) => {
+    setDemoState(prev => ({
+      ...prev,
+      [taskId]: {
+        isRunning: true,
+        isPaused: false,
+        currentStep: 0,
+        speed: prev[taskId]?.speed || 1
+      }
+    }));
+
+    // Запускаем демонстрацию для конкретного задания
+    await runDemoForTask(taskId);
+  };
+
+  const pauseDemo = (taskId: number) => {
+    setDemoState(prev => ({
+      ...prev,
+      [taskId]: {
+        ...prev[taskId],
+        isPaused: !prev[taskId]?.isPaused
+      }
+    }));
+  };
+
+  const resetDemo = (taskId: number) => {
+    setDemoState(prev => ({
+      ...prev,
+      [taskId]: {
+        isRunning: false,
+        isPaused: false,
+        currentStep: 0,
+        speed: 1
+      }
+    }));
+  };
+
+  const setDemoSpeed = (taskId: number, speed: number) => {
+    setDemoState(prev => ({
+      ...prev,
+      [taskId]: {
+        ...prev[taskId],
+        speed
+      }
+    }));
+  };
+
+  const runDemoForTask = async (taskId: number) => {
+    const task = currentLesson?.tasks.find(t => t.id === taskId);
+    if (!task) return;
+
+    // Определяем шаги демонстрации для каждого задания
+    const demoSteps = getDemoStepsForTask(taskId);
+    
+    for (let i = 0; i < demoSteps.length; i++) {
+      // Проверяем, не остановлена ли демонстрация
+      if (!demoState[taskId]?.isRunning || demoState[taskId]?.isPaused) {
+        break;
+      }
+
+      setDemoState(prev => ({
+        ...prev,
+        [taskId]: {
+          ...prev[taskId],
+          currentStep: i
+        }
+      }));
+
+      await executeDemoStep(demoSteps[i], taskId);
+      
+      // Пауза между шагами (зависит от скорости)
+      const delay = 2000 / (demoState[taskId]?.speed || 1);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+
+    // Завершаем демонстрацию
+    setDemoState(prev => ({
+      ...prev,
+      [taskId]: {
+        ...prev[taskId],
+        isRunning: false,
+        isPaused: false
+      }
+    }));
+  };
+
+  const getDemoStepsForTask = (taskId: number) => {
+    switch (taskId) {
+      case 1: // Elements
+        return [
+          { type: 'highlight', selector: '.devtools-demo', message: 'Находим элемент с классом devtools-demo' },
+          { type: 'simulate', action: 'openDevTools', message: 'Открываем DevTools (F12)' },
+          { type: 'simulate', action: 'searchElement', selector: 'devtools-demo', message: 'Ищем элемент в DevTools' },
+          { type: 'simulate', action: 'clickElementStyle', message: 'Кликаем в element.style' },
+          { type: 'simulate', action: 'addCSS', property: 'color', value: 'red', message: 'Добавляем красный цвет' },
+          { type: 'simulate', action: 'addCSS', property: 'border', value: '2px solid blue', message: 'Добавляем синюю рамку' }
+        ];
+      default:
+        return [];
+    }
+  };
+
+  const executeDemoStep = async (step: any, taskId: number) => {
+    switch (step.type) {
+      case 'highlight':
+        await highlightElement(step.selector, step.message);
+        break;
+      case 'simulate':
+        await simulateAction(step.action, step, taskId);
+        break;
+    }
+  };
+
+  const highlightElement = async (selector: string, message: string) => {
+    const element = document.querySelector(selector);
+    if (element) {
+      // Добавляем подсветку
+      element.classList.add('demo-highlight');
+      
+      // Показываем сообщение
+      showDemoMessage(message);
+      
+      // Убираем подсветку через 1.5 секунды
+      setTimeout(() => {
+        element.classList.remove('demo-highlight');
+      }, 1500);
+    }
+  };
+
+  const simulateAction = async (action: string, step: any, taskId: number) => {
+    switch (action) {
+      case 'openDevTools':
+        showDemoMessage(step.message);
+        // Эмулируем открытие DevTools
+        break;
+      case 'searchElement':
+        showDemoMessage(step.message);
+        break;
+      case 'clickElementStyle':
+        showDemoMessage(step.message);
+        break;
+      case 'addCSS':
+        showDemoMessage(step.message);
+        // Эмулируем добавление CSS
+        if (step.property === 'color' && step.value === 'red') {
+          const element = document.querySelector('.devtools-demo');
+          if (element) {
+            element.style.color = 'red';
+          }
+        } else if (step.property === 'border' && step.value === '2px solid blue') {
+          const element = document.querySelector('.devtools-demo');
+          if (element) {
+            element.style.border = '2px solid blue';
+          }
+        }
+        break;
+    }
+  };
+
+  const showDemoMessage = (message: string) => {
+    // Создаем временное сообщение
+    const messageEl = document.createElement('div');
+    messageEl.className = 'demo-message';
+    messageEl.textContent = message;
+    messageEl.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #3b82f6;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      z-index: 10000;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      animation: slideIn 0.3s ease-out;
+    `;
+    
+    document.body.appendChild(messageEl);
+    
+    // Убираем сообщение через 2 секунды
+    setTimeout(() => {
+      messageEl.remove();
+    }, 2000);
   };
 
   const getProgressPercentage = () => {
@@ -552,24 +745,79 @@ export default function DevToolsPage() {
                   </div>
                 </div>
 
-                {/* Кнопка показать/скрыть решение */}
-                <div className="text-center mb-4">
-                  <button
-                    onClick={() => toggleSolution(task.id)}
-                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2 mx-auto"
-                  >
-                    {showSolutions[task.id] ? (
-                      <>
-                        <span>🔒</span>
-                        Скрыть решение
-                      </>
-                    ) : (
-                      <>
-                        <span>🔓</span>
-                        Показать решение
-                      </>
-                    )}
-                  </button>
+                {/* Кнопки управления */}
+                <div className="text-center mb-4 space-y-3">
+                  <div className="flex gap-3 justify-center">
+                    <button
+                      onClick={() => toggleSolution(task.id)}
+                      className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
+                    >
+                      {showSolutions[task.id] ? (
+                        <>
+                          <span>🔒</span>
+                          Скрыть решение
+                        </>
+                      ) : (
+                        <>
+                          <span>🔓</span>
+                          Показать решение
+                        </>
+                      )}
+                    </button>
+                    
+                    <button
+                      onClick={() => startDemo(task.id)}
+                      disabled={demoState[task.id]?.isRunning}
+                      className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
+                    >
+                      <span>🎬</span>
+                      Показать демо
+                    </button>
+                  </div>
+
+                  {/* Управление демонстрацией */}
+                  {demoState[task.id]?.isRunning && (
+                    <div className="demo-controls">
+                      <button
+                        onClick={() => pauseDemo(task.id)}
+                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded text-sm"
+                      >
+                        {demoState[task.id]?.isPaused ? '▶️ Продолжить' : '⏸️ Пауза'}
+                      </button>
+                      
+                      <button
+                        onClick={() => resetDemo(task.id)}
+                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded text-sm"
+                      >
+                        🔄 Сбросить
+                      </button>
+                      
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-gray-600">Скорость:</span>
+                        <input
+                          type="range"
+                          min="0.5"
+                          max="3"
+                          step="0.5"
+                          value={demoState[task.id]?.speed || 1}
+                          onChange={(e) => setDemoSpeed(task.id, parseFloat(e.target.value))}
+                          className="w-20"
+                        />
+                        <span className="text-sm text-gray-600">{demoState[task.id]?.speed || 1}x</span>
+                      </div>
+                      
+                      <div className="flex-1">
+                        <div className="demo-progress">
+                          <div 
+                            className="demo-progress-bar"
+                            style={{ 
+                              width: `${((demoState[task.id]?.currentStep || 0) / getDemoStepsForTask(task.id).length) * 100}%` 
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Решение (скрыто по умолчанию) */}
