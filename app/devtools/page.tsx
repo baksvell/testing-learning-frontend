@@ -291,8 +291,15 @@ export default function DevToolsPage() {
   const startDemo = async (taskId: number) => {
     console.log('🎬 Starting demo for task:', taskId);
     
-    // Показываем инструкцию по открытию DevTools
-    showDevToolsInstruction();
+    // Проверяем, открыты ли DevTools
+    if (!isDevToolsOpen()) {
+      // DevTools не открыты, показываем инструкцию и НЕ запускаем демонстрацию
+      showDevToolsInstruction();
+      return;
+    }
+    
+    // DevTools открыты, запускаем демонстрацию
+    showDemoMessage('🎬 DevTools открыты! Демонстрация началась!');
     
     setDemoState(prev => ({
       ...prev,
@@ -528,13 +535,6 @@ export default function DevToolsPage() {
   const showDevToolsInstruction = () => {
     if (typeof window === 'undefined') return;
     
-    // Проверяем, открыты ли DevTools
-    if (isDevToolsOpen()) {
-      // DevTools открыты, запускаем демонстрацию
-      showDemoMessage('🎬 DevTools открыты! Демонстрация началась!');
-      return;
-    }
-    
     // DevTools не открыты, показываем инструкцию
     const modal = document.createElement('div');
     modal.style.cssText = `
@@ -602,10 +602,24 @@ export default function DevToolsPage() {
     
     checkBtn?.addEventListener('click', () => {
       modal.remove();
-      // Проверяем снова
+      // Проверяем снова и запускаем демонстрацию если DevTools открыты
       setTimeout(() => {
         if (isDevToolsOpen()) {
+          // DevTools открыты, запускаем демонстрацию
           showDemoMessage('🎬 DevTools открыты! Демонстрация началась!');
+          
+          setDemoState(prev => ({
+            ...prev,
+            [1]: {
+              isRunning: true,
+              isPaused: false,
+              currentStep: 0,
+              speed: prev[1]?.speed || 1
+            }
+          }));
+
+          // Запускаем демонстрацию
+          runDemoForTask(1);
         } else {
           showDevToolsInstruction();
         }
