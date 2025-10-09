@@ -402,7 +402,7 @@ export default function DevToolsPage() {
   };
 
   const highlightElement = async (selector: string, message: string) => {
-    const element = document.querySelector(selector);
+    const element = document.querySelector(selector) as HTMLElement;
     if (element) {
       // Добавляем подсветку
       element.classList.add('demo-highlight');
@@ -433,12 +433,12 @@ export default function DevToolsPage() {
         showDemoMessage(step.message);
         // Эмулируем добавление CSS
         if (step.property === 'color' && step.value === 'red') {
-          const element = document.querySelector('.devtools-demo');
+          const element = document.querySelector('.devtools-demo') as HTMLElement;
           if (element) {
             element.style.color = 'red';
           }
         } else if (step.property === 'border' && step.value === '2px solid blue') {
-          const element = document.querySelector('.devtools-demo');
+          const element = document.querySelector('.devtools-demo') as HTMLElement;
           if (element) {
             element.style.border = '2px solid blue';
           }
