@@ -86,6 +86,9 @@ export default function HomePage() {
               <Link href="/devtools" className="text-gray-600 hover:text-primary-600 transition-colors">
                 DevTools
               </Link>
+              <Link href="/postman" className="text-gray-600 hover:text-primary-600 transition-colors">
+                Postman
+              </Link>
               <Link href="/leaderboard" className="text-gray-600 hover:text-primary-600 transition-colors">
                 Рейтинг
               </Link>
@@ -309,6 +312,7 @@ export default function HomePage() {
               <ul className="space-y-2 text-gray-400">
                 <li><Link href="/tasks" className="hover:text-white transition-colors">Задания</Link></li>
                 <li><Link href="/devtools" className="hover:text-white transition-colors">DevTools урок</Link></li>
+                <li><Link href="/postman" className="hover:text-white transition-colors">Postman</Link></li>
                 <li><Link href="/tutorials" className="hover:text-white transition-colors">Туториалы</Link></li>
                 <li><Link href="/resources" className="hover:text-white transition-colors">Ресурсы</Link></li>
               </ul>
