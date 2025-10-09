@@ -405,12 +405,74 @@ export default function DevToolsPage() {
     switch (taskId) {
       case 1: // Elements
         return [
-          { type: 'highlight', selector: '.devtools-demo', message: '🎯 Находим элемент с классом "devtools-demo" на странице' },
-          { type: 'simulate', action: 'openDevTools', message: '🔧 Открываем DevTools (нажмите F12)' },
-          { type: 'simulate', action: 'searchElement', selector: 'devtools-demo', message: '🔍 В DevTools нажимаем Ctrl+F и ищем "devtools-demo"' },
-          { type: 'simulate', action: 'clickElementStyle', message: '👆 В панели Styles кликаем в блок element.style' },
-          { type: 'simulate', action: 'addCSS', property: 'color', value: 'red', message: '🎨 Добавляем CSS: color: red;' },
-          { type: 'simulate', action: 'addCSS', property: 'border', value: '2px solid blue', message: '🎨 Добавляем CSS: border: 2px solid blue;' }
+          { 
+            type: 'instruction', 
+            message: '📋 Задание: Найдите элемент с классом "devtools-demo" и измените его внешний вид',
+            details: 'Сделайте текст красным и добавьте синюю рамку толщиной 2px'
+          },
+          { 
+            type: 'highlight', 
+            selector: '.devtools-demo', 
+            message: '🎯 Шаг 1: Находим элемент с классом "devtools-demo" на странице',
+            details: 'Этот элемент находится ниже на странице'
+          },
+          { 
+            type: 'simulate', 
+            action: 'openDevTools', 
+            message: '🔧 Шаг 2: Открываем DevTools',
+            details: 'Нажмите F12 или Ctrl+Shift+I'
+          },
+          { 
+            type: 'simulate', 
+            action: 'navigateToElements', 
+            message: '📋 Шаг 3: Переходим на вкладку Elements',
+            details: 'В DevTools нажмите на вкладку "Elements"'
+          },
+          { 
+            type: 'simulate', 
+            action: 'openSearch', 
+            message: '🔍 Шаг 4: Открываем поиск в DevTools',
+            details: 'Нажмите Ctrl+F в DevTools'
+          },
+          { 
+            type: 'simulate', 
+            action: 'searchElement', 
+            message: '🔍 Шаг 5: Ищем элемент "devtools-demo"',
+            details: 'В поле поиска введите: devtools-demo'
+          },
+          { 
+            type: 'simulate', 
+            action: 'selectElement', 
+            message: '👆 Шаг 6: Выбираем найденный элемент',
+            details: 'Кликните на найденный элемент в HTML'
+          },
+          { 
+            type: 'simulate', 
+            action: 'clickElementStyle', 
+            message: '👆 Шаг 7: Кликаем в element.style',
+            details: 'В панели Styles найдите блок element.style и кликните в него'
+          },
+          { 
+            type: 'simulate', 
+            action: 'addCSS', 
+            property: 'color', 
+            value: 'red', 
+            message: '🎨 Шаг 8: Добавляем красный цвет',
+            details: 'В element.style введите: color: red;'
+          },
+          { 
+            type: 'simulate', 
+            action: 'addCSS', 
+            property: 'border', 
+            value: '2px solid blue', 
+            message: '🎨 Шаг 9: Добавляем синюю рамку',
+            details: 'В element.style введите: border: 2px solid blue;'
+          },
+          { 
+            type: 'complete', 
+            message: '✅ Задание выполнено!',
+            details: 'Элемент теперь имеет красный текст и синюю рамку'
+          }
         ];
       default:
         return [];
@@ -426,18 +488,26 @@ export default function DevToolsPage() {
     }
     
     switch (step.type) {
+      case 'instruction':
+        console.log('📋 Showing instruction:', step.message);
+        showDetailedMessage(step.message, step.details);
+        break;
       case 'highlight':
         console.log('🎯 Highlighting element:', step.selector);
-        await highlightElement(step.selector, step.message);
+        await highlightElement(step.selector, step.message, step.details);
         break;
       case 'simulate':
         console.log('🎭 Simulating action:', step.action);
         await simulateAction(step.action, step, taskId);
         break;
+      case 'complete':
+        console.log('✅ Task completed:', step.message);
+        showDetailedMessage(step.message, step.details);
+        break;
     }
   };
 
-  const highlightElement = async (selector: string, message: string) => {
+  const highlightElement = async (selector: string, message: string, details?: string) => {
     if (typeof window === 'undefined') return;
     
     console.log('🔍 Looking for element with selector:', selector);
@@ -445,8 +515,8 @@ export default function DevToolsPage() {
     
     if (element) {
       console.log('✅ Element found:', element);
-      // Показываем сообщение
-      showDemoMessage(message);
+      // Показываем детальное сообщение
+      showDetailedMessage(message, details);
       
       // Добавляем подсветку
       element.classList.add('demo-highlight');
@@ -459,29 +529,30 @@ export default function DevToolsPage() {
       // Прокручиваем к элементу
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       
-      // Убираем подсветку через 3 секунды (увеличено для лучшего восприятия)
+      // Убираем подсветку через 4 секунды (увеличено для лучшего восприятия)
       setTimeout(() => {
         element.classList.remove('demo-highlight');
         // Убираем дополнительные стили
         element.style.boxShadow = '';
         element.style.transform = '';
         element.style.transition = '';
-      }, 3000);
+      }, 4000);
     } else {
       console.log('❌ Element not found with selector:', selector);
-      showDemoMessage(`❌ Элемент не найден: ${selector}`);
+      showDetailedMessage(`❌ Элемент не найден: ${selector}`, 'Проверьте, что элемент существует на странице');
     }
   };
 
   const simulateAction = async (action: string, step: any, taskId: number) => {
     if (typeof window === 'undefined') return;
     
+    // Показываем детальное сообщение
+    showDetailedMessage(step.message, step.details);
+    
     switch (action) {
       case 'openDevTools':
-        showDemoMessage('🔧 Открываем DevTools (F12)');
         // Пытаемся открыть DevTools программно (работает не во всех браузерах)
         try {
-          // Это может не работать из-за политик безопасности браузера
           if (window.console && (window.console as any).clear) {
             (window.console as any).clear();
           }
@@ -489,11 +560,15 @@ export default function DevToolsPage() {
           console.log('DevTools cannot be opened programmatically');
         }
         break;
-      case 'searchElement':
-        showDemoMessage('🔍 Ищем элемент в DevTools: нажмите Ctrl+F и введите "devtools-demo"');
-        // Пытаемся симулировать Ctrl+F
+        
+      case 'navigateToElements':
+        // Симулируем переход на вкладку Elements
+        console.log('Navigating to Elements tab');
+        break;
+        
+      case 'openSearch':
+        // Пытаемся симулировать Ctrl+F в DevTools
         try {
-          // Создаем событие клавиатуры
           const ctrlFEvent = new KeyboardEvent('keydown', {
             key: 'f',
             code: 'KeyF',
@@ -502,45 +577,55 @@ export default function DevToolsPage() {
             cancelable: true
           });
           
-          // Отправляем событие
           document.dispatchEvent(ctrlFEvent);
-          
-          // Небольшая задержка, затем пытаемся ввести текст
-          setTimeout(() => {
-            const inputEvent = new InputEvent('input', {
-              data: 'devtools-demo',
-              bubbles: true,
-              cancelable: true
-            });
-            
-            // Ищем активный элемент (поле поиска)
-            const activeElement = document.activeElement as HTMLInputElement;
-            if (activeElement && activeElement.tagName === 'INPUT') {
-              activeElement.value = 'devtools-demo';
-              activeElement.dispatchEvent(inputEvent);
-            }
-          }, 100);
+          console.log('Ctrl+F event dispatched');
         } catch (e) {
           console.log('Could not simulate Ctrl+F:', e);
         }
         break;
-      case 'clickElementStyle':
-        showDemoMessage('👆 Кликаем в element.style в панели Styles');
+        
+      case 'searchElement':
+        // Пытаемся ввести текст в поле поиска
+        try {
+          setTimeout(() => {
+            const activeElement = document.activeElement as HTMLInputElement;
+            if (activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA')) {
+              activeElement.value = 'devtools-demo';
+              activeElement.dispatchEvent(new Event('input', { bubbles: true }));
+              console.log('Text entered in search field');
+            } else {
+              console.log('No active input field found');
+            }
+          }, 200);
+        } catch (e) {
+          console.log('Could not enter search text:', e);
+        }
         break;
+        
+      case 'selectElement':
+        // Симулируем выбор элемента
+        console.log('Selecting element in DevTools');
+        break;
+        
+      case 'clickElementStyle':
+        console.log('Clicking in element.style');
+        break;
+        
       case 'addCSS':
-        showDemoMessage(`🎨 Добавляем CSS: ${step.property}: ${step.value}`);
         // Эмулируем добавление CSS
         if (step.property === 'color' && step.value === 'red') {
           const element = document.querySelector('.devtools-demo') as HTMLElement;
           if (element) {
             element.style.color = 'red';
             element.style.transition = 'color 0.5s ease';
+            console.log('Added red color to element');
           }
         } else if (step.property === 'border' && step.value === '2px solid blue') {
           const element = document.querySelector('.devtools-demo') as HTMLElement;
           if (element) {
             element.style.border = '2px solid blue';
             element.style.transition = 'border 0.5s ease';
+            console.log('Added blue border to element');
           }
         }
         break;
@@ -687,34 +772,48 @@ export default function DevToolsPage() {
     });
   };
 
-  const showDemoMessage = (message: string) => {
+  const showDetailedMessage = (message: string, details?: string) => {
     if (typeof window === 'undefined') return;
     
-    // Создаем временное сообщение
+    // Создаем детальное сообщение
     const messageEl = document.createElement('div');
     messageEl.className = 'demo-message';
-    messageEl.textContent = message;
     messageEl.style.cssText = `
       position: fixed;
       top: 20px;
       right: 20px;
       background: #3b82f6;
       color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
+      padding: 16px 20px;
+      border-radius: 12px;
       z-index: 10000;
       font-family: Arial, sans-serif;
       font-size: 14px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
       animation: slideIn 0.3s ease-out;
+      max-width: 400px;
+      line-height: 1.4;
     `;
+    
+    if (details) {
+      messageEl.innerHTML = `
+        <div style="font-weight: 600; margin-bottom: 8px;">${message}</div>
+        <div style="opacity: 0.9; font-size: 13px;">${details}</div>
+      `;
+    } else {
+      messageEl.textContent = message;
+    }
     
     document.body.appendChild(messageEl);
     
-    // Убираем сообщение через 3 секунды (увеличено для лучшего чтения)
+    // Убираем сообщение через 4 секунды (увеличено для чтения деталей)
     setTimeout(() => {
       messageEl.remove();
-    }, 3000);
+    }, 4000);
+  };
+
+  const showDemoMessage = (message: string) => {
+    showDetailedMessage(message);
   };
 
   const getProgressPercentage = () => {
