@@ -14,8 +14,7 @@ import {
   Play,
   Star,
   Globe,
-  File,
-  Send
+  File
 } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '../contexts/AuthContext'
@@ -66,7 +65,7 @@ export default function HomePage() {
 
       const categories = [
         { name: "DevTools", icon: <Code />, count: 6, color: "bg-indigo-500", href: "/devtools" },
-        { name: "Postman", icon: <Send />, count: 5, color: "bg-orange-500", href: "/postman-lessons" },
+        { name: "Postman", icon: <Globe />, count: 5, color: "bg-blue-500", href: "/postman-lessons" },
         { name: "OpenAPI", icon: <File />, count: 5, color: "bg-emerald-500", href: "/openapi" },
         { name: "Функциональное", icon: <Bug />, count: 6, color: "bg-primary-500", href: "/functional" },
         { name: "UI/UX", icon: <BookOpen />, count: 5, color: "bg-success-500", href: "/ui-ux" },
@@ -250,30 +249,20 @@ export default function HomePage() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                className={`p-6 transition-all duration-300 hover:-translate-y-1 ${
-                  category.name === 'Postman' 
-                    ? 'bg-gray-900 text-white rounded-lg border border-gray-700 hover:border-orange-500 hover:shadow-orange-500/20 hover:shadow-xl' 
-                    : 'card hover:shadow-lg'
-                }`}
+                className="card p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <div className={`inline-flex items-center justify-center w-12 h-12 ${category.color} text-white rounded-lg mb-4`}>
                   {category.icon}
                 </div>
-                <h3 className={`text-xl font-semibold mb-2 ${
-                  category.name === 'Postman' ? 'text-white' : 'text-gray-900'
-                }`}>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   {category.name}
                 </h3>
-                <p className={`mb-4 ${
-                  category.name === 'Postman' ? 'text-gray-300' : 'text-gray-600'
-                }`}>
+                <p className="text-gray-600 mb-4">
                   {category.count} {category.name === 'DevTools' ? 'уроков' : 'заданий'}
                 </p>
-                <p className={`text-sm mb-4 ${
-                  category.name === 'Postman' ? 'text-gray-400' : 'text-gray-500'
-                }`}>
+                <p className="text-sm text-gray-500 mb-4">
                   {category.name === 'DevTools' && 'Изучение инструментов разработчика браузера'}
-                  {category.name === 'Postman' && 'Интерактивная платформа для разработки и тестирования API'}
+                  {category.name === 'Postman' && 'Профессиональное тестирование API'}
                   {category.name === 'OpenAPI' && 'Документация и тестирование API с Swagger'}
                   {category.name === 'Функциональное' && 'Тестирование функциональности приложения'}
                   {category.name === 'UI/UX' && 'Тестирование пользовательского интерфейса'}
@@ -283,11 +272,7 @@ export default function HomePage() {
                 </p>
                 <Link 
                   href={category.href || `/tasks?category=${category.name.toLowerCase()}`}
-                  className={`w-full px-4 py-2 rounded-md font-medium transition-colors ${
-                    category.name === 'Postman' 
-                      ? 'bg-orange-600 hover:bg-orange-700 text-white' 
-                      : 'btn btn-primary'
-                  }`}
+                  className="btn w-full btn-primary"
                 >
                   {category.name === 'DevTools' ? 'Изучить' : 'Начать'}
                 </Link>
