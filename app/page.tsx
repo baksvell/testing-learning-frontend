@@ -239,7 +239,7 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category, index) => (
               <motion.div
                 key={index}
@@ -256,6 +256,14 @@ export default function HomePage() {
                 </h3>
                 <p className="text-gray-600 mb-4">
                   {category.count} {category.name === 'DevTools' ? 'уроков' : 'заданий'}
+                </p>
+                <p className="text-sm text-gray-500 mb-4">
+                  {category.name === 'DevTools' && 'Изучение инструментов разработчика браузера'}
+                  {category.name === 'Postman' && 'Профессиональное тестирование API'}
+                  {category.name === 'Функциональное' && 'Тестирование функциональности приложения'}
+                  {category.name === 'UI/UX' && 'Тестирование пользовательского интерфейса'}
+                  {category.name === 'API' && 'Тестирование REST API и веб-сервисов'}
+                  {category.name === 'Безопасность' && 'Тестирование безопасности веб-приложений'}
                 </p>
                 <Link 
                   href={category.href || `/tasks?category=${category.name.toLowerCase()}`}
