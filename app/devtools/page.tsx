@@ -649,6 +649,17 @@ export default function DevToolsPage() {
         <div style="background: rgba(255,255,255,0.1); padding: 8px; border-radius: 4px; margin-bottom: 12px; font-size: 12px;">
           ⚠️ <strong>ВАЖНО:</strong> Ищите HTML элемент <code>&lt;div&gt;</code> с классом "devtools-demo", а НЕ текст инструкции!
         </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 12px;">
+          <strong>🔍 Что искать в результатах:</strong><br>
+          <div style="margin-top: 8px; font-family: monospace; font-size: 11px; background: rgba(0,0,0,0.1); padding: 6px; border-radius: 3px;">
+            &lt;div class="devtools-demo bg-gradient-to-r..."&gt;<br>
+            &nbsp;&nbsp;🎯 Демо элемент для практики<br>
+            &lt;/div&gt;
+          </div>
+          <div style="margin-top: 6px; font-size: 11px; opacity: 0.8;">
+            ↑ Это HTML элемент, который нужно найти
+          </div>
+        </div>
         <div style="margin-bottom: 12px; font-size: 12px; opacity: 0.8;">
           💡 После ввода нажмите Enter или кликните на найденный элемент
         </div>
@@ -740,6 +751,42 @@ export default function DevToolsPage() {
         1. Кликните мышкой в панель DevTools (справа)<br>
         2. Убедитесь, что DevTools активны<br>
         3. Нажмите <kbd style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Ctrl+F</kbd> в DevTools
+      </div>
+      <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 12px;">
+        <strong>🔍 Где искать поиск:</strong><br>
+        <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+          <div style="
+            background: white;
+            border: 2px solid #007acc;
+            border-radius: 20px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: #333;
+            min-width: 120px;
+          ">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <span>devtools-demo</span>
+            <div style="
+              background: #666;
+              color: white;
+              border-radius: 50%;
+              width: 16px;
+              height: 16px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 10px;
+              margin-left: auto;
+            ">×</div>
+          </div>
+          <span style="opacity: 0.8;">← Поиск появится здесь</span>
+        </div>
       </div>
       <div style="margin-bottom: 12px; font-size: 12px; opacity: 0.8;">
         💡 Если не получается, просто нажмите кнопку "Продолжить" ниже
