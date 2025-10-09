@@ -289,6 +289,8 @@ export default function DevToolsPage() {
   };
 
   const startDemo = async (taskId: number) => {
+    console.log('🎬 Starting demo for task:', taskId);
+    
     setDemoState(prev => ({
       ...prev,
       [taskId]: {
@@ -336,19 +338,33 @@ export default function DevToolsPage() {
   };
 
   const runDemoForTask = async (taskId: number) => {
-    if (typeof window === 'undefined') return;
+    console.log('🚀 runDemoForTask called for task:', taskId);
+    
+    if (typeof window === 'undefined') {
+      console.log('❌ Window is undefined, returning');
+      return;
+    }
     
     const task = currentLesson?.tasks.find(t => t.id === taskId);
-    if (!task) return;
+    if (!task) {
+      console.log('❌ Task not found:', taskId);
+      return;
+    }
+
+    console.log('✅ Task found:', task);
 
     // Определяем шаги демонстрации для каждого задания
     const demoSteps = getDemoStepsForTask(taskId);
+    console.log('📋 Demo steps:', demoSteps);
     
     for (let i = 0; i < demoSteps.length; i++) {
       // Проверяем, не остановлена ли демонстрация
       if (!demoState[taskId]?.isRunning || demoState[taskId]?.isPaused) {
+        console.log('⏸️ Demo paused or stopped at step:', i);
         break;
       }
+
+      console.log('🎯 Executing step:', i, demoSteps[i]);
 
       setDemoState(prev => ({
         ...prev,
@@ -364,6 +380,8 @@ export default function DevToolsPage() {
       const delay = 2000 / (demoState[taskId]?.speed || 1);
       await new Promise(resolve => setTimeout(resolve, delay));
     }
+
+    console.log('🏁 Demo completed for task:', taskId);
 
     // Завершаем демонстрацию
     setDemoState(prev => ({
@@ -393,13 +411,20 @@ export default function DevToolsPage() {
   };
 
   const executeDemoStep = async (step: any, taskId: number) => {
-    if (typeof window === 'undefined') return;
+    console.log('⚡ executeDemoStep:', step.type, step);
+    
+    if (typeof window === 'undefined') {
+      console.log('❌ Window is undefined in executeDemoStep');
+      return;
+    }
     
     switch (step.type) {
       case 'highlight':
+        console.log('🎯 Highlighting element:', step.selector);
         await highlightElement(step.selector, step.message);
         break;
       case 'simulate':
+        console.log('🎭 Simulating action:', step.action);
         await simulateAction(step.action, step, taskId);
         break;
     }
