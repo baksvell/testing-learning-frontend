@@ -30,6 +30,7 @@ export default function DevToolsPage() {
   const [currentLesson, setCurrentLesson] = useState<DevToolsLesson | null>(null);
   const [completedTasks, setCompletedTasks] = useState<number[]>([]);
   const [activeTab, setActiveTab] = useState<'theory' | 'practice'>('theory');
+  const [showSolutions, setShowSolutions] = useState<{[key: number]: boolean}>({});
 
   useEffect(() => {
     // Загружаем урок по DevTools
@@ -272,6 +273,13 @@ export default function DevToolsPage() {
     
     setCompletedTasks(newCompletedTasks);
     localStorage.setItem('devtools-progress', JSON.stringify(newCompletedTasks));
+  };
+
+  const toggleSolution = (taskId: number) => {
+    setShowSolutions(prev => ({
+      ...prev,
+      [taskId]: !prev[taskId]
+    }));
   };
 
   const getProgressPercentage = () => {
@@ -544,33 +552,57 @@ export default function DevToolsPage() {
                   </div>
                 </div>
 
-                {/* Решение */}
-                <div className="bg-green-50 border-l-4 border-green-400 p-4 mb-4">
-                  <h4 className="font-semibold text-green-800 mb-3">✅ Решение:</h4>
-                  <ol className="space-y-2">
-                    {task.solution.steps.map((step, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <span className="bg-green-100 text-green-800 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center mt-0.5">
-                          {index + 1}
-                        </span>
-                        <span className="text-sm text-green-700">{step}</span>
-                      </li>
-                    ))}
-                  </ol>
+                {/* Кнопка показать/скрыть решение */}
+                <div className="text-center mb-4">
+                  <button
+                    onClick={() => toggleSolution(task.id)}
+                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2 mx-auto"
+                  >
+                    {showSolutions[task.id] ? (
+                      <>
+                        <span>🔒</span>
+                        Скрыть решение
+                      </>
+                    ) : (
+                      <>
+                        <span>🔓</span>
+                        Показать решение
+                      </>
+                    )}
+                  </button>
                 </div>
 
-                {/* Подсказки */}
-                <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
-                  <h4 className="font-semibold text-blue-800 mb-3">💡 Полезные советы:</h4>
-                  <ul className="space-y-2">
-                    {task.solution.tips.map((tip, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <span className="text-blue-500 mt-1">💡</span>
-                        <span className="text-sm text-blue-700">{tip}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {/* Решение (скрыто по умолчанию) */}
+                {showSolutions[task.id] && (
+                  <>
+                    <div className="bg-green-50 border-l-4 border-green-400 p-4 mb-4">
+                      <h4 className="font-semibold text-green-800 mb-3">✅ Решение:</h4>
+                      <ol className="space-y-2">
+                        {task.solution.steps.map((step, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <span className="bg-green-100 text-green-800 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center mt-0.5">
+                              {index + 1}
+                            </span>
+                            <span className="text-sm text-green-700">{step}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+
+                    {/* Подсказки */}
+                    <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
+                      <h4 className="font-semibold text-blue-800 mb-3">💡 Полезные советы:</h4>
+                      <ul className="space-y-2">
+                        {task.solution.tips.map((tip, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <span className="text-blue-500 mt-1">💡</span>
+                            <span className="text-sm text-blue-700">{tip}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </>
+                )}
               </div>
             ))}
           </div>
