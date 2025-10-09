@@ -754,38 +754,52 @@ export default function DevToolsPage() {
       </div>
       <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 12px;">
         <strong>🔍 Где искать поиск:</strong><br>
-        <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+        <div style="margin-top: 8px;">
           <div style="
-            background: white;
+            background: #f0f0f0;
             border: 2px solid #007acc;
-            border-radius: 20px;
-            padding: 6px 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            border-radius: 4px;
+            padding: 8px;
             font-size: 11px;
             color: #333;
-            min-width: 120px;
+            margin-bottom: 6px;
           ">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.35-4.35"></path>
-            </svg>
-            <span>devtools-demo</span>
+            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+              <span style="background: #007acc; color: white; padding: 2px 6px; border-radius: 2px; font-size: 10px;">DevTools</span>
+              <span style="opacity: 0.7;">Elements | Console | Sources | Network</span>
+            </div>
             <div style="
-              background: #666;
-              color: white;
-              border-radius: 50%;
-              width: 16px;
-              height: 16px;
+              background: white;
+              border: 1px solid #ddd;
+              border-radius: 3px;
+              padding: 4px 8px;
               display: flex;
               align-items: center;
-              justify-content: center;
+              gap: 6px;
               font-size: 10px;
-              margin-left: auto;
-            ">×</div>
+            ">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+              <span>devtools-demo</span>
+              <div style="
+                background: #666;
+                color: white;
+                border-radius: 50%;
+                width: 12px;
+                height: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 8px;
+                margin-left: auto;
+              ">×</div>
+            </div>
           </div>
-          <span style="opacity: 0.8;">← Поиск появится здесь</span>
+          <div style="font-size: 10px; opacity: 0.8; text-align: center;">
+            ↑ Поиск находится ВНУТРИ DevTools (справа)
+          </div>
         </div>
       </div>
       <div style="margin-bottom: 12px; font-size: 12px; opacity: 0.8;">
