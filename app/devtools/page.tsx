@@ -1480,7 +1480,7 @@ export default function DevToolsPage() {
                       <ul className="space-y-2">
                         {task.solution.tips.map((tip, index) => (
                           <li key={index} className="flex items-start gap-2">
-                            <span className="text-blue-500 mt-1">💡</span>
+                            <span className="text-blue-500 mt-1">•</span>
                             <span className="text-sm text-blue-700">{tip}</span>
                           </li>
                         ))}
