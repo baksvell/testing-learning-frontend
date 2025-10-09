@@ -1426,59 +1426,8 @@ export default function DevToolsPage() {
                       )}
                     </button>
                     
-                    <button
-                      onClick={() => startDemo(task.id)}
-                      disabled={demoState[task.id]?.isRunning}
-                      className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
-                    >
-                      <span>🎬</span>
-                      Показать демо
-                    </button>
                   </div>
 
-                  {/* Управление демонстрацией */}
-                  {demoState[task.id]?.isRunning && (
-                    <div className="demo-controls">
-                      <button
-                        onClick={() => pauseDemo(task.id)}
-                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded text-sm"
-                      >
-                        {demoState[task.id]?.isPaused ? '▶️ Продолжить' : '⏸️ Пауза'}
-                      </button>
-                      
-                      <button
-                        onClick={() => resetDemo(task.id)}
-                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded text-sm"
-                      >
-                        🔄 Сбросить
-                      </button>
-                      
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-600">Скорость:</span>
-                        <input
-                          type="range"
-                          min="0.5"
-                          max="3"
-                          step="0.5"
-                          value={demoState[task.id]?.speed || 1}
-                          onChange={(e) => setDemoSpeed(task.id, parseFloat(e.target.value))}
-                          className="w-20"
-                        />
-                        <span className="text-sm text-gray-600">{demoState[task.id]?.speed || 1}x</span>
-                      </div>
-                      
-                      <div className="flex-1">
-                        <div className="demo-progress">
-                          <div 
-                            className="demo-progress-bar"
-                            style={{ 
-                              width: `${((demoState[task.id]?.currentStep || 0) / getDemoStepsForTask(task.id).length) * 100}%` 
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </div>
 
                 {/* Решение (скрыто по умолчанию) */}
