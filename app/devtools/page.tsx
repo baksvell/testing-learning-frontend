@@ -427,7 +427,7 @@ export default function DevToolsPage() {
             type: 'simulate', 
             action: 'searchElement', 
             message: '🔍 Шаг 4: Ищем элемент "devtools-demo"',
-            details: 'В поле поиска введите: devtools-demo'
+            details: 'В поле поиска введите: devtools-demo\nВАЖНО: Ищите HTML элемент <div>, а не текст инструкции!'
           },
           { 
             type: 'simulate', 
@@ -507,12 +507,37 @@ export default function DevToolsPage() {
     // Ждем немного, чтобы пользователь прочитал сообщение
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    const element = document.querySelector(selector) as HTMLElement;
+    // Пробуем разные варианты поиска элемента
+    let element = document.querySelector(selector) as HTMLElement;
+    
+    if (!element) {
+      console.log('❌ Element not found with selector:', selector);
+      console.log('🔍 Trying alternative selectors...');
+      
+      // Пробуем альтернативные селекторы
+      const alternatives = [
+        'div.devtools-demo',
+        '[class*="devtools-demo"]',
+        '.devtools-demo.bg-gradient-to-r',
+        'div[class*="devtools-demo"]'
+      ];
+      
+      for (const altSelector of alternatives) {
+        element = document.querySelector(altSelector) as HTMLElement;
+        if (element) {
+          console.log('✅ Element found with alternative selector:', altSelector);
+          break;
+        }
+      }
+    }
     
     if (element) {
       console.log('✅ Element found:', element);
+      console.log('Element tagName:', element.tagName);
       console.log('Element classes:', element.className);
-      console.log('Element text:', element.textContent?.substring(0, 50));
+      console.log('Element id:', element.id);
+      console.log('Element text:', element.textContent?.substring(0, 100));
+      console.log('Element position:', element.getBoundingClientRect());
       
       // Убираем подсветку с других элементов
       document.querySelectorAll('.demo-highlight').forEach(el => {
@@ -520,6 +545,9 @@ export default function DevToolsPage() {
         (el as HTMLElement).style.boxShadow = '';
         (el as HTMLElement).style.transform = '';
         (el as HTMLElement).style.transition = '';
+        (el as HTMLElement).style.border = '';
+        (el as HTMLElement).style.zIndex = '';
+        (el as HTMLElement).style.position = '';
       });
       
       // Добавляем очень заметную подсветку
@@ -530,11 +558,20 @@ export default function DevToolsPage() {
       element.style.border = '5px solid #ff0000';
       element.style.zIndex = '9999';
       element.style.position = 'relative';
+      element.style.backgroundColor = 'rgba(255, 0, 0, 0.1)';
       
       // Прокручиваем к элементу
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       
-      // Убираем подсветку через 6 секунд (еще медленнее)
+      // Показываем дополнительное сообщение с информацией об элементе
+      setTimeout(() => {
+        showDetailedMessage(
+          '🎯 Элемент найден и подсвечен!', 
+          `Тег: ${element.tagName}, Классы: ${element.className}, Текст: "${element.textContent?.substring(0, 30)}..."`
+        );
+      }, 2000);
+      
+      // Убираем подсветку через 8 секунд (еще медленнее)
       setTimeout(() => {
         element.classList.remove('demo-highlight');
         element.style.boxShadow = '';
@@ -543,10 +580,19 @@ export default function DevToolsPage() {
         element.style.border = '';
         element.style.zIndex = '';
         element.style.position = '';
-      }, 6000);
+        element.style.backgroundColor = '';
+      }, 8000);
     } else {
-      console.log('❌ Element not found with selector:', selector);
-      showDetailedMessage(`❌ Элемент не найден: ${selector}`, 'Проверьте, что элемент существует на странице');
+      console.log('❌ Element not found with any selector');
+      console.log('🔍 Available elements with "devtools" in class:');
+      document.querySelectorAll('[class*="devtools"]').forEach((el, index) => {
+        console.log(`${index + 1}.`, el.tagName, el.className, el.textContent?.substring(0, 30));
+      });
+      
+      showDetailedMessage(
+        `❌ Элемент не найден: ${selector}`, 
+        'Проверьте консоль для отладочной информации. Возможно, элемент еще не загружен.'
+      );
     }
   };
 
@@ -605,8 +651,11 @@ export default function DevToolsPage() {
           <span>🔍</span>
           <span>Введите "devtools-demo" в поиск</span>
         </div>
-        <div style="opacity: 0.9; font-size: 14px; margin-bottom: 16px;">
+        <div style="opacity: 0.9; font-size: 14px; margin-bottom: 12px;">
           В поле поиска DevTools введите: <code style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">devtools-demo</code>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 8px; border-radius: 4px; margin-bottom: 12px; font-size: 12px;">
+          ⚠️ <strong>ВАЖНО:</strong> Ищите HTML элемент <code>&lt;div&gt;</code> с классом "devtools-demo", а НЕ текст инструкции!
         </div>
         <div style="margin-bottom: 12px; font-size: 12px; opacity: 0.8;">
           💡 После ввода нажмите Enter или кликните на найденный элемент
