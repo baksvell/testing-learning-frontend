@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { Eye, Palette, Smartphone, MousePointer, Users, CheckCircle } from 'lucide-react';
 
 interface UIUXTask {

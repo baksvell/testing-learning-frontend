@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { Bug, CheckCircle, AlertTriangle, Clock, User, Settings, Database, Globe } from 'lucide-react';
 
 interface FunctionalTask {

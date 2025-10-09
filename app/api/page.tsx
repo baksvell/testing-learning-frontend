@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { Globe, Database, Shield, Zap, CheckCircle, AlertTriangle } from 'lucide-react';
 
 interface APITask {
