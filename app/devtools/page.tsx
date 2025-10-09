@@ -291,6 +291,9 @@ export default function DevToolsPage() {
   const startDemo = async (taskId: number) => {
     console.log('🎬 Starting demo for task:', taskId);
     
+    // Показываем инструкцию
+    showDemoMessage('🎬 Демонстрация началась! Следите за подсветкой элементов и сообщениями.');
+    
     setDemoState(prev => ({
       ...prev,
       [taskId]: {
@@ -377,6 +380,9 @@ export default function DevToolsPage() {
 
     console.log('🏁 Demo completed for task:', taskId);
 
+    // Показываем сообщение о завершении
+    showDemoMessage('✅ Демонстрация завершена! Теперь попробуйте сами в DevTools.');
+
     // Завершаем демонстрацию
     setDemoState(prev => ({
       ...prev,
@@ -392,12 +398,12 @@ export default function DevToolsPage() {
     switch (taskId) {
       case 1: // Elements
         return [
-          { type: 'highlight', selector: '.devtools-demo', message: 'Находим элемент с классом devtools-demo' },
-          { type: 'simulate', action: 'openDevTools', message: 'Открываем DevTools (F12)' },
-          { type: 'simulate', action: 'searchElement', selector: 'devtools-demo', message: 'Ищем элемент в DevTools' },
-          { type: 'simulate', action: 'clickElementStyle', message: 'Кликаем в element.style' },
-          { type: 'simulate', action: 'addCSS', property: 'color', value: 'red', message: 'Добавляем красный цвет' },
-          { type: 'simulate', action: 'addCSS', property: 'border', value: '2px solid blue', message: 'Добавляем синюю рамку' }
+          { type: 'highlight', selector: '.devtools-demo', message: '🎯 Находим элемент с классом "devtools-demo" на странице' },
+          { type: 'simulate', action: 'openDevTools', message: '🔧 Открываем DevTools (нажмите F12)' },
+          { type: 'simulate', action: 'searchElement', selector: 'devtools-demo', message: '🔍 В DevTools нажимаем Ctrl+F и ищем "devtools-demo"' },
+          { type: 'simulate', action: 'clickElementStyle', message: '👆 В панели Styles кликаем в блок element.style' },
+          { type: 'simulate', action: 'addCSS', property: 'color', value: 'red', message: '🎨 Добавляем CSS: color: red;' },
+          { type: 'simulate', action: 'addCSS', property: 'border', value: '2px solid blue', message: '🎨 Добавляем CSS: border: 2px solid blue;' }
         ];
       default:
         return [];
@@ -429,16 +435,19 @@ export default function DevToolsPage() {
     
     const element = document.querySelector(selector) as HTMLElement;
     if (element) {
-      // Добавляем подсветку
-      element.classList.add('demo-highlight');
-      
       // Показываем сообщение
       showDemoMessage(message);
       
-      // Убираем подсветку через 1.5 секунды
+      // Добавляем подсветку
+      element.classList.add('demo-highlight');
+      
+      // Прокручиваем к элементу
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      
+      // Убираем подсветку через 2 секунды
       setTimeout(() => {
         element.classList.remove('demo-highlight');
-      }, 1500);
+      }, 2000);
     }
   };
 
@@ -447,27 +456,37 @@ export default function DevToolsPage() {
     
     switch (action) {
       case 'openDevTools':
-        showDemoMessage(step.message);
-        // Эмулируем открытие DevTools
+        showDemoMessage('🔧 Открываем DevTools (F12)');
+        // Пытаемся открыть DevTools программно (работает не во всех браузерах)
+        try {
+          // Это может не работать из-за политик безопасности браузера
+          if (window.console && (window.console as any).clear) {
+            (window.console as any).clear();
+          }
+        } catch (e) {
+          console.log('DevTools cannot be opened programmatically');
+        }
         break;
       case 'searchElement':
-        showDemoMessage(step.message);
+        showDemoMessage('🔍 Ищем элемент в DevTools: нажмите Ctrl+F и введите "devtools-demo"');
         break;
       case 'clickElementStyle':
-        showDemoMessage(step.message);
+        showDemoMessage('👆 Кликаем в element.style в панели Styles');
         break;
       case 'addCSS':
-        showDemoMessage(step.message);
+        showDemoMessage(`🎨 Добавляем CSS: ${step.property}: ${step.value}`);
         // Эмулируем добавление CSS
         if (step.property === 'color' && step.value === 'red') {
           const element = document.querySelector('.devtools-demo') as HTMLElement;
           if (element) {
             element.style.color = 'red';
+            element.style.transition = 'color 0.5s ease';
           }
         } else if (step.property === 'border' && step.value === '2px solid blue') {
           const element = document.querySelector('.devtools-demo') as HTMLElement;
           if (element) {
             element.style.border = '2px solid blue';
+            element.style.transition = 'border 0.5s ease';
           }
         }
         break;
