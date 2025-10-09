@@ -440,13 +440,21 @@ export default function DevToolsPage() {
   const highlightElement = async (selector: string, message: string) => {
     if (typeof window === 'undefined') return;
     
+    console.log('🔍 Looking for element with selector:', selector);
     const element = document.querySelector(selector) as HTMLElement;
+    
     if (element) {
+      console.log('✅ Element found:', element);
       // Показываем сообщение
       showDemoMessage(message);
       
       // Добавляем подсветку
       element.classList.add('demo-highlight');
+      
+      // Добавляем дополнительную подсветку через стили
+      element.style.boxShadow = '0 0 20px rgba(59, 130, 246, 0.8)';
+      element.style.transform = 'scale(1.02)';
+      element.style.transition = 'all 0.3s ease';
       
       // Прокручиваем к элементу
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -454,7 +462,14 @@ export default function DevToolsPage() {
       // Убираем подсветку через 3 секунды (увеличено для лучшего восприятия)
       setTimeout(() => {
         element.classList.remove('demo-highlight');
+        // Убираем дополнительные стили
+        element.style.boxShadow = '';
+        element.style.transform = '';
+        element.style.transition = '';
       }, 3000);
+    } else {
+      console.log('❌ Element not found with selector:', selector);
+      showDemoMessage(`❌ Элемент не найден: ${selector}`);
     }
   };
 
@@ -476,6 +491,38 @@ export default function DevToolsPage() {
         break;
       case 'searchElement':
         showDemoMessage('🔍 Ищем элемент в DevTools: нажмите Ctrl+F и введите "devtools-demo"');
+        // Пытаемся симулировать Ctrl+F
+        try {
+          // Создаем событие клавиатуры
+          const ctrlFEvent = new KeyboardEvent('keydown', {
+            key: 'f',
+            code: 'KeyF',
+            ctrlKey: true,
+            bubbles: true,
+            cancelable: true
+          });
+          
+          // Отправляем событие
+          document.dispatchEvent(ctrlFEvent);
+          
+          // Небольшая задержка, затем пытаемся ввести текст
+          setTimeout(() => {
+            const inputEvent = new InputEvent('input', {
+              data: 'devtools-demo',
+              bubbles: true,
+              cancelable: true
+            });
+            
+            // Ищем активный элемент (поле поиска)
+            const activeElement = document.activeElement as HTMLInputElement;
+            if (activeElement && activeElement.tagName === 'INPUT') {
+              activeElement.value = 'devtools-demo';
+              activeElement.dispatchEvent(inputEvent);
+            }
+          }, 100);
+        } catch (e) {
+          console.log('Could not simulate Ctrl+F:', e);
+        }
         break;
       case 'clickElementStyle':
         showDemoMessage('👆 Кликаем в element.style в панели Styles');
