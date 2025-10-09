@@ -62,6 +62,7 @@ export default function HomePage() {
   ]
 
   const categories = [
+    { name: "DevTools", icon: <Code />, count: 6, color: "bg-indigo-500", href: "/devtools", special: true },
     { name: "Функциональное", icon: <Bug />, count: 15, color: "bg-primary-500" },
     { name: "UI/UX", icon: <BookOpen />, count: 12, color: "bg-success-500" },
     { name: "API", icon: <Code />, count: 10, color: "bg-warning-500" },
@@ -81,6 +82,9 @@ export default function HomePage() {
             <nav className="hidden md:flex space-x-8">
               <Link href="/tasks" className="text-gray-600 hover:text-primary-600 transition-colors">
                 Задания
+              </Link>
+              <Link href="/devtools" className="text-gray-600 hover:text-primary-600 transition-colors">
+                DevTools
               </Link>
               <Link href="/leaderboard" className="text-gray-600 hover:text-primary-600 transition-colors">
                 Рейтинг
@@ -230,29 +234,32 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
             {categories.map((category, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="card p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                className={`card p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 ${
+                  category.special ? 'ring-2 ring-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50' : ''
+                }`}
               >
                 <div className={`inline-flex items-center justify-center w-12 h-12 ${category.color} text-white rounded-lg mb-4`}>
                   {category.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   {category.name}
+                  {category.special && <span className="ml-2 text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full">NEW</span>}
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  {category.count} заданий
+                  {category.count} {category.name === 'DevTools' ? 'уроков' : 'заданий'}
                 </p>
                 <Link 
-                  href={`/tasks?category=${category.name.toLowerCase()}`}
-                  className="btn btn-primary w-full"
+                  href={category.href || `/tasks?category=${category.name.toLowerCase()}`}
+                  className={`btn w-full ${category.special ? 'btn-indigo' : 'btn-primary'}`}
                 >
-                  Начать
+                  {category.name === 'DevTools' ? 'Изучить' : 'Начать'}
                 </Link>
               </motion.div>
             ))}
@@ -304,6 +311,7 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold mb-4">Обучение</h3>
               <ul className="space-y-2 text-gray-400">
                 <li><Link href="/tasks" className="hover:text-white transition-colors">Задания</Link></li>
+                <li><Link href="/devtools" className="hover:text-white transition-colors">DevTools урок</Link></li>
                 <li><Link href="/tutorials" className="hover:text-white transition-colors">Туториалы</Link></li>
                 <li><Link href="/resources" className="hover:text-white transition-colors">Ресурсы</Link></li>
               </ul>

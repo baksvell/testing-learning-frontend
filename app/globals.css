@@ -37,6 +37,10 @@
     @apply bg-danger-600 text-white hover:bg-danger-700 focus:ring-danger-500;
   }
   
+  .btn-indigo {
+    @apply bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500;
+  }
+  
   .card {
     @apply bg-white rounded-lg shadow-md border border-gray-200;
   }
@@ -105,3 +109,6 @@
     box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
   }
 }
+
+
+
