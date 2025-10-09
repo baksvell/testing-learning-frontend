@@ -241,23 +241,20 @@ export default function HomePage() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                className={`card p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 ${
-                  category.special ? 'ring-2 ring-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50' : ''
-                }`}
+                className="card p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <div className={`inline-flex items-center justify-center w-12 h-12 ${category.color} text-white rounded-lg mb-4`}>
                   {category.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   {category.name}
-                  {category.special && <span className="ml-2 text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full">NEW</span>}
                 </h3>
                 <p className="text-gray-600 mb-4">
                   {category.count} {category.name === 'DevTools' ? 'уроков' : 'заданий'}
                 </p>
                 <Link 
                   href={category.href || `/tasks?category=${category.name.toLowerCase()}`}
-                  className={`btn w-full ${category.special ? 'btn-indigo' : 'btn-primary'}`}
+                  className="btn w-full btn-primary"
                 >
                   {category.name === 'DevTools' ? 'Изучить' : 'Начать'}
                 </Link>
