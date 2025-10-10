@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a2b2822d-d7cd-4d11-92c0-b3d1ebdca2a7" name="Changes" comment="The first project commit for testing training">
+      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend" beforeDir="false" afterPath="$PROJECT_DIR$/backend" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fly.toml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fly.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/main-simple.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main-simple.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/main-ultra-simple.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main-ultra-simple.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/requirements-minimal.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/requirements-simple.txt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/requirements-simple.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/requirements-ultra-minimal.txt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/requirements-ultra-minimal.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/test_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/test_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend" beforeDir="false" afterPath="$PROJECT_DIR$/frontend" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/contexts/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/contexts/AuthContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/screenshots/devtools/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/screenshots/devtools/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/screenshots/devtools/instructions.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/screenshots/devtools/instructions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime.txt" beforeDir="false" afterPath="$PROJECT_DIR$/runtime.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;baksvell&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/baksvell/Website_for_test.git&quot;,
+    &quot;accountId&quot;: &quot;4c5ecb27-8f72-44c7-b71c-b52fb92e7c2a&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="33LrOOd1722XYShQIt36ehdgaPI" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-dfff61a61320-9cdd278e9d02-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.25410.159" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a2b2822d-d7cd-4d11-92c0-b3d1ebdca2a7" name="Changes" comment="" />
+      <created>1759107161372</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1759107161372</updated>
+    </task>
+    <task id="LOCAL-00001" summary="The first project commit for testing training">
+      <option name="closed" value="true" />
+      <created>1759150698641</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1759150698641</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="The first project commit for testing training" />
+    <option name="LAST_COMMIT_MESSAGE" value="The first project commit for testing training" />
+  </component>
+</project>
