@@ -297,11 +297,7 @@ export default function HomePage() {
             <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
               Присоединяйтесь к тысячам тестировщиков, которые уже изучают новые навыки на нашей платформе
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/register" className="btn bg-white text-primary-600 hover:bg-gray-100 text-lg px-8 py-3">
-                <Zap className="w-5 h-5 mr-2" />
-                Начать бесплатно
-              </Link>
+            <div className="flex justify-center">
               <Link href="/demo" className="btn border-2 border-white text-white hover:bg-white hover:text-primary-600 text-lg px-8 py-3">
                 Посмотреть демо
               </Link>
