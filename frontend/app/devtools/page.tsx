@@ -1525,11 +1525,17 @@ export default function DevToolsPage() {
                       width="800" 
                       height="450" 
                       controls 
+                      preload="metadata"
                       className="rounded-lg shadow-lg w-full max-w-4xl"
                     >
                       <source src="/videos/2025-10-09 14-54-15.mkv" type="video/x-matroska" />
                       <source src="/videos/2025-10-09 14-54-15.mkv" type="video/mp4" />
-                      Ваш браузер не поддерживает видео.
+                      <source src="/videos/2025-10-09 14-54-15.mkv" type="video/webm" />
+                      <source src="/videos/2025-10-09 14-54-15.mkv" type="video/ogg" />
+                      Ваш браузер не поддерживает видео. Попробуйте скачать файл: 
+                      <a href="/videos/2025-10-09 14-54-15.mkv" download className="text-blue-600 underline">
+                        2025-10-09 14-54-15.mkv
+                      </a>
                     </video>
                     <p className="text-sm text-gray-600 mt-2">
                       💡 В видео показаны все шаги: открытие DevTools, поиск элемента, изменение стилей
@@ -1548,14 +1554,23 @@ export default function DevToolsPage() {
                       width="800" 
                       height="450" 
                       controls 
+                      preload="metadata"
                       className="rounded-lg shadow-lg w-full max-w-4xl"
                     >
                       <source src="/videos/DevTools_console.mkv" type="video/x-matroska" />
                       <source src="/videos/DevTools_console.mkv" type="video/mp4" />
-                      Ваш браузер не поддерживает видео.
+                      <source src="/videos/DevTools_console.mkv" type="video/webm" />
+                      <source src="/videos/DevTools_console.mkv" type="video/ogg" />
+                      Ваш браузер не поддерживает видео. Попробуйте скачать файл: 
+                      <a href="/videos/DevTools_console.mkv" download className="text-blue-600 underline">
+                        DevTools_console.mkv
+                      </a>
                     </video>
                     <p className="text-sm text-gray-600 mt-2">
                       💡 В видео показаны все шаги: работа с консолью, поиск элементов, изменение текста
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      ⚠️ Если видео не воспроизводится, попробуйте скачать файл по ссылке выше или используйте другой браузер
                     </p>
                   </div>
                 )}
