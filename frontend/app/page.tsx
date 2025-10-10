@@ -72,7 +72,7 @@ export default function HomePage() {
         { name: "UI/UX", icon: <BookOpen />, count: 5, color: "bg-success-500", href: "/ui-ux" },
         { name: "API", icon: <Code />, count: 5, color: "bg-warning-500", href: "/api" },
         { name: "Регрессионное", icon: <Zap />, count: 5, color: "bg-purple-500", href: "/regression" },
-        { name: "Безопасность", icon: <Shield />, count: 8, color: "bg-danger-500" }
+        { name: "Безопасность", icon: <Shield />, count: 8, color: "bg-danger-500", href: "/security" }
       ]
 
   return (
