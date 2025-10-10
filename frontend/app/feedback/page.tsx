@@ -236,13 +236,6 @@ export default function FeedbackPage() {
           </form>
         </div>
 
-        {/* Additional Info */}
-        <div className="mt-8 text-center text-sm text-gray-500">
-          <p>
-            Все отзывы рассматриваются в течение 1-2 рабочих дней. 
-            Мы ценим ваше время и мнение!
-          </p>
-        </div>
       </div>
     </div>
   )
