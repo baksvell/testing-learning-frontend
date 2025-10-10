@@ -26,12 +26,22 @@ export async function POST(request: NextRequest) {
     // 3. Отправить в Telegram
     // 4. Отправить в Slack/Discord
 
-    // Пока просто логируем в консоль
+    // Создаем объект отзыва
+    const feedback = {
+      id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+      type,
+      message,
+      email: email || '',
+      timestamp: new Date().toISOString()
+    }
+
+    // Логируем в консоль
     console.log('📝 Новый отзыв:', {
+      id: feedback.id,
       type,
       message: message.substring(0, 100) + '...',
       email: email || 'не указан',
-      timestamp: new Date().toISOString(),
+      timestamp: feedback.timestamp,
       userAgent: request.headers.get('user-agent'),
       ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip')
     })

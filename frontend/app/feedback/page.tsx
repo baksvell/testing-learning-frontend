@@ -27,6 +27,19 @@ export default function FeedbackPage() {
       })
 
       if (response.ok) {
+        // Сохраняем отзыв в localStorage для админ-панели
+        const feedback = {
+          id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+          type: formData.type,
+          message: formData.message,
+          email: formData.email,
+          timestamp: new Date().toISOString()
+        }
+        
+        const existingFeedbacks = JSON.parse(localStorage.getItem('admin_feedbacks') || '[]')
+        existingFeedbacks.push(feedback)
+        localStorage.setItem('admin_feedbacks', JSON.stringify(existingFeedbacks))
+        
         setIsSubmitted(true)
         setFormData({ type: 'suggestion', message: '', email: '' })
       } else {

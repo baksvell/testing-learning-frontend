@@ -343,6 +343,7 @@ export default function HomePage() {
                 <li><Link href="/help" className="hover:text-white transition-colors">Помощь</Link></li>
                 <li><Link href="/contact" className="hover:text-white transition-colors">Контакты</Link></li>
                 <li><Link href="/privacy" className="hover:text-white transition-colors">Конфиденциальность</Link></li>
+                <li><Link href="/admin/feedback" className="hover:text-white transition-colors text-xs">👁️ Просмотр отзывов</Link></li>
               </ul>
               
               {/* Книга отзывов */}
