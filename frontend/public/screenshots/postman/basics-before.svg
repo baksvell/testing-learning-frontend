@@ -28,3 +28,4 @@
   <rect x="30" y="160" width="340" height="20" fill="#f1f5f9" stroke="#cbd5e1" rx="2"/>
   <text x="40" y="172" fill="#64748b" font-family="Arial" font-size="10">Ответ появится здесь после отправки запроса</text>
 </svg>
+

@@ -9,3 +9,4 @@
   <text x="50" y="145" fill="#64748b" font-family="Arial" font-size="10">pm.expect(pm.response.responseTime).to.be.below(1000);</text>
   <text x="40" y="160" fill="#64748b" font-family="Arial" font-size="12">});</text>
 </svg>
+
