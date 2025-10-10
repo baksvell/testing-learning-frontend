@@ -1536,6 +1536,29 @@ export default function DevToolsPage() {
                     </p>
                   </div>
                 )}
+
+                {/* Видео-демонстрация для урока Console */}
+                {showVideos[task.id] && task.id === 2 && (
+                  <div className="mt-6 p-4 bg-green-50 rounded-lg">
+                    <h4 className="text-lg font-semibold mb-3 text-green-800">🎥 Видео-демонстрация Console</h4>
+                    <p className="text-green-600 mb-4">
+                      Посмотрите, как правильно выполнить задание с консолью:
+                    </p>
+                    <video 
+                      width="800" 
+                      height="450" 
+                      controls 
+                      className="rounded-lg shadow-lg w-full max-w-4xl"
+                    >
+                      <source src="/videos/DevTools_console.mkv" type="video/x-matroska" />
+                      <source src="/videos/DevTools_console.mkv" type="video/mp4" />
+                      Ваш браузер не поддерживает видео.
+                    </video>
+                    <p className="text-sm text-gray-600 mt-2">
+                      💡 В видео показаны все шаги: работа с консолью, поиск элементов, изменение текста
+                    </p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
