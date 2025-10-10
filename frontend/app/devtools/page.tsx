@@ -1463,11 +1463,11 @@ export default function DevToolsPage() {
                       )}
                     </button>
                     
-                    {/* Кнопка видео только для Elements */}
-                    {task.id === 1 && (
+                    {/* Кнопка видео для Elements и Console */}
+                    {(task.id === 1 || task.id === 2) && (
                       <button
                         onClick={() => toggleVideo(task.id)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
+                        className={`${task.id === 1 ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'} text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2`}
                       >
                         {showVideos[task.id] ? (
                           <>
