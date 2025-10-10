@@ -1478,11 +1478,8 @@ export default function DevToolsPage() {
                       <h4 className="font-semibold text-green-800 mb-3">✅ Решение:</h4>
                       <ol className="space-y-2">
                         {task.solution.steps.map((step, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <span className="bg-green-100 text-green-800 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center mt-0.5">
-                              {index + 1}
-                            </span>
-                            <span className="text-sm text-green-700">{step}</span>
+                          <li key={index} className="text-green-700">
+                            {step}
                           </li>
                         ))}
                       </ol>
