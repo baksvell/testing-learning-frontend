@@ -1552,8 +1552,8 @@ export default function DevToolsPage() {
                       preload="metadata"
                       className="rounded-lg shadow-lg w-full max-w-4xl"
                     >
-                      <source src="/videos/2025-10-09 14-54-15.mkv" type="video/x-matroska" />
-                      <source src="/videos/2025-10-09 14-54-15.mkv" type="video/mp4" />
+                      <source src="/videos/DevTools_console.mkv" type="video/x-matroska" />
+                      <source src="/videos/DevTools_console.mkv" type="video/mp4" />
                       Ваш браузер не поддерживает видео.
                     </video>
                     <p className="text-sm text-gray-600 mt-2">
