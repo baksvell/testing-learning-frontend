@@ -36,30 +36,30 @@ export default function HomePage() {
       .catch(console.error)
   }, [])
 
-  const features = [
+  const futureFeatures = [
     {
-      icon: <Target className="w-8 h-8" />,
-      title: "Практические задания",
-      description: "Реальные сценарии тестирования с автоматической проверкой результатов",
-      color: "text-primary-600"
+      icon: <File className="w-8 h-8" />,
+      title: "Работа с документацией",
+      description: "Практика создания и анализа технической документации, API docs, пользовательских инструкций",
+      color: "text-blue-600"
     },
     {
-      icon: <Trophy className="w-8 h-8" />,
-      title: "Геймификация",
-      description: "Система очков, достижений и рейтингов для мотивации обучения",
-      color: "text-warning-600"
+      icon: <BookOpen className="w-8 h-8" />,
+      title: "Тестирование документации",
+      description: "Проверка актуальности, полноты и понятности технической документации",
+      color: "text-green-600"
     },
     {
-      icon: <Shield className="w-8 h-8" />,
-      title: "Безопасность",
-      description: "Изучение тестирования безопасности, XSS, SQL инъекций и других уязвимостей",
-      color: "text-danger-600"
+      icon: <Globe className="w-8 h-8" />,
+      title: "Многоязычная поддержка",
+      description: "Документация на разных языках и тестирование локализации",
+      color: "text-purple-600"
     },
     {
-      icon: <Code className="w-8 h-8" />,
-      title: "API тестирование",
-      description: "Практика тестирования REST API, JSON ответов и асинхронных запросов",
-      color: "text-success-600"
+      icon: <Zap className="w-8 h-8" />,
+      title: "Автоматизация документации",
+      description: "Генерация документации из кода, автоматические тесты документации",
+      color: "text-orange-600"
     }
   ]
 
@@ -195,15 +195,15 @@ export default function HomePage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Почему выбирают нас?
+              Возможности для будущего развития
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Современный подход к обучению тестированию с практическими заданиями и игровыми элементами
+              Планируемые направления развития платформы с акцентом на практическую работу с документацией
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
+            {futureFeatures.map((feature, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
