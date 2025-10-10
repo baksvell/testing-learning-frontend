@@ -40,7 +40,7 @@ export default function DevToolsPage() {
   }}>({});
 
   useEffect(() => {
-    // Загружаем урок по DevTools
+    // Загружаем урок по DevTools - обновлено
     const devToolsLesson: DevToolsLesson = {
       id: 1,
       title: "Интерактивный урок по DevTools",
