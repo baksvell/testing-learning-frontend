@@ -1,18 +1,95 @@
-<svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
-  <rect width="400" height="200" fill="#1e1e1e" stroke="#d1d5db" stroke-width="2" rx="8"/>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Фон -->
+  <rect width="800" height="600" fill="#f8fafc"/>
   
-  <!-- Заголовок консоли -->
-  <rect x="0" y="0" width="400" height="30" fill="#2d2d2d" rx="8"/>
-  <text x="20" y="20" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">Console</text>
+  <!-- Заголовок -->
+  <text x="400" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1f2937">
+    Анализ вкладки Console
+  </text>
   
-  <!-- Результаты команд -->
-  <text x="20" y="50" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">> console.log('Привет, DevTools!')</text>
-  <text x="20" y="70" fill="#4ade80" font-family="Arial, sans-serif" font-size="12">Привет, DevTools!</text>
+  <!-- Описание -->
+  <text x="400" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#6b7280">
+    Изучите консоль для выполнения JavaScript команд и отладки
+  </text>
   
-  <text x="20" y="95" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">> document.querySelector('.devtools-demo')</text>
-  <text x="20" y="115" fill="#60a5fa" font-family="Arial, sans-serif" font-size="12">&lt;div class="devtools-demo"&gt;...&lt;/div&gt;</text>
+  <!-- Задание -->
+  <rect x="50" y="100" width="700" height="120" fill="#d1fae5" stroke="#10b981" stroke-width="2" rx="8"/>
+  <text x="70" y="130" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#065f46">
+    ✅ Задание выполнено!
+  </text>
+  <text x="70" y="155" font-family="Arial, sans-serif" font-size="14" fill="#065f46">
+    1) ✅ Выведено сообщение 'Привет, DevTools!' в консоль
+  </text>
+  <text x="70" y="175" font-family="Arial, sans-serif" font-size="14" fill="#065f46">
+    2) ✅ Найден демо-элемент внизу страницы (синий блок с градиентом)
+  </text>
+  <text x="70" y="195" font-family="Arial, sans-serif" font-size="14" fill="#065f46">
+    3) ✅ Изменен заголовок с 'Демо элемент для практики' на 'Новый заголовок элемента!'
+  </text>
   
-  <text x="20" y="140" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">> document.title = 'DevTools Урок - Изучаем!'</text>
-  <text x="20" y="160" fill="#4ade80" font-family="Arial, sans-serif" font-size="12">"DevTools Урок - Изучаем!"</text>
+  <!-- После выполнения -->
+  <text x="70" y="250" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1f2937">
+    После выполнения:
+  </text>
   
+  <!-- Демо элемент ПОСЛЕ -->
+  <defs>
+    <linearGradient id="gradientAfter" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect x="70" y="270" width="660" height="120" fill="url(#gradientAfter)" rx="12" stroke="#1e40af" stroke-width="2"/>
+  <text x="90" y="300" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">
+    Новый заголовок элемента!
+  </text>
+  <text x="90" y="325" font-family="Arial, sans-serif" font-size="14" fill="white">
+    Этот элемент создан специально для практических заданий по DevTools.
+  </text>
+  <text x="90" y="345" font-family="Arial, sans-serif" font-size="14" fill="white">
+    Попробуйте изменить его стили, атрибуты или содержимое!
+  </text>
+  <rect x="90" y="355" width="120" height="25" fill="white" rx="4"/>
+  <text x="150" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#3b82f6" font-weight="bold">
+    Нажми меня!
+  </text>
+  
+  <!-- DevTools Console -->
+  <rect x="50" y="420" width="700" height="150" fill="#1e1e1e" stroke="#374151" stroke-width="2" rx="8"/>
+  <text x="70" y="440" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#10b981">
+    DevTools Console
+  </text>
+  
+  <!-- Команды в консоли -->
+  <text x="70" y="465" font-family="monospace" font-size="12" fill="#e5e7eb">
+    > console.log('Привет, DevTools!')
+  </text>
+  <text x="70" y="485" font-family="monospace" font-size="12" fill="#10b981">
+    Привет, DevTools!
+  </text>
+  <text x="70" y="505" font-family="monospace" font-size="12" fill="#e5e7eb">
+    > document.querySelector('.devtools-demo')
+  </text>
+  <text x="70" y="525" font-family="monospace" font-size="12" fill="#fbbf24">
+    &lt;div class="devtools-demo"&gt;...&lt;/div&gt;
+  </text>
+  <text x="70" y="545" font-family="monospace" font-size="12" fill="#e5e7eb">
+    > document.querySelector('.devtools-demo').textContent = 'Новый заголовок элемента!';
+  </text>
+  <text x="70" y="565" font-family="monospace" font-size="12" fill="#10b981">
+    'Новый заголовок элемента!'
+  </text>
+  
+  <!-- Стрелка изменения -->
+  <path d="M 400 390 Q 400 400 400 410" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="420" y="405" font-family="Arial, sans-serif" font-size="12" fill="#10b981" font-weight="bold">
+    Изменено!
+  </text>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#10b981"/>
+    </marker>
+  </defs>
 </svg>
