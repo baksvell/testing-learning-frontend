@@ -344,6 +344,23 @@ export default function HomePage() {
                 <li><Link href="/contact" className="hover:text-white transition-colors">Контакты</Link></li>
                 <li><Link href="/privacy" className="hover:text-white transition-colors">Конфиденциальность</Link></li>
               </ul>
+              
+              {/* Книга отзывов */}
+              <div className="mt-6">
+                <Link 
+                  href="/feedback" 
+                  className="group flex items-center space-x-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white px-4 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                  <div className="relative">
+                    <BookOpen className="w-6 h-6" />
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-sm">Книга отзывов</div>
+                    <div className="text-xs text-amber-100">Жалобы и предложения</div>
+                  </div>
+                </Link>
+              </div>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
