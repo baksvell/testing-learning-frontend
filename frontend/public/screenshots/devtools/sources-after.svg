@@ -1,0 +1,19 @@
+<svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#1e1e1e" stroke="#d1d5db" stroke-width="2" rx="8"/>
+  
+  <!-- Заголовок Sources -->
+  <rect x="0" y="0" width="400" height="30" fill="#2d2d2d" rx="8"/>
+  <text x="20" y="20" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">Sources</text>
+  
+  <!-- Файловая структура -->
+  <text x="20" y="50" fill="#4ade80" font-family="Arial, sans-serif" font-size="12">📁 localhost:3000</text>
+  <text x="40" y="70" fill="#4ade80" font-family="Arial, sans-serif" font-size="12">📁 _next</text>
+  <text x="60" y="90" fill="#4ade80" font-family="Arial, sans-serif" font-size="12">📁 static</text>
+  <text x="80" y="110" fill="#60a5fa" font-family="Arial, sans-serif" font-size="12">📄 main.js</text>
+  
+  <!-- Код с breakpoint -->
+  <text x="20" y="140" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">1  function handleClick() {</text>
+  <text x="20" y="160" fill="#dc2626" font-family="Arial, sans-serif" font-size="12">2  ● console.log('Hello!');</text>
+  <text x="20" y="180" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">3  }</text>
+  
+</svg>

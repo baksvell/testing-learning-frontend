@@ -1,0 +1,18 @@
+<svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#1e1e1e" stroke="#d1d5db" stroke-width="2" rx="8"/>
+  
+  <!-- Заголовок консоли -->
+  <rect x="0" y="0" width="400" height="30" fill="#2d2d2d" rx="8"/>
+  <text x="20" y="20" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">Console</text>
+  
+  <!-- Результаты команд -->
+  <text x="20" y="50" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">> console.log('Привет, DevTools!')</text>
+  <text x="20" y="70" fill="#4ade80" font-family="Arial, sans-serif" font-size="12">Привет, DevTools!</text>
+  
+  <text x="20" y="95" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">> document.querySelector('.devtools-demo')</text>
+  <text x="20" y="115" fill="#60a5fa" font-family="Arial, sans-serif" font-size="12">&lt;div class="devtools-demo"&gt;...&lt;/div&gt;</text>
+  
+  <text x="20" y="140" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">> document.title = 'DevTools Урок - Изучаем!'</text>
+  <text x="20" y="160" fill="#4ade80" font-family="Arial, sans-serif" font-size="12">"DevTools Урок - Изучаем!"</text>
+  
+</svg>

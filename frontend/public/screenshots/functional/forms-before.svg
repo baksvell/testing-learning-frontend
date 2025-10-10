@@ -1,0 +1,13 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#f8f9fa"/>
+  <rect x="50" y="50" width="300" height="200" fill="white" stroke="#dee2e6" stroke-width="2" rx="8"/>
+  <text x="200" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">Форма регистрации</text>
+  <rect x="70" y="100" width="260" height="30" fill="#f8f9fa" stroke="#ced4da" stroke-width="1" rx="4"/>
+  <text x="80" y="120" font-family="Arial, sans-serif" font-size="12" fill="#6c757d">Email</text>
+  <rect x="70" y="140" width="260" height="30" fill="#f8f9fa" stroke="#ced4da" stroke-width="1" rx="4"/>
+  <text x="80" y="160" font-family="Arial, sans-serif" font-size="12" fill="#6c757d">Пароль</text>
+  <rect x="70" y="180" width="260" height="30" fill="#f8f9fa" stroke="#ced4da" stroke-width="1" rx="4"/>
+  <text x="80" y="200" font-family="Arial, sans-serif" font-size="12" fill="#6c757d">Подтверждение пароля</text>
+  <rect x="150" y="220" width="100" height="25" fill="#007bff" rx="4"/>
+  <text x="200" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">Зарегистрироваться</text>
+</svg>
