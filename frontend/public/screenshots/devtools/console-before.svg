@@ -17,9 +17,9 @@
   <text x="80" y="105" text-anchor="middle" fill="white" font-family="Arial" font-size="12" font-weight="bold">!</text>
   
   <!-- Title BEFORE change -->
-  <text x="110" y="85" fill="white" font-family="Arial" font-size="16" font-weight="bold">Демо элемент для практики</text>
-  <text x="110" y="105" fill="white" font-family="Arial" font-size="12">Белый текст на градиентном фоне</text>
-  <text x="110" y="125" fill="white" font-family="Arial" font-size="10">Оригинальный заголовок - будет изменен через консоль</text>
+  <text x="110" y="85" fill="white" font-family="Arial" font-size="16" font-weight="bold">Demo element for practice</text>
+  <text x="110" y="105" fill="white" font-family="Arial" font-size="12">White text on gradient background</text>
+  <text x="110" y="125" fill="white" font-family="Arial" font-size="10">Original title - will be changed via console</text>
   
   <!-- Console indicator -->
   <rect x="20" y="170" width="360" height="20" fill="#1f2937" rx="4"/>
