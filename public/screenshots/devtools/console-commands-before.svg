@@ -1,0 +1,39 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="url(#grad1)"/>
+  
+  <!-- Console header -->
+  <rect x="0" y="0" width="600" height="30" fill="#374151"/>
+  <text x="20" y="20" fill="#e5e7eb" font-family="monospace" font-size="12">Console</text>
+  
+  <!-- Console content -->
+  <text x="20" y="60" fill="#10b981" font-family="monospace" font-size="12">></text>
+  <text x="40" y="60" fill="#e5e7eb" font-family="monospace" font-size="12">console.log('Привет, DevTools!')</text>
+  
+  <text x="20" y="90" fill="#10b981" font-family="monospace" font-size="12">></text>
+  <text x="40" y="90" fill="#e5e7eb" font-family="monospace" font-size="12">document.querySelector('.devtools-demo')</text>
+  
+  <text x="20" y="120" fill="#10b981" font-family="monospace" font-size="12">></text>
+  <text x="40" y="120" fill="#e5e7eb" font-family="monospace" font-size="12">document.querySelector('.devtools-demo').textContent = 'Новый заголовок элемента!'</text>
+  
+  <!-- Demo element on page -->
+  <rect x="50" y="200" width="500" height="100" fill="#3b82f6" rx="8" stroke="#1e40af" stroke-width="2"/>
+  <circle cx="80" cy="250" r="15" fill="#ef4444"/>
+  <text x="80" y="255" text-anchor="middle" fill="white" font-family="Arial" font-size="12" font-weight="bold">!</text>
+  <text x="110" y="235" fill="white" font-family="Arial" font-size="16" font-weight="bold">Демо элемент для практики</text>
+  <text x="110" y="255" fill="white" font-family="Arial" font-size="12">Белый текст на градиентном фоне</text>
+  <text x="110" y="275" fill="white" font-family="Arial" font-size="10">Оригинальный заголовок - будет изменен через консоль</text>
+  
+  <!-- Instructions -->
+  <text x="20" y="350" fill="#fbbf24" font-family="Arial" font-size="14" font-weight="bold">Команды для выполнения в консоли:</text>
+  <text x="20" y="370" fill="#e5e7eb" font-family="Arial" font-size="12">1. console.log('Привет, DevTools!')</text>
+  <text x="20" y="385" fill="#e5e7eb" font-family="Arial" font-size="12">2. document.querySelector('.devtools-demo')</text>
+  <text x="20" y="400" fill="#e5e7eb" font-family="Arial" font-size="12">3. document.querySelector('.devtools-demo').textContent = 'Новый заголовок элемента!'</text>
+</svg>

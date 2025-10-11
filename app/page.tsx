@@ -14,7 +14,8 @@ import {
   Play,
   Star,
   Globe,
-  File
+  File,
+  Database
 } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '../contexts/AuthContext'
@@ -36,34 +37,34 @@ export default function HomePage() {
       .catch(console.error)
   }, [])
 
-  const features = [
+  const futureFeatures = [
     {
-      icon: <Target className="w-8 h-8" />,
-      title: "Практические задания",
-      description: "Реальные сценарии тестирования с автоматической проверкой результатов",
-      color: "text-primary-600"
+      icon: <File className="w-8 h-8" />,
+      title: "Работа с документацией",
+      description: "Практика создания и анализа технической документации, API docs, пользовательских инструкций",
+      color: "text-blue-600"
     },
     {
-      icon: <Trophy className="w-8 h-8" />,
-      title: "Геймификация",
-      description: "Система очков, достижений и рейтингов для мотивации обучения",
-      color: "text-warning-600"
+      icon: <BookOpen className="w-8 h-8" />,
+      title: "Тестирование документации",
+      description: "Проверка актуальности, полноты и понятности технической документации",
+      color: "text-green-600"
     },
     {
-      icon: <Shield className="w-8 h-8" />,
-      title: "Безопасность",
-      description: "Изучение тестирования безопасности, XSS, SQL инъекций и других уязвимостей",
-      color: "text-danger-600"
+      icon: <Globe className="w-8 h-8" />,
+      title: "Многоязычная поддержка",
+      description: "Документация на разных языках и тестирование локализации",
+      color: "text-purple-600"
     },
     {
-      icon: <Code className="w-8 h-8" />,
-      title: "API тестирование",
-      description: "Практика тестирования REST API, JSON ответов и асинхронных запросов",
-      color: "text-success-600"
+      icon: <Database className="w-8 h-8" />,
+      title: "Уроки по SQL",
+      description: "Изучение SQL запросов, тестирование баз данных, работа с данными",
+      color: "text-orange-600"
     }
   ]
 
-      // Categories for testing lessons
+      // Categories for testing lessons - updated (OpenAPI removed)
       const categories = [
         { name: "DevTools", icon: <Code />, count: 6, color: "bg-indigo-500", href: "/devtools" },
         { name: "Postman", icon: <Globe />, count: 5, color: "bg-blue-500", href: "/postman-lessons" },
@@ -72,7 +73,7 @@ export default function HomePage() {
         { name: "UI/UX", icon: <BookOpen />, count: 5, color: "bg-success-500", href: "/ui-ux" },
         { name: "API", icon: <Code />, count: 5, color: "bg-warning-500", href: "/api" },
         { name: "Регрессионное", icon: <Zap />, count: 5, color: "bg-purple-500", href: "/regression" },
-        { name: "Безопасность", icon: <Shield />, count: 8, color: "bg-danger-500" }
+        { name: "Безопасность", icon: <Shield />, count: 8, color: "bg-danger-500", href: "/security" }
       ]
 
   return (
@@ -195,15 +196,15 @@ export default function HomePage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Почему выбирают нас?
+              Возможности для будущего развития
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Современный подход к обучению тестированию с практическими заданиями и игровыми элементами
+              Планируемые направления развития платформы с акцентом на практическую работу с документацией
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
+            {futureFeatures.map((feature, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -297,11 +298,7 @@ export default function HomePage() {
             <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
               Присоединяйтесь к тысячам тестировщиков, которые уже изучают новые навыки на нашей платформе
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/register" className="btn bg-white text-primary-600 hover:bg-gray-100 text-lg px-8 py-3">
-                <Zap className="w-5 h-5 mr-2" />
-                Начать бесплатно
-              </Link>
+            <div className="flex justify-center">
               <Link href="/demo" className="btn border-2 border-white text-white hover:bg-white hover:text-primary-600 text-lg px-8 py-3">
                 Посмотреть демо
               </Link>
@@ -347,7 +344,25 @@ export default function HomePage() {
                 <li><Link href="/help" className="hover:text-white transition-colors">Помощь</Link></li>
                 <li><Link href="/contact" className="hover:text-white transition-colors">Контакты</Link></li>
                 <li><Link href="/privacy" className="hover:text-white transition-colors">Конфиденциальность</Link></li>
+                <li><Link href="/admin/feedback" className="hover:text-white transition-colors text-xs">👁️ Просмотр отзывов</Link></li>
               </ul>
+              
+              {/* Книга отзывов */}
+              <div className="mt-6">
+                <Link 
+                  href="/feedback" 
+                  className="group flex items-center space-x-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white px-4 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                  <div className="relative">
+                    <BookOpen className="w-6 h-6" />
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-sm">Книга отзывов</div>
+                    <div className="text-xs text-amber-100">Жалобы и предложения</div>
+                  </div>
+                </Link>
+              </div>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">

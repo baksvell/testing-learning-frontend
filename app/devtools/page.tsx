@@ -40,7 +40,7 @@ export default function DevToolsPage() {
   }}>({});
 
   useEffect(() => {
-    // Загружаем урок по DevTools
+    // Загружаем урок по DevTools - обновлено
     const devToolsLesson: DevToolsLesson = {
       id: 1,
       title: "Интерактивный урок по DevTools",
@@ -90,35 +90,49 @@ export default function DevToolsPage() {
           description: "Изучите консоль для выполнения JavaScript команд и отладки",
           category: "Console",
           completed: false,
-          challenge: "Используйте консоль для выполнения JavaScript команд: выведите сообщение в консоль, найдите демо-элемент внизу страницы (с классом 'devtools-demo') и измените заголовок страницы.",
-          beforeImage: "/screenshots/devtools/console-before.svg",
-          afterImage: "/screenshots/devtools/console-after.svg",
+          challenge: "Используйте консоль DevTools для выполнения JavaScript команд: 1) Выведите сообщение 'Привет, DevTools!' в консоль, 2) Найдите демо-элемент внизу страницы с помощью консольной команды (синий блок с градиентом), 3) Измените его заголовок с 'Демо элемент для практики' на 'Новый заголовок элемента!'. Консоль - это мощный инструмент для отладки и тестирования JavaScript кода.",
+          beforeImage: "/screenshots/devtools/console-before-final.svg",
+          afterImage: "/screenshots/devtools/console-after-final.svg",
           solution: {
             steps: [
-              "1. Откройте вкладку Console в DevTools (рядом с Elements)",
-              "2. Очистите консоль: нажмите кнопку 🚫 или Ctrl+L",
-              "3. Выполните команду логирования:",
-              "  • Введите: console.log('Привет, DevTools!')",
+              "1. Откройте DevTools (F12 или Ctrl+Shift+I)",
+              "2. Перейдите на вкладку Console (рядом с Elements, Network, Sources)",
+              "3. Очистите консоль: нажмите кнопку 🚫 или используйте Ctrl+L",
+              "4. Выполните команду логирования:",
+              "  • В консоли введите: console.log('Привет, DevTools!')",
               "  • Нажмите Enter",
-              "  • Должно появиться сообщение в консоли",
-              "4. Найдите демо-элемент на странице:",
-              "  • Прокрутите страницу вниз до синего блока 'Демо элемент для практики'",
-              "  • Введите: document.querySelector('.devtools-demo')",
+              "  • В консоли должно появиться: Привет, DevTools!",
+              "5. Найдите демо-элемент на странице через консоль:",
+              "  • Сначала визуально (для понимания): прокрутите страницу вниз до синего блока с градиентом 'Демо элемент для практики'",
+              "  • Затем программно (основная задача): в консоли введите: document.querySelector('.devtools-demo')",
               "  • Нажмите Enter",
-              "  • В консоли должен появиться HTML элемент <div class='devtools-demo'>",
-              "5. Измените заголовок страницы:",
-              "  • Введите: document.title = 'DevTools Урок - Изучаем!';",
+              "  • В консоли должен появиться HTML элемент: <div class='devtools-demo'>...</div>",
+              "6. Измените заголовок демо-элемента:",
+              "  • В консоли введите: document.querySelector('.devtools-demo').textContent = 'Новый заголовок элемента!';",
               "  • Нажмите Enter",
-              "  • Проверьте заголовок вкладки браузера"
+              "  • Проверьте: заголовок синего блока должен измениться с 'Демо элемент для практики' на 'Новый заголовок элемента!'",
+              "7. Дополнительные команды для изучения:",
+              "  • console.warn('Предупреждение!') - выводит предупреждение",
+              "  • console.error('Ошибка!') - выводит ошибку",
+              "  • document.body.style.backgroundColor = 'lightblue' - меняет фон страницы"
             ],
             tips: [
-              "Консоль - это JavaScript интерпретатор в браузере",
-              "Используйте Tab для автодополнения команд",
-              "Стрелка вверх ↑ показывает предыдущие команды",
-              "Кликните на результат в консоли для детального просмотра",
-              "Консоль показывает ошибки JavaScript в реальном времени",
-              "Демо-элемент находится в самом низу страницы - прокрутите вниз!",
-              "document.querySelector() находит первый элемент с указанным селектором"
+              "💡 Консоль - это JavaScript интерпретатор в браузере для выполнения команд",
+              "⌨️ Используйте Tab для автодополнения команд и свойств",
+              "⬆️ Стрелка вверх ↑ показывает предыдущие команды из истории",
+              "🖱️ Кликните на результат в консоли для детального просмотра объекта",
+              "🚨 Консоль показывает ошибки JavaScript в реальном времени",
+              "📍 Демо-элемент находится в самом низу страницы - прокрутите вниз!",
+              "🔍 document.querySelector() находит первый элемент с указанным селектором",
+              "📝 console.log() - основной способ вывода информации в консоль",
+              "✏️ textContent изменяет текстовое содержимое HTML элемента",
+              "🔄 Используйте Ctrl+L для быстрой очистки консоли",
+              "💾 Результаты команд сохраняются в истории консоли",
+              "🎯 Консоль полезна для тестирования JavaScript кода перед внедрением",
+              "📝 textContent изменяет текстовое содержимое HTML элемента (без HTML тегов)",
+              "🎯 textContent - простой и надежный способ изменить текст элемента",
+              "⚠️ Внимание: проверьте правильность написания querySelector (с заглавной Q)",
+              "💡 textContent работает с любым текстом и не вызывает ошибок с кавычками"
             ]
           }
         },
@@ -128,30 +142,73 @@ export default function DevToolsPage() {
           description: "Изучите сетевые запросы и производительность загрузки",
           category: "Network",
           completed: false,
-          challenge: "Изучите сетевые запросы страницы: найдите API запросы, проверьте их статус и время загрузки, изучите заголовки и содержимое ответов.",
+          challenge: "Изучите сетевые запросы страницы: используйте раздел 'API Демонстрация для урока Network' внизу страницы для создания API запросов, затем найдите их в Network tab, проверьте статус и время загрузки, изучите заголовки и содержимое ответов.",
           beforeImage: "/screenshots/devtools/network-before.svg",
           afterImage: "/screenshots/devtools/network-after.svg",
           solution: {
             steps: [
-              "1. Откройте вкладку Network в DevTools",
-              "2. Очистите список запросов: нажмите кнопку 🚫",
-              "3. Обновите страницу (F5 или Ctrl+R)",
-              "4. Найдите API запросы:",
-              "  • Ищите запросы к /api/ (например, /api/tasks, /api/stats)",
-              "  • Или используйте фильтр 'XHR' для AJAX запросов",
-              "5. Изучите детали запроса:",
-              "  • Кликните на любой API запрос",
-              "  • Посмотрите вкладку 'Headers' - заголовки запроса и ответа",
-              "  • Посмотрите вкладку 'Response' - содержимое ответа",
-              "  • Посмотрите вкладку 'Timing' - время загрузки",
-              "6. Проверьте статус ответа (должен быть 200 OK)"
+              "1. Откройте вкладку Network в DevTools:",
+              "  • Нажмите F12 или Ctrl+Shift+I для открытия DevTools",
+              "  • Кликните на вкладку 'Network' (рядом с Elements, Console, Sources)",
+              "  • Убедитесь, что запись активна (красная точка в левом верхнем углу)",
+              "2. Очистите список запросов:",
+              "  • Нажмите кнопку 🚫 (Clear) в левом верхнем углу",
+              "  • Или используйте Ctrl+L для быстрой очистки",
+              "  • Это поможет сосредоточиться на новых запросах",
+              "3. Создайте API запросы с помощью демонстрации:",
+              "  • Прокрутите страницу вниз до раздела 'API Демонстрация для урока Network'",
+              "  • Нажмите на кнопку '📡 GET /api/devtools-demo'",
+              "  • Наблюдайте, как запрос появляется в Network tab",
+              "  • Попробуйте также '📤 POST /api/devtools-demo' и '💬 POST /api/feedback'",
+              "4. Найдите API запросы в списке:",
+              "  • Ищите запросы к /api/devtools-demo и /api/feedback",
+              "  • Используйте фильтр 'Fetch/XHR' для показа только API запросов",
+              "  • API запросы имеют тип 'xhr' или 'fetch'",
+              "  • Обратите внимание на статус коды (должны быть 200 OK)",
+              "5. Изучите детали конкретного запроса:",
+              "  • Кликните на любой API запрос в списке (например, /api/devtools-demo)",
+              "  • Откроется панель с деталями справа",
+              "  • Изучите все доступные вкладки",
+              "6. Проанализируйте вкладку 'Headers':",
+              "  • 'General': URL (/api/devtools-demo), метод (GET/POST), статус код (200)",
+              "  • 'Request Headers': заголовки, отправленные браузером",
+              "  • 'Response Headers': заголовки, полученные от сервера",
+              "  • Обратите внимание на Content-Type: application/json",
+              "7. Изучите вкладку 'Response':",
+              "  • Просмотрите JSON содержимое ответа сервера",
+              "  • Для GET запроса увидите данные о уроках и статистике",
+              "  • Для POST запроса увидите подтверждение успешного выполнения",
+              "8. Проанализируйте вкладку 'Timing':",
+              "  • 'Waiting (TTFB)': время до первого байта ответа",
+              "  • 'Content Download': время загрузки JSON данных",
+              "  • Общее время запроса (обычно 100-200ms)",
+              "9. Проверьте статус ответа:",
+              "  • 200 OK - успешный запрос (должен быть для всех наших API)",
+              "  • Зеленый цвет в списке запросов указывает на успех",
+              "  • Красный цвет указывал бы на ошибки (4xx, 5xx)",
+              "10. Используйте фильтры для анализа:",
+              "  • 'Fetch/XHR' - показывает только API запросы",
+              "  • 'All' - показывает все запросы (HTML, CSS, JS, API)",
+              "  • 'JS' - только JavaScript файлы",
+              "  • 'CSS' - только стили",
+              "  • 'Img' - только изображения"
             ],
             tips: [
               "💡 Network показывает все ресурсы, которые загружает страница",
               "💡 Зеленые запросы (200) - успешные, красные (4xx, 5xx) - ошибки",
               "💡 Время загрузки показано справа от каждого запроса",
-              "💡 Используйте фильтры (XHR, JS, CSS) для поиска конкретных типов ресурсов",
-              "💡 Вкладка 'Timing' показывает детальную информацию о времени загрузки"
+              "💡 Используйте фильтры (Fetch/XHR, JS, CSS, Img) для поиска конкретных типов ресурсов",
+              "💡 Вкладка 'Timing' показывает детальную информацию о времени загрузки",
+              "💡 API демонстрация создает реальные запросы для изучения",
+              "💡 GET /api/devtools-demo возвращает данные о уроках в JSON формате",
+              "💡 POST запросы отправляют данные на сервер и получают подтверждение",
+              "💡 Content-Type: application/json указывает на JSON данные",
+              "💡 TTFB (Time To First Byte) - важная метрика производительности API",
+              "💡 Можно перетащить запросы для изменения порядка",
+              "💡 Двойной клик на запрос откроет его в новой вкладке",
+              "💡 Используйте поиск (Ctrl+F) для поиска по URL или заголовкам",
+              "💡 Вкладка 'Initiator' показывает, какой код инициировал запрос",
+              "💡 Network помогает найти медленные запросы и оптимизировать производительность"
             ]
           }
         },
@@ -168,27 +225,47 @@ export default function DevToolsPage() {
             steps: [
               "1. Откройте вкладку Sources в DevTools",
               "2. Найдите JavaScript файлы:",
-              "  • В левой панели найдите папку с вашим сайтом",
-              "  • Найдите файл с кодом страницы (обычно в _next/static/chunks/)",
+              "  • В левой панели 'Page' найдите папку с вашим сайтом",
+              "  • Разверните папку _next/static/chunks/ или js/",
+              "  • Найдите основной файл приложения (обычно с большим размером)",
               "3. Поставьте breakpoint:",
-              "  • Найдите строку с кодом (например, с console.log или функцией)",
+              "  • Откройте JavaScript файл в центральной панели",
+              "  • Найдите строку с кодом (например, с console.log, функцией или обработчиком)",
               "  • Кликните на номер строки слева - появится красная точка",
-              "  • Это breakpoint - код остановится на этой строке",
-              "4. Запустите отладку:",
-              "  • Обновите страницу (F5)",
-              "  • Код остановится на breakpoint",
-              "  • В правой панели 'Scope' видны переменные",
-              "5. Используйте кнопки отладки:",
-              "  • ▶️ Continue - продолжить выполнение",
-              "  • ⏭️ Step Over (F10) - выполнить текущую строку",
-              "  • ⏬ Step Into (F11) - войти в функцию"
+              "  • Breakpoint можно поставить на любую исполняемую строку",
+              "4. Запустите код:",
+              "  • Обновите страницу (F5) или выполните действие, которое запускает код",
+              "  • Выполнение остановится на breakpoint",
+              "  • В консоли появится сообщение 'Paused on breakpoint'",
+              "5. Изучите переменные в панели 'Scope':",
+              "  • 'Local' - локальные переменные текущей функции",
+              "  • 'Closure' - переменные из внешних функций",
+              "  • 'Global' - глобальные переменные",
+              "  • Наведите на переменную для просмотра значения",
+              "6. Используйте панель 'Watch':",
+              "  • Нажмите '+' для добавления выражения",
+              "  • Введите имя переменной или выражение (например, 'user.name')",
+              "  • Значение будет обновляться при пошаговом выполнении",
+              "7. Пошаговое выполнение:",
+              "  • F10 (Step Over) - выполнить текущую строку, не заходя в функции",
+              "  • F11 (Step Into) - войти в функцию, если она есть на текущей строке",
+              "  • Shift+F11 (Step Out) - выйти из текущей функции",
+              "  • F8 (Continue) - продолжить выполнение до следующего breakpoint",
+              "  • Ctrl+Shift+F8 - отключить все breakpoint'ы",
+              "8. Анализируйте Call Stack:",
+              "  • В панели 'Call Stack' видно цепочку вызовов функций",
+              "  • Кликните на любой уровень для перехода к соответствующему коду",
+              "  • Это помогает понять, как код дошел до текущей точки"
             ],
             tips: [
-              "💡 Breakpoints помогают найти ошибки в коде",
-              "💡 В панели 'Call Stack' видна цепочка вызовов функций",
-              "💡 В панели 'Watch' можно следить за значениями переменных",
-              "💡 Удалить breakpoint: кликните на красную точку еще раз",
-              "💡 Условные breakpoints можно создать правым кликом на номер строки"
+              "💡 Breakpoint останавливает выполнение кода в определенной точке",
+              "💡 Можно поставить условный breakpoint: правый клик → 'Add conditional breakpoint'",
+              "💡 В панели 'Call Stack' видно, какие функции привели к текущей точке",
+              "💡 Используйте 'Watch' для отслеживания сложных выражений",
+              "💡 Sources помогает найти ошибки в JavaScript коде и понять логику",
+              "💡 Можно редактировать значения переменных прямо в панели 'Scope'",
+              "💡 Используйте 'Console' во время отладки для выполнения команд",
+              "💡 Breakpoint'ы сохраняются между обновлениями страницы"
             ]
           }
         },
@@ -204,28 +281,51 @@ export default function DevToolsPage() {
           solution: {
             steps: [
               "1. Откройте вкладку Performance в DevTools",
-              "2. Настройте запись:",
-              "  • Убедитесь что выбрано 'Screenshots' и 'Memory'",
+              "2. Настройте параметры записи:",
+              "  • Убедитесь что выбрано 'Screenshots' для визуального анализа",
+              "  • Включите 'Memory' для отслеживания использования памяти",
+              "  • Выберите 'Web Vitals' для метрик производительности",
               "  • Нажмите кнопку Record (круглая кнопка) или Ctrl+E",
               "3. Выполните действия на странице:",
-              "  • Обновите страницу (F5)",
-              "  • Кликните на кнопки и элементы",
-              "  • Прокрутите страницу вверх-вниз",
-              "  • Подождите 3-5 секунд",
+              "  • Обновите страницу (F5) для анализа загрузки",
+              "  • Кликните на кнопки и интерактивные элементы",
+              "  • Прокрутите страницу вверх-вниз для анализа скролла",
+              "  • Откройте модальные окна или выпадающие меню",
+              "  • Подождите 5-10 секунд для полного анализа",
               "4. Остановите запись:",
               "  • Нажмите кнопку Stop или Ctrl+E",
-              "  • Дождитесь обработки результатов",
-              "5. Изучите результаты:",
-              "  • Посмотрите на временную шкалу сверху",
-              "  • Красные полосы указывают на проблемы",
-              "  • Изучите Call Tree внизу для деталей"
+              "  • Дождитесь обработки результатов (может занять несколько секунд)",
+              "5. Анализируйте временную шкалу:",
+              "  • Посмотрите на график FPS (кадры в секунду) - должен быть близок к 60",
+              "  • Изучите полосы активности: синие (HTML), желтые (JavaScript), фиолетовые (Rendering)",
+              "  • Красные полосы указывают на проблемы производительности",
+              "  • Длинные полосы означают медленные операции",
+              "6. Изучите детали в нижней панели:",
+              "  • 'Main' - основной поток выполнения JavaScript",
+              "  • 'Raster' - операции рендеринга",
+              "  • 'GPU' - операции графического процессора",
+              "  • 'Network' - сетевые запросы во время записи",
+              "7. Анализируйте Call Tree:",
+              "  • Кликните на любую полосу для детального анализа",
+              "  • В правой панели 'Bottom-Up' найдите функции, которые занимают больше всего времени",
+              "  • 'Call Tree' показывает иерархию вызовов функций",
+              "  • 'Event Log' показывает все события в хронологическом порядке",
+              "8. Используйте фильтры:",
+              "  • Включите/выключите типы операций (Scripting, Rendering, Painting)",
+              "  • Используйте поиск для нахождения конкретных функций",
+              "  • Анализируйте только проблемные участки"
             ],
             tips: [
               "💡 Performance показывает время выполнения JavaScript, рендеринга, загрузки",
-              "💡 FPS (кадры в секунду) должен быть близок к 60",
+              "💡 FPS (кадры в секунду) должен быть близок к 60 для плавной анимации",
               "💡 Длинные красные полосы указывают на медленные операции",
               "💡 Используйте фильтры для фокуса на конкретных типах операций",
-              "💡 Screenshots помогают понять, что происходило в каждый момент времени"
+              "💡 Screenshots помогают понять, что происходило в каждый момент времени",
+              "💡 'Bottom-Up' показывает функции, которые занимают больше всего времени",
+              "💡 'Call Tree' помогает понять иерархию вызовов функций",
+              "💡 Анализируйте 'Main' поток для поиска блокирующих операций",
+              "💡 'Web Vitals' показывают ключевые метрики производительности",
+              "💡 Используйте поиск для нахождения конкретных функций в профиле"
             ]
           }
         },
@@ -243,26 +343,48 @@ export default function DevToolsPage() {
               "1. Включите Device Mode:",
               "  • Нажмите Ctrl+Shift+M или иконку 📱 в DevTools",
               "  • Страница должна измениться на мобильный вид",
+              "  • Появится панель с настройками устройства сверху",
               "2. Выберите устройство:",
-              "  • В выпадающем списке выберите 'iPhone 12'",
-              "  • Обратите внимание на изменение размера экрана",
-              "3. Проверьте адаптивность:",
+              "  • В выпадающем списке выберите 'iPhone 12' или 'Samsung Galaxy S20'",
+              "  • Обратите внимание на изменение размера экрана и разрешения",
+              "  • Попробуйте разные устройства: iPhone, Samsung, iPad",
+              "3. Настройте размер экрана:",
+              "  • Выберите 'Responsive' для создания собственного размера",
+              "  • Измените ширину и высоту вручную",
+              "  • Используйте предустановленные размеры (375x667, 414x896, 768x1024)",
+              "4. Проверьте адаптивность:",
               "  • Прокрутите страницу вверх-вниз",
               "  • Проверьте, как выглядят кнопки и текст",
               "  • Убедитесь, что все элементы помещаются на экран",
-              "4. Измените ориентацию:",
+              "  • Проверьте навигационное меню и выпадающие списки",
+              "5. Измените ориентацию:",
               "  • Нажмите кнопку поворота экрана (🔄)",
               "  • Проверьте, как выглядит сайт в ландшафтном режиме",
-              "5. Настройте сеть:",
+              "  • Убедитесь, что контент адаптируется к новому размеру",
+              "6. Настройте сеть:",
               "  • В выпадающем списке 'No throttling' выберите 'Slow 3G'",
-              "  • Обновите страницу (F5) и посмотрите на скорость загрузки"
+              "  • Попробуйте 'Fast 3G', 'Slow 4G' для разных скоростей",
+              "  • Обновите страницу (F5) и посмотрите на скорость загрузки",
+              "7. Проверьте touch события:",
+              "  • Клики мышью превращаются в тапы",
+              "  • Проверьте hover эффекты (они могут не работать на мобильных)",
+              "  • Убедитесь, что кнопки достаточно большие для пальцев",
+              "8. Анализируйте метрики:",
+              "  • Посмотрите на 'Lighthouse' для аудита производительности",
+              "  • Проверьте 'Accessibility' для доступности",
+              "  • Изучите 'Best Practices' для рекомендаций"
             ],
             tips: [
               "💡 Device Mode эмулирует реальные устройства и их возможности",
               "💡 Throttling помогает тестировать производительность на медленных сетях",
               "💡 Проверяйте touch события - клики мышью превращаются в тапы",
               "💡 Используйте 'Responsive' для создания собственных размеров экрана",
-              "💡 Device Mode показывает, как сайт выглядит на реальных устройствах"
+              "💡 Device Mode показывает, как сайт выглядит на реальных устройствах",
+              "💡 Проверяйте hover эффекты - они могут не работать на мобильных устройствах",
+              "💡 Убедитесь, что кнопки достаточно большие для пальцев (минимум 44px)",
+              "💡 Lighthouse в Device Mode показывает метрики для мобильных устройств",
+              "💡 Проверяйте навигацию - она должна быть удобной для пальцев",
+              "💡 Тестируйте разные ориентации экрана для полной адаптивности"
             ]
           }
         }
@@ -1403,7 +1525,7 @@ export default function DevToolsPage() {
                     <div className="bg-gray-100 rounded-lg p-4 min-h-[200px] flex items-center justify-center">
                       {task.beforeImage ? (
                         <img 
-                          src={task.beforeImage} 
+                          src={`${task.beforeImage}?v=3`} 
                           alt="До выполнения задания" 
                           className="max-w-full max-h-[200px] rounded border"
                         />
@@ -1417,7 +1539,7 @@ export default function DevToolsPage() {
                     <div className="bg-gray-100 rounded-lg p-4 min-h-[200px] flex items-center justify-center">
                       {task.afterImage ? (
                         <img 
-                          src={task.afterImage} 
+                          src={`${task.afterImage}?v=3`} 
                           alt="После выполнения задания" 
                           className="max-w-full max-h-[200px] rounded border"
                         />
@@ -1449,11 +1571,11 @@ export default function DevToolsPage() {
                       )}
                     </button>
                     
-                    {/* Кнопка видео только для Elements */}
-                    {task.id === 1 && (
+                    {/* Кнопка видео для Elements, Console и Network */}
+                    {(task.id === 1 || task.id === 2 || task.id === 3) && (
                       <button
                         onClick={() => toggleVideo(task.id)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
+                        className={`${task.id === 1 || task.id === 3 ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'} text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2`}
                       >
                         {showVideos[task.id] ? (
                           <>
@@ -1478,15 +1600,44 @@ export default function DevToolsPage() {
                       <h4 className="font-semibold text-green-800 mb-3">✅ Решение:</h4>
                       <ol className="space-y-2">
                         {task.solution.steps.map((step, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <span className="bg-green-100 text-green-800 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center mt-0.5">
-                              {index + 1}
-                            </span>
-                            <span className="text-sm text-green-700">{step}</span>
+                          <li key={index} className="text-green-700">
+                            {step}
                           </li>
                         ))}
                       </ol>
                     </div>
+
+                    {/* Скриншоты с командами терминала для урока Console */}
+                    {task.id === 2 && (
+                      <div className="bg-gray-50 border-l-4 border-gray-400 p-4 mb-4">
+                        <h4 className="font-semibold text-gray-800 mb-3">🖥️ Команды терминала:</h4>
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <div className="text-center">
+                            <h5 className="font-semibold text-gray-700 mb-2">До выполнения команд:</h5>
+                            <div className="bg-gray-100 rounded-lg p-2">
+                              <img 
+                                src="/screenshots/devtools/console-commands-before.svg" 
+                                alt="Команды до выполнения" 
+                                className="max-w-full h-auto rounded border"
+                              />
+                            </div>
+                          </div>
+                          <div className="text-center">
+                            <h5 className="font-semibold text-gray-700 mb-2">После выполнения команд:</h5>
+                            <div className="bg-gray-100 rounded-lg p-2">
+                              <img 
+                                src="/screenshots/devtools/console-commands-after.svg" 
+                                alt="Команды после выполнения" 
+                                className="max-w-full h-auto rounded border"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-600 mt-3">
+                          💡 Скопируйте команды из левого скриншота и выполните их в консоли DevTools
+                        </p>
+                      </div>
+                    )}
 
                     {/* Подсказки */}
                     <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
@@ -1514,6 +1665,7 @@ export default function DevToolsPage() {
                       width="800" 
                       height="450" 
                       controls 
+                      preload="metadata"
                       className="rounded-lg shadow-lg w-full max-w-4xl"
                     >
                       <source src="/videos/2025-10-09 14-54-15.mkv" type="video/x-matroska" />
@@ -1525,10 +1677,155 @@ export default function DevToolsPage() {
                     </p>
                   </div>
                 )}
+
+                {/* Видео-демонстрация для урока Console */}
+                {showVideos[task.id] && task.id === 2 && (
+                  <div className="mt-6 p-4 bg-green-50 rounded-lg">
+                    <h4 className="text-lg font-semibold mb-3 text-green-800">🎥 Видео-демонстрация Console</h4>
+                    <p className="text-green-600 mb-4">
+                      Посмотрите, как правильно выполнить задание с консолью:
+                    </p>
+                    <video 
+                      width="800" 
+                      height="450" 
+                      controls 
+                      preload="metadata"
+                      className="rounded-lg shadow-lg w-full max-w-4xl"
+                    >
+                      <source src="/videos/DevTools_console.mkv" type="video/x-matroska" />
+                      <source src="/videos/DevTools_console.mkv" type="video/mp4" />
+                      Ваш браузер не поддерживает видео.
+                    </video>
+                    <p className="text-sm text-gray-600 mt-2">
+                      💡 В видео показаны все шаги: работа с консолью, поиск элементов, изменение текста
+                    </p>
+                  </div>
+                )}
+
+                {/* Видео-демонстрация для урока Network */}
+                {showVideos[task.id] && task.id === 3 && (
+                  <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                    <h4 className="text-lg font-semibold mb-3 text-blue-800">🎥 Видео-демонстрация Network</h4>
+                    <p className="text-blue-600 mb-4">
+                      Посмотрите, как правильно выполнить задание с Network tab:
+                    </p>
+                    <video 
+                      width="800" 
+                      height="450" 
+                      controls 
+                      preload="metadata"
+                      className="rounded-lg shadow-lg w-full max-w-4xl"
+                      crossOrigin="anonymous"
+                    >
+                      <source src="/videos/DevTools_network.mkv" type="video/x-matroska" />
+                      <source src="/videos/DevTools_network.mkv" type="video/mp4" />
+                      Ваш браузер не поддерживает видео.
+                    </video>
+                    <p className="text-sm text-gray-600 mt-2">
+                      💡 В видео показаны все шаги: открытие Network tab, использование API демонстрации, анализ запросов
+                    </p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
         )}
+
+        {/* API Demo для урока Network */}
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mt-8">
+          <h3 className="text-xl font-bold mb-4 text-yellow-800">🌐 API Демонстрация для урока Network</h3>
+          <p className="text-yellow-700 mb-4">
+            Используйте эти кнопки для создания API запросов, которые вы сможете увидеть в Network tab:
+          </p>
+          <div className="flex gap-4 flex-wrap">
+            <button 
+              onClick={async () => {
+                console.log('🚀 Начинаем GET запрос к /api/devtools-demo');
+                try {
+                  const response = await fetch('/api/devtools-demo');
+                  console.log('📡 GET Response status:', response.status);
+                  console.log('📡 GET Response headers:', response.headers);
+                  const data = await response.json();
+                  console.log('📡 GET API Response data:', data);
+                  alert(`✅ GET API запрос выполнен! Статус: ${response.status}. Проверьте Network tab и консоль.`);
+                } catch (error) {
+                  console.error('❌ GET API Error:', error);
+                  const errorMessage = error instanceof Error ? error.message : 'Неизвестная ошибка';
+                  alert(`❌ Ошибка GET API запроса: ${errorMessage}. Проверьте консоль.`);
+                }
+              }}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+            >
+              📡 GET /api/devtools-demo
+            </button>
+            <button 
+              onClick={async () => {
+                try {
+                  const response = await fetch('/api/devtools-demo', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ action: 'test' })
+                  });
+                  const data = await response.json();
+                  console.log('POST API Response:', data);
+                  alert(`POST API запрос выполнен! Статус: ${response.status}. Проверьте Network tab.`);
+                } catch (error) {
+                  console.error('POST API Error:', error);
+                  alert('Ошибка POST API запроса. Проверьте консоль.');
+                }
+              }}
+              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+            >
+              📤 POST /api/devtools-demo
+            </button>
+            <button 
+              onClick={async () => {
+                try {
+                  const response = await fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                      type: 'suggestion',
+                      message: 'Тестовое сообщение для Network урока',
+                      email: 'test@example.com'
+                    })
+                  });
+                  const data = await response.json();
+                  console.log('Feedback API Response:', data);
+                  alert(`Feedback API запрос выполнен! Статус: ${response.status}. Проверьте Network tab.`);
+                } catch (error) {
+                  console.error('Feedback API Error:', error);
+                  alert('Ошибка Feedback API запроса. Проверьте консоль.');
+                }
+              }}
+              className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+            >
+              💬 POST /api/feedback
+            </button>
+          </div>
+          <div className="mt-4 p-3 bg-yellow-100 rounded-lg">
+            <p className="text-sm text-yellow-800">
+              <strong>💡 Инструкция:</strong> Нажмите на любую кнопку выше, затем откройте Network tab в DevTools 
+              и найдите запросы с типом "xhr" или "fetch". Используйте фильтр "Fetch/XHR" для удобства!
+            </p>
+          </div>
+          <div className="mt-4 p-3 bg-blue-100 rounded-lg">
+            <p className="text-sm text-blue-800">
+              <strong>🔧 Диагностика:</strong> Если API запросы не появляются в Network tab:
+            </p>
+            <ul className="text-sm text-blue-700 mt-2 list-disc list-inside">
+              <li>Убедитесь, что DevTools открыт и активна вкладка Network</li>
+              <li>Очистите список запросов (кнопка 🚫) перед нажатием на кнопки</li>
+              <li>Проверьте, что запись активна (красная точка в Network tab)</li>
+              <li>Попробуйте обновить страницу и повторить</li>
+              <li>Проверьте консоль на наличие ошибок (F12 → Console)</li>
+            </ul>
+          </div>
+        </div>
 
         {/* Демо элемент для практики */}
         <div className="devtools-demo bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 rounded-lg shadow-lg mt-8">
