@@ -91,8 +91,8 @@ export default function DevToolsPage() {
           category: "Console",
           completed: false,
           challenge: "Используйте консоль DevTools для выполнения JavaScript команд: 1) Выведите сообщение 'Привет, DevTools!' в консоль, 2) Найдите демо-элемент внизу страницы с помощью консольной команды (синий блок с градиентом), 3) Измените его заголовок с 'Демо элемент для практики' на 'Новый заголовок элемента!'. Консоль - это мощный инструмент для отладки и тестирования JavaScript кода.",
-          beforeImage: "/screenshots/devtools/elements-before.svg",
-          afterImage: "/screenshots/devtools/elements-after.svg",
+          beforeImage: "/screenshots/devtools/console-before.svg",
+          afterImage: "/screenshots/devtools/console-after.svg",
           solution: {
             steps: [
               "1. Откройте DevTools (F12 или Ctrl+Shift+I)",
@@ -1416,23 +1416,11 @@ export default function DevToolsPage() {
                     <h4 className="font-semibold text-gray-900 mb-3">📸 До выполнения:</h4>
                     <div className="bg-gray-100 rounded-lg p-4 min-h-[200px] flex items-center justify-center">
                       {task.beforeImage ? (
-                        <div>
-                          <p className="text-xs text-gray-400 mb-2">DEBUG: {task.beforeImage}</p>
-                          <img 
-                            src={task.beforeImage} 
-                            alt="До выполнения задания" 
-                            className="max-w-full max-h-[200px] rounded border"
-                            onError={(e) => {
-                              console.error('Image failed to load:', task.beforeImage);
-                              e.currentTarget.style.display = 'none';
-                              const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
-                              if (nextElement) {
-                                nextElement.style.display = 'block';
-                              }
-                            }}
-                          />
-                          <p className="text-red-500 text-sm" style={{display: 'none'}}>Ошибка загрузки: {task.beforeImage}</p>
-                        </div>
+                        <img 
+                          src={task.beforeImage} 
+                          alt="До выполнения задания" 
+                          className="max-w-full max-h-[200px] rounded border"
+                        />
                       ) : (
                         <p className="text-gray-500 text-sm">Скриншот будет добавлен</p>
                       )}
@@ -1442,23 +1430,11 @@ export default function DevToolsPage() {
                     <h4 className="font-semibold text-gray-900 mb-3">📸 После выполнения:</h4>
                     <div className="bg-gray-100 rounded-lg p-4 min-h-[200px] flex items-center justify-center">
                       {task.afterImage ? (
-                        <div>
-                          <p className="text-xs text-gray-400 mb-2">DEBUG: {task.afterImage}</p>
-                          <img 
-                            src={task.afterImage} 
-                            alt="После выполнения задания" 
-                            className="max-w-full max-h-[200px] rounded border"
-                            onError={(e) => {
-                              console.error('Image failed to load:', task.afterImage);
-                              e.currentTarget.style.display = 'none';
-                              const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
-                              if (nextElement) {
-                                nextElement.style.display = 'block';
-                              }
-                            }}
-                          />
-                          <p className="text-red-500 text-sm" style={{display: 'none'}}>Ошибка загрузки: {task.afterImage}</p>
-                        </div>
+                        <img 
+                          src={task.afterImage} 
+                          alt="После выполнения задания" 
+                          className="max-w-full max-h-[200px] rounded border"
+                        />
                       ) : (
                         <p className="text-gray-500 text-sm">Скриншот будет добавлен</p>
                       )}
