@@ -1425,7 +1425,10 @@ export default function DevToolsPage() {
                             onError={(e) => {
                               console.error('Image failed to load:', task.beforeImage);
                               e.currentTarget.style.display = 'none';
-                              e.currentTarget.nextElementSibling.style.display = 'block';
+                              const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
+                              if (nextElement) {
+                                nextElement.style.display = 'block';
+                              }
                             }}
                           />
                           <p className="text-red-500 text-sm" style={{display: 'none'}}>Ошибка загрузки: {task.beforeImage}</p>
@@ -1448,7 +1451,10 @@ export default function DevToolsPage() {
                             onError={(e) => {
                               console.error('Image failed to load:', task.afterImage);
                               e.currentTarget.style.display = 'none';
-                              e.currentTarget.nextElementSibling.style.display = 'block';
+                              const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
+                              if (nextElement) {
+                                nextElement.style.display = 'block';
+                              }
                             }}
                           />
                           <p className="text-red-500 text-sm" style={{display: 'none'}}>Ошибка загрузки: {task.afterImage}</p>
