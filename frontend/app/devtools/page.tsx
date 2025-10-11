@@ -91,8 +91,8 @@ export default function DevToolsPage() {
           category: "Console",
           completed: false,
           challenge: "Используйте консоль DevTools для выполнения JavaScript команд: 1) Выведите сообщение 'Привет, DevTools!' в консоль, 2) Найдите демо-элемент внизу страницы с помощью консольной команды (синий блок с градиентом), 3) Измените его заголовок с 'Демо элемент для практики' на 'Новый заголовок элемента!'. Консоль - это мощный инструмент для отладки и тестирования JavaScript кода.",
-          beforeImage: "/screenshots/devtools/demo-before-final.svg",
-          afterImage: "/screenshots/devtools/demo-after-final.svg",
+          beforeImage: "/console-before.svg",
+          afterImage: "/console-after.svg",
           solution: {
             steps: [
               "1. Откройте DevTools (F12 или Ctrl+Shift+I)",
