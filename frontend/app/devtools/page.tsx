@@ -1416,11 +1416,20 @@ export default function DevToolsPage() {
                     <h4 className="font-semibold text-gray-900 mb-3">📸 До выполнения:</h4>
                     <div className="bg-gray-100 rounded-lg p-4 min-h-[200px] flex items-center justify-center">
                       {task.beforeImage ? (
-                        <img 
-                          src={task.beforeImage} 
-                          alt="До выполнения задания" 
-                          className="max-w-full max-h-[200px] rounded border"
-                        />
+                        <div>
+                          <p className="text-xs text-gray-400 mb-2">DEBUG: {task.beforeImage}</p>
+                          <img 
+                            src={task.beforeImage} 
+                            alt="До выполнения задания" 
+                            className="max-w-full max-h-[200px] rounded border"
+                            onError={(e) => {
+                              console.error('Image failed to load:', task.beforeImage);
+                              e.currentTarget.style.display = 'none';
+                              e.currentTarget.nextElementSibling.style.display = 'block';
+                            }}
+                          />
+                          <p className="text-red-500 text-sm" style={{display: 'none'}}>Ошибка загрузки: {task.beforeImage}</p>
+                        </div>
                       ) : (
                         <p className="text-gray-500 text-sm">Скриншот будет добавлен</p>
                       )}
@@ -1430,11 +1439,20 @@ export default function DevToolsPage() {
                     <h4 className="font-semibold text-gray-900 mb-3">📸 После выполнения:</h4>
                     <div className="bg-gray-100 rounded-lg p-4 min-h-[200px] flex items-center justify-center">
                       {task.afterImage ? (
-                        <img 
-                          src={task.afterImage} 
-                          alt="После выполнения задания" 
-                          className="max-w-full max-h-[200px] rounded border"
-                        />
+                        <div>
+                          <p className="text-xs text-gray-400 mb-2">DEBUG: {task.afterImage}</p>
+                          <img 
+                            src={task.afterImage} 
+                            alt="После выполнения задания" 
+                            className="max-w-full max-h-[200px] rounded border"
+                            onError={(e) => {
+                              console.error('Image failed to load:', task.afterImage);
+                              e.currentTarget.style.display = 'none';
+                              e.currentTarget.nextElementSibling.style.display = 'block';
+                            }}
+                          />
+                          <p className="text-red-500 text-sm" style={{display: 'none'}}>Ошибка загрузки: {task.afterImage}</p>
+                        </div>
                       ) : (
                         <p className="text-gray-500 text-sm">Скриншот будет добавлен</p>
                       )}
