@@ -7,7 +7,7 @@ export default function NetworkDemoPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function send(method: "GET" | "POST" | "PUT" | "DELETE", scenario?: string) {
+  async function send(method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE", scenario?: string) {
     setLoading(true);
     setError(null);
     setResult(null);
@@ -53,12 +53,37 @@ export default function NetworkDemoPage() {
 
         {/* Базовые HTTP методы */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">🔧 Базовые HTTP методы</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">🔧 HTTP методы</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
             <button onClick={() => send("GET")} className="btn btn-secondary">GET</button>
             <button onClick={() => send("POST")} className="btn btn-primary">POST</button>
             <button onClick={() => send("PUT")} className="btn btn-warning">PUT</button>
+            <button onClick={() => send("PATCH")} className="btn bg-indigo-600 hover:bg-indigo-700 text-white">PATCH</button>
             <button onClick={() => send("DELETE")} className="btn btn-danger">DELETE</button>
+          </div>
+          
+          {/* Объяснения о методах */}
+          <div className="mt-6 grid md:grid-cols-2 gap-6">
+            <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+              <h3 className="font-semibold text-green-800 mb-2">🛡️ Безопасные методы</h3>
+              <p className="text-green-700 text-sm mb-2">Не изменяют состояние сервера:</p>
+              <ul className="text-green-600 text-sm space-y-1">
+                <li>• <strong>GET</strong> - только чтение данных</li>
+                <li>• <strong>HEAD</strong> - как GET, но без тела ответа</li>
+                <li>• <strong>OPTIONS</strong> - получение доступных методов</li>
+              </ul>
+            </div>
+            
+            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <h3 className="font-semibold text-blue-800 mb-2">🔄 Идемпотентные методы</h3>
+              <p className="text-blue-700 text-sm mb-2">Повторное выполнение дает тот же результат:</p>
+              <ul className="text-blue-600 text-sm space-y-1">
+                <li>• <strong>GET</strong> - всегда возвращает те же данные</li>
+                <li>• <strong>PUT</strong> - полная замена ресурса</li>
+                <li>• <strong>DELETE</strong> - удаление (повторное = уже удален)</li>
+                <li>• <strong>PATCH</strong> - частичное обновление (может быть идемпотентным)</li>
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -71,6 +96,8 @@ export default function NetworkDemoPage() {
             <button onClick={() => send("GET", "unauthorized")} className="btn bg-red-400 hover:bg-red-500 text-white">GET 401 Unauthorized</button>
             <button onClick={() => send("POST", "validation-error")} className="btn bg-orange-600 hover:bg-orange-700 text-white">POST 400 Validation</button>
             <button onClick={() => send("PUT", "conflict")} className="btn bg-yellow-600 hover:bg-yellow-700 text-white">PUT 409 Conflict</button>
+            <button onClick={() => send("PATCH", "validation-error")} className="btn bg-orange-500 hover:bg-orange-600 text-white">PATCH 400 Validation</button>
+            <button onClick={() => send("PATCH", "not-found")} className="btn bg-red-300 hover:bg-red-400 text-white">PATCH 404 Not Found</button>
             <button onClick={() => send("DELETE", "forbidden")} className="btn bg-purple-600 hover:bg-purple-700 text-white">DELETE 403 Forbidden</button>
           </div>
         </div>
@@ -81,6 +108,7 @@ export default function NetworkDemoPage() {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <button onClick={() => send("GET", "slow")} className="btn bg-blue-600 hover:bg-blue-700 text-white">GET Slow (3s)</button>
             <button onClick={() => send("POST", "slow")} className="btn bg-blue-500 hover:bg-blue-600 text-white">POST Slow (2s)</button>
+            <button onClick={() => send("PATCH", "partial-update")} className="btn bg-indigo-500 hover:bg-indigo-600 text-white">PATCH Partial Update</button>
             <button onClick={() => send("GET", "large")} className="btn bg-green-600 hover:bg-green-700 text-white">GET Large Data</button>
           </div>
         </div>
@@ -149,6 +177,8 @@ export default function NetworkDemoPage() {
             </ul>
             <li>Сравните разные типы запросов: успешные (зеленые) и с ошибками (красные)</li>
             <li>Обратите внимание на время загрузки медленных запросов</li>
+            <li>Изучите разницу между PUT (полная замена) и PATCH (частичное обновление)</li>
+            <li>Поняйте концепции безопасных методов (GET) и идемпотентных методов (GET, PUT, DELETE)</li>
           </ol>
         </div>
       </div>

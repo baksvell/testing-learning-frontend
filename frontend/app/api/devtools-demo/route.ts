@@ -119,6 +119,47 @@ export async function PUT(request: Request) {
   }
 }
 
+export async function PATCH(request: Request) {
+  const url = new URL(request.url)
+  const scenario = url.searchParams.get('scenario')
+  const body = await request.json().catch(() => ({}))
+  
+  switch (scenario) {
+    case 'partial-update':
+      return NextResponse.json({
+        method: 'PATCH',
+        message: 'Partial update successful',
+        body,
+        updatedFields: Object.keys(body),
+        timestamp: new Date().toISOString(),
+      })
+    
+    case 'validation-error':
+      return NextResponse.json(
+        { 
+          error: 'Validation Error', 
+          message: 'Invalid patch data',
+          details: ['Field "email" format is invalid', 'Field "age" must be a number']
+        },
+        { status: 400 }
+      )
+    
+    case 'not-found':
+      return NextResponse.json(
+        { error: 'Not Found', message: 'Resource to patch not found' },
+        { status: 404 }
+      )
+    
+    default:
+      return NextResponse.json({
+        method: 'PATCH',
+        message: 'Demo PATCH received',
+        body,
+        timestamp: new Date().toISOString(),
+      })
+  }
+}
+
 export async function DELETE(request: Request) {
   const url = new URL(request.url)
   const scenario = url.searchParams.get('scenario')
