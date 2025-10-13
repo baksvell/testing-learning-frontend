@@ -35,6 +35,17 @@ export default function NetworkDemoPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-3xl mx-auto px-4">
+        {/* Кнопка возврата */}
+        <div className="mb-6">
+          <a
+            href="/devtools"
+            className="inline-flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+          >
+            <span>←</span>
+            Назад к урокам DevTools
+          </a>
+        </div>
+        
         <h1 className="text-3xl font-bold text-gray-900 mb-6">Демо для вкладки Network</h1>
         <p className="text-gray-600 mb-8">
           Нажимайте на кнопки ниже, чтобы отправлять различные типы запросов к <code>/api/devtools-demo</code> и наблюдайте их во вкладке <strong>Network</strong> в DevTools.
