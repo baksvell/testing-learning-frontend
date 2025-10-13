@@ -196,7 +196,7 @@ export default function DevToolsPage() {
             steps: [
               "1. Откройте DevTools (F12) и перейдите на вкладку Sources",
               "2. Найдите код для отладки:",
-              "  • В левой панели найдите 'Page' → 'devtools' → 'page.tsx'",
+              "  • В левой панели найдите: Page → testing-learning-frontend-f2oq.vercel.app → _next → static → chunks → app → devtools → page-*.js",
               "  • Или найдите функцию 'calculateSum' в коде на странице урока (в демо-блоке)",
               "3. Поставьте breakpoint:",
               "  • В Sources найдите функцию 'calculateSum' (она в коде страницы урока)",
@@ -1427,9 +1427,10 @@ export default function DevToolsPage() {
                         <p className="text-yellow-800 text-sm">
                           <strong>💡 Как найти код в Sources:</strong><br/>
                           1. Откройте Sources в DevTools<br/>
-                          2. Найдите функцию 'calculateSum' в коде страницы<br/>
-                          3. Поставьте breakpoint на строке с console.log<br/>
-                          4. Нажмите кнопку "Запустить отладку" ниже
+                          2. Перейдите по пути: Page → testing-learning-frontend-f2oq.vercel.app → _next → static → chunks → app → devtools → page-*.js<br/>
+                          3. Найдите функцию 'calculateSum' в коде<br/>
+                          4. Поставьте breakpoint на строке с console.log<br/>
+                          5. Нажмите кнопку "Запустить отладку" ниже
                         </p>
                       </div>
                       
