@@ -143,7 +143,7 @@ export default function DevToolsPage() {
           description: "Изучите сетевые запросы и производительность загрузки",
           category: "Network",
           completed: false,
-          challenge: "Практическое изучение Network панели: отправьте различные HTTP запросы и проанализируйте их в DevTools. Изучите статус-коды, заголовки, время загрузки и содержимое ответов.",
+          challenge: "Откройте демо Network (кнопка ниже) и отправьте различные HTTP запросы. В DevTools изучите Network панель: статус-коды, заголовки, время загрузки и содержимое ответов.",
           solution: {
             steps: [
               "1. Откройте DevTools (F12) и перейдите на вкладку Network",
@@ -1473,22 +1473,25 @@ export default function DevToolsPage() {
                 {/* Кнопки управления */}
                 <div className="text-center mb-4 space-y-3">
                   <div className="flex gap-3 justify-center flex-wrap">
-                    <button
-                      onClick={() => toggleSolution(task.id)}
-                      className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
-                    >
-                      {showSolutions[task.id] ? (
-                        <>
-                          <span>🔒</span>
-                          Скрыть решение
-                        </>
-                      ) : (
-                        <>
-                          <span>🔓</span>
-                          Показать решение
-                        </>
-                      )}
-                    </button>
+                    {/* Кнопка "Показать решение" - только для заданий с визуальными изменениями */}
+                    {task.category !== 'Network' && (
+                      <button
+                        onClick={() => toggleSolution(task.id)}
+                        className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
+                      >
+                        {showSolutions[task.id] ? (
+                          <>
+                            <span>🔒</span>
+                            Скрыть решение
+                          </>
+                        ) : (
+                          <>
+                            <span>🔓</span>
+                            Показать решение
+                          </>
+                        )}
+                      </button>
+                    )}
                     
                     {/* Кнопка видео для Elements и Console */}
                     {(task.id === 1 || task.id === 2) && (
@@ -1512,8 +1515,8 @@ export default function DevToolsPage() {
                   </div>
                 </div>
 
-                {/* Решение (скрыто по умолчанию) */}
-                {showSolutions[task.id] && (
+                {/* Решение (скрыто по умолчанию) - только для заданий с визуальными изменениями */}
+                {showSolutions[task.id] && task.category !== 'Network' && (
                   <>
                     <div className="bg-green-50 border-l-4 border-green-400 p-4 mb-4">
                       <h4 className="font-semibold text-green-800 mb-3">✅ Решение:</h4>
