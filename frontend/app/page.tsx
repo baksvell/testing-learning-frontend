@@ -40,40 +40,34 @@ export default function HomePage() {
   const futureFeatures = [
     {
       icon: <File className="w-8 h-8" />,
-      title: "Работа с документацией",
-      description: "Практика создания и анализа технической документации, API docs, пользовательских инструкций",
+      title: "Swagger/OpenAPI",
+      description: "Изучение документации API, тестирование с помощью Swagger UI, валидация схем",
       color: "text-blue-600"
     },
     {
-      icon: <BookOpen className="w-8 h-8" />,
-      title: "Тестирование документации",
-      description: "Проверка актуальности, полноты и понятности технической документации",
+      icon: <Database className="w-8 h-8" />,
+      title: "SQL Тренировка",
+      description: "Практика SQL запросов, тестирование баз данных, работа с данными и миграциями",
       color: "text-green-600"
     },
     {
       icon: <Globe className="w-8 h-8" />,
-      title: "Многоязычная поддержка",
-      description: "Документация на разных языках и тестирование локализации",
+      title: "REST API Тестирование",
+      description: "Углубленное изучение REST API, тестирование различных HTTP методов и статус-кодов",
       color: "text-purple-600"
     },
     {
-      icon: <Database className="w-8 h-8" />,
-      title: "Уроки по SQL",
-      description: "Изучение SQL запросов, тестирование баз данных, работа с данными",
+      icon: <Shield className="w-8 h-8" />,
+      title: "API Безопасность",
+      description: "Тестирование безопасности API, аутентификация, авторизация, защита от атак",
       color: "text-orange-600"
     }
   ]
 
-      // Categories for testing lessons - updated (OpenAPI removed)
+      // Categories for testing tools - focused on essential tools
       const categories = [
         { name: "DevTools", icon: <Code />, count: 6, color: "bg-indigo-500", href: "/devtools" },
-        { name: "Postman", icon: <Globe />, count: 5, color: "bg-blue-500", href: "/postman-lessons" },
-        { name: "OpenAPI", icon: <File />, count: 5, color: "bg-emerald-500", href: "/openapi" },
-        { name: "Функциональное", icon: <Bug />, count: 6, color: "bg-primary-500", href: "/functional" },
-        { name: "UI/UX", icon: <BookOpen />, count: 5, color: "bg-success-500", href: "/ui-ux" },
-        { name: "API", icon: <Code />, count: 5, color: "bg-warning-500", href: "/api" },
-        { name: "Регрессионное", icon: <Zap />, count: 5, color: "bg-purple-500", href: "/regression" },
-        { name: "Безопасность", icon: <Shield />, count: 8, color: "bg-danger-500", href: "/security" }
+        { name: "Postman", icon: <Globe />, count: 5, color: "bg-blue-500", href: "/postman-lessons" }
       ]
 
   return (
@@ -87,20 +81,17 @@ export default function HomePage() {
               <span className="text-2xl font-bold text-gradient">TestMaster</span>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <Link href="/tasks" className="text-gray-600 hover:text-primary-600 transition-colors">
-                Задания
-              </Link>
               <Link href="/devtools" className="text-gray-600 hover:text-primary-600 transition-colors">
                 DevTools
               </Link>
-              <Link href="/postman" className="text-gray-600 hover:text-primary-600 transition-colors">
+              <Link href="/postman-lessons" className="text-gray-600 hover:text-primary-600 transition-colors">
                 Postman
               </Link>
-              <Link href="/leaderboard" className="text-gray-600 hover:text-primary-600 transition-colors">
-                Рейтинг
+              <Link href="/tasks" className="text-gray-600 hover:text-primary-600 transition-colors">
+                Задания
               </Link>
-              <Link href="/achievements" className="text-gray-600 hover:text-primary-600 transition-colors">
-                Достижения
+              <Link href="/dashboard" className="text-gray-600 hover:text-primary-600 transition-colors">
+                Панель
               </Link>
             </nav>
             <div className="flex items-center space-x-4">
@@ -138,20 +129,21 @@ export default function HomePage() {
             className="text-center"
           >
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Изучайте тестирование
-              <span className="text-gradient block">интерактивно</span>
+              Изучайте инструменты
+              <span className="text-gradient block">тестирования</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Практическая платформа для изучения различных видов тестирования веб-приложений. 
-              Реальные задания, игровые элементы и система прогресса.
+              Практическая платформа для изучения профессиональных инструментов тестирования. 
+              DevTools, Postman и другие инструменты с реальными примерами.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/tasks" className="btn btn-primary text-lg px-8 py-3">
-                <Play className="w-5 h-5 mr-2" />
-                Начать обучение
+              <Link href="/devtools" className="btn btn-primary text-lg px-8 py-3">
+                <Code className="w-5 h-5 mr-2" />
+                DevTools
               </Link>
-              <Link href="/about" className="btn btn-secondary text-lg px-8 py-3">
-                Узнать больше
+              <Link href="/postman-lessons" className="btn btn-secondary text-lg px-8 py-3">
+                <Globe className="w-5 h-5 mr-2" />
+                Postman
               </Link>
             </div>
           </motion.div>
@@ -196,10 +188,10 @@ export default function HomePage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Возможности для будущего развития
+              Планируемые инструменты
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Планируемые направления развития платформы с акцентом на практическую работу с документацией
+              В разработке: Swagger/OpenAPI, SQL тренировка и другие профессиональные инструменты
             </p>
           </motion.div>
 
@@ -237,14 +229,14 @@ export default function HomePage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Категории тестирования
+              Инструменты тестирования
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Изучайте различные виды тестирования от базовых до продвинутых
+              Изучайте профессиональные инструменты для тестирования веб-приложений
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {categories.map((category, index) => (
               <motion.div
                 key={index}
@@ -263,14 +255,8 @@ export default function HomePage() {
                   {category.count} {category.name === 'DevTools' ? 'уроков' : 'заданий'}
                 </p>
                 <p className="text-sm text-gray-500 mb-4">
-                  {category.name === 'DevTools' && 'Изучение инструментов разработчика браузера'}
-                  {category.name === 'Postman' && 'Профессиональное тестирование API'}
-                  {category.name === 'OpenAPI' && 'Документация и тестирование API с Swagger'}
-                  {category.name === 'Функциональное' && 'Тестирование функциональности приложения'}
-                  {category.name === 'UI/UX' && 'Тестирование пользовательского интерфейса'}
-                  {category.name === 'API' && 'Тестирование REST API и веб-сервисов'}
-                  {category.name === 'Регрессионное' && 'Автоматизированное тестирование изменений'}
-                  {category.name === 'Безопасность' && 'Тестирование безопасности веб-приложений'}
+                  {category.name === 'DevTools' && 'Изучение инструментов разработчика браузера: Console, Elements, Network, Sources и другие'}
+                  {category.name === 'Postman' && 'Профессиональное тестирование API: коллекции, переменные, тесты и автоматизация'}
                 </p>
                 <Link 
                   href={category.href || `/tasks?category=${category.name.toLowerCase()}`}
@@ -293,14 +279,19 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-4xl font-bold text-white mb-4">
-              Готовы начать обучение?
+              Готовы изучить инструменты?
             </h2>
             <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-              Присоединяйтесь к тысячам тестировщиков, которые уже изучают новые навыки на нашей платформе
+              Начните с DevTools или Postman - профессиональные инструменты для тестирования веб-приложений
             </p>
-            <div className="flex justify-center">
-              <Link href="/demo" className="btn border-2 border-white text-white hover:bg-white hover:text-primary-600 text-lg px-8 py-3">
-                Посмотреть демо
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/devtools" className="btn border-2 border-white text-white hover:bg-white hover:text-primary-600 text-lg px-8 py-3">
+                <Code className="w-5 h-5 mr-2" />
+                DevTools
+              </Link>
+              <Link href="/postman-lessons" className="btn border-2 border-white text-white hover:bg-white hover:text-primary-600 text-lg px-8 py-3">
+                <Globe className="w-5 h-5 mr-2" />
+                Postman
               </Link>
             </div>
           </motion.div>
@@ -317,25 +308,25 @@ export default function HomePage() {
                 <span className="text-xl font-bold">TestMaster</span>
               </div>
               <p className="text-gray-400">
-                Интерактивная платформа для обучения тестированию веб-приложений
+                Платформа для изучения профессиональных инструментов тестирования
               </p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-4">Обучение</h3>
+              <h3 className="text-lg font-semibold mb-4">Инструменты</h3>
               <ul className="space-y-2 text-gray-400">
+                <li><Link href="/devtools" className="hover:text-white transition-colors">DevTools</Link></li>
+                <li><Link href="/postman-lessons" className="hover:text-white transition-colors">Postman</Link></li>
                 <li><Link href="/tasks" className="hover:text-white transition-colors">Задания</Link></li>
-                <li><Link href="/devtools" className="hover:text-white transition-colors">DevTools урок</Link></li>
-                <li><Link href="/postman" className="hover:text-white transition-colors">Postman</Link></li>
-                <li><Link href="/tutorials" className="hover:text-white transition-colors">Туториалы</Link></li>
-                <li><Link href="/resources" className="hover:text-white transition-colors">Ресурсы</Link></li>
+                <li><Link href="/dashboard" className="hover:text-white transition-colors">Панель управления</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-4">Сообщество</h3>
+              <h3 className="text-lg font-semibold mb-4">В разработке</h3>
               <ul className="space-y-2 text-gray-400">
-                <li><Link href="/leaderboard" className="hover:text-white transition-colors">Рейтинг</Link></li>
-                <li><Link href="/achievements" className="hover:text-white transition-colors">Достижения</Link></li>
-                <li><Link href="/forum" className="hover:text-white transition-colors">Форум</Link></li>
+                <li><span className="text-gray-500">Swagger/OpenAPI</span></li>
+                <li><span className="text-gray-500">SQL Тренировка</span></li>
+                <li><span className="text-gray-500">REST API Тестирование</span></li>
+                <li><span className="text-gray-500">API Безопасность</span></li>
               </ul>
             </div>
             <div>
