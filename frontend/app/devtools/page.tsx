@@ -151,9 +151,10 @@ export default function DevToolsPage() {
               "1. Откройте вкладку Network в DevTools",
               "2. Очистите список запросов: нажмите кнопку 🚫",
               "3. Обновите страницу (F5 или Ctrl+R)",
-              "4. Найдите API запросы:",
-              "  • Ищите запросы к /api/ (например, /api/tasks, /api/stats)",
-              "  • Или используйте фильтр 'XHR' для AJAX запросов",
+              "4. Откройте демо для генерации запросов и вернитесь в Network:",
+              "  • Перейдите по ссылке ниже 'Демо: отправка запросов'",
+              "  • На новой странице нажимайте GET/POST/PUT/DELETE",
+              "  • Возвращайтесь во вкладку Network и изучайте записи",
               "5. Изучите детали запроса:",
               "  • Кликните на любой API запрос",
               "  • Посмотрите вкладку 'Headers' - заголовки запроса и ответа",
@@ -1390,7 +1391,16 @@ export default function DevToolsPage() {
                         {task.category}
                       </span>
                     </div>
-                    <p className="text-gray-600 mb-4">{task.description}</p>
+                  <p className="text-gray-600 mb-4">{task.description}</p>
+                  {task.category === 'Network' && (
+                    <div className="my-3 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <div className="font-semibold text-blue-800 mb-2">Демо: отправка запросов</div>
+                      <p className="text-blue-700 mb-3">Откройте страницу с кнопками GET/POST/PUT/DELETE и наблюдайте запросы во вкладке Network.</p>
+                      <a href="/devtools/network-demo" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors inline-block">
+                        Открыть демо Network
+                      </a>
+                    </div>
+                  )}
                   </div>
                   
                   <button
