@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
+// import { useAuth } from '../../contexts/AuthContext';
 
 interface Task {
   id: number;
@@ -26,7 +26,8 @@ interface DevToolsLesson {
 }
 
 export default function DevToolsPage() {
-  const { user } = useAuth();
+  // const { user } = useAuth();
+  const user = null; // DevTools доступен без авторизации
   const [currentLesson, setCurrentLesson] = useState<DevToolsLesson | null>(null);
   const [completedTasks, setCompletedTasks] = useState<number[]>([]);
   const [activeTab, setActiveTab] = useState<'theory' | 'practice'>('theory');
