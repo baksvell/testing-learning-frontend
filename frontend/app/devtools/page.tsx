@@ -143,7 +143,7 @@ export default function DevToolsPage() {
           description: "Изучите сетевые запросы и производительность загрузки",
           category: "Network",
           completed: false,
-          challenge: "Откройте демо Network (кнопка ниже) и отправьте различные HTTP запросы. В DevTools изучите Network панель: статус-коды, заголовки, время загрузки и содержимое ответов.",
+          challenge: "Откройте демо Network (кнопка выше) и отправьте различные HTTP запросы. В DevTools изучите Network панель: статус-коды, заголовки, время загрузки и содержимое ответов.",
           solution: {
             steps: [
               "1. Откройте DevTools (F12) и перейдите на вкладку Network",
