@@ -468,7 +468,7 @@ export default function PostmanLessonsPage() {
                     <li><code>GET /</code> - Информация об API</li>
                     <li><code>GET /health</code> - Проверка состояния</li>
                     <li><code>GET /api/tasks</code> - Список задач</li>
-                    <li><code>GET /api/tasks/{id}</code> - Конкретная задача</li>
+                    <li><code>GET /api/tasks/&#123;id&#125;</code> - Конкретная задача</li>
                     <li><code>GET /api/stats</code> - Статистика платформы</li>
                     <li><code>GET /api/database/test</code> - Тест базы данных</li>
                   </ul>
