@@ -25,9 +25,16 @@ export default function PostmanDemoPage() {
   const [selectedRequest, setSelectedRequest] = useState<string | null>(null);
   const [requestMethod, setRequestMethod] = useState('GET');
   const [requestUrl, setRequestUrl] = useState('https://jsonplaceholder.typicode.com/posts');
+  const [requestBody, setRequestBody] = useState('');
+  const [requestHeaders, setRequestHeaders] = useState('{"Content-Type": "application/json"}');
   const [isRunning, setIsRunning] = useState(false);
+  const [isRunningSingle, setIsRunningSingle] = useState(false);
   const [results, setResults] = useState<RequestResult[]>([]);
   const [showResults, setShowResults] = useState(false);
+  const [singleResult, setSingleResult] = useState<any>(null);
+  const [responseData, setResponseData] = useState<any>(null);
+  const [responseHeaders, setResponseHeaders] = useState<any>(null);
+  const [responseTime, setResponseTime] = useState<number>(0);
 
   const collections = [
     { id: '1', name: 'To-Do API Testing', expanded: true, requests: [
@@ -48,9 +55,81 @@ export default function PostmanDemoPage() {
     { id: '2', name: 'To-Do Production', active: false }
   ];
 
+  const sendSingleRequest = async () => {
+    setIsRunningSingle(true);
+    setSingleResult(null);
+    setResponseData(null);
+    setResponseHeaders(null);
+    
+    const startTime = Date.now();
+    
+    try {
+      let headers: any = {};
+      try {
+        headers = JSON.parse(requestHeaders);
+      } catch (e) {
+        headers = { 'Content-Type': 'application/json' };
+      }
+
+      const requestOptions: RequestInit = {
+        method: requestMethod,
+        headers: headers,
+      };
+
+      if (requestMethod !== 'GET' && requestBody.trim()) {
+        requestOptions.body = requestBody;
+      }
+
+      const response = await fetch(requestUrl, requestOptions);
+      const endTime = Date.now();
+      const responseTimeMs = endTime - startTime;
+      
+      let responseText = '';
+      let responseJson = null;
+      
+      try {
+        responseText = await response.text();
+        responseJson = JSON.parse(responseText);
+      } catch (e) {
+        responseJson = responseText;
+      }
+
+      const responseHeadersObj: any = {};
+      response.headers.forEach((value, key) => {
+        responseHeadersObj[key] = value;
+      });
+
+      setResponseTime(responseTimeMs);
+      setResponseData(responseJson);
+      setResponseHeaders(responseHeadersObj);
+      setSingleResult({
+        status: response.status,
+        statusText: response.statusText,
+        responseTime: responseTimeMs,
+        size: `${Math.round(responseText.length / 1024 * 100) / 100} KB`,
+        url: requestUrl,
+        method: requestMethod
+      });
+
+    } catch (error: any) {
+      setSingleResult({
+        status: 0,
+        statusText: 'Network Error',
+        responseTime: Date.now() - startTime,
+        size: '0 B',
+        url: requestUrl,
+        method: requestMethod,
+        error: error.message
+      });
+    }
+    
+    setIsRunningSingle(false);
+  };
+
   const runCollection = async () => {
     setIsRunning(true);
     setShowResults(true);
+    setResults([]);
     
     // Симуляция выполнения запросов
     const mockResults: RequestResult[] = [
@@ -318,10 +397,36 @@ export default function PostmanDemoPage() {
                           value={requestUrl}
                           onChange={(e) => setRequestUrl(e.target.value)}
                           className="w-full border border-gray-300 rounded-md px-3 py-2"
+                          placeholder="https://jsonplaceholder.typicode.com/posts"
                         />
                       </div>
-                      <button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
-                        Отправить запрос
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Headers (JSON)</label>
+                        <textarea 
+                          value={requestHeaders}
+                          onChange={(e) => setRequestHeaders(e.target.value)}
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 h-20 font-mono text-sm"
+                          placeholder='{"Content-Type": "application/json"}'
+                        />
+                      </div>
+                      {requestMethod !== 'GET' && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">Body (JSON)</label>
+                          <textarea 
+                            value={requestBody}
+                            onChange={(e) => setRequestBody(e.target.value)}
+                            className="w-full border border-gray-300 rounded-md px-3 py-2 h-32 font-mono text-sm"
+                            placeholder='{"title": "Test", "body": "Test body", "userId": 1}'
+                          />
+                        </div>
+                      )}
+                      <button 
+                        onClick={sendSingleRequest}
+                        disabled={isRunningSingle}
+                        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-md flex items-center justify-center space-x-2"
+                      >
+                        <Send className="w-4 h-4" />
+                        <span>{isRunningSingle ? 'Отправка...' : 'Отправить запрос'}</span>
                       </button>
                     </div>
                   </div>
@@ -345,10 +450,147 @@ export default function PostmanDemoPage() {
                   </div>
                 </div>
 
+                {/* Результаты одиночного запроса */}
+                {singleResult && (
+                  <div className="bg-white rounded-lg shadow mb-6">
+                    <div className="p-4 border-b">
+                      <h3 className="text-lg font-semibold text-gray-900">Результат запроса</h3>
+                    </div>
+                    <div className="p-4">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                        <div className="text-center">
+                          <div className={`text-2xl font-bold ${getStatusColor(singleResult.status)}`}>
+                            {singleResult.status}
+                          </div>
+                          <div className="text-sm text-gray-600">Status</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-gray-900">{singleResult.responseTime}ms</div>
+                          <div className="text-sm text-gray-600">Time</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-gray-900">{singleResult.size}</div>
+                          <div className="text-sm text-gray-600">Size</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-gray-900">{singleResult.method}</div>
+                          <div className="text-sm text-gray-600">Method</div>
+                        </div>
+                      </div>
+                      
+                      {singleResult.error && (
+                        <div className="bg-red-50 border border-red-200 p-3 rounded mb-4">
+                          <div className="text-red-800 font-medium">Ошибка:</div>
+                          <div className="text-red-700 text-sm">{singleResult.error}</div>
+                        </div>
+                      )}
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <h4 className="font-medium text-gray-900 mb-2">Response Headers</h4>
+                          <div className="bg-gray-50 p-3 rounded text-sm font-mono max-h-40 overflow-y-auto">
+                            <pre>{JSON.stringify(responseHeaders, null, 2)}</pre>
+                          </div>
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-900 mb-2">Response Body</h4>
+                          <div className="bg-gray-50 p-3 rounded text-sm font-mono max-h-40 overflow-y-auto">
+                            <pre>{JSON.stringify(responseData, null, 2)}</pre>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Быстрые примеры */}
+                <div className="bg-white rounded-lg shadow mb-6">
+                  <div className="p-4 border-b">
+                    <h3 className="text-lg font-semibold text-gray-900">🚀 Быстрые примеры</h3>
+                  </div>
+                  <div className="p-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <button
+                        onClick={() => {
+                          setRequestMethod('GET');
+                          setRequestUrl('https://jsonplaceholder.typicode.com/posts/1');
+                          setRequestBody('');
+                        }}
+                        className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
+                      >
+                        <div className="font-medium text-gray-900">GET Post</div>
+                        <div className="text-sm text-gray-600">Получить пост по ID</div>
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                          setRequestMethod('POST');
+                          setRequestUrl('https://jsonplaceholder.typicode.com/posts');
+                          setRequestBody('{"title": "Test Post", "body": "This is a test post", "userId": 1}');
+                        }}
+                        className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
+                      >
+                        <div className="font-medium text-gray-900">POST Create</div>
+                        <div className="text-sm text-gray-600">Создать новый пост</div>
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                          setRequestMethod('PUT');
+                          setRequestUrl('https://jsonplaceholder.typicode.com/posts/1');
+                          setRequestBody('{"id": 1, "title": "Updated Post", "body": "This post has been updated", "userId": 1}');
+                        }}
+                        className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
+                      >
+                        <div className="font-medium text-gray-900">PUT Update</div>
+                        <div className="text-sm text-gray-600">Обновить пост</div>
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                          setRequestMethod('DELETE');
+                          setRequestUrl('https://jsonplaceholder.typicode.com/posts/1');
+                          setRequestBody('');
+                        }}
+                        className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
+                      >
+                        <div className="font-medium text-gray-900">DELETE Remove</div>
+                        <div className="text-sm text-gray-600">Удалить пост</div>
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                          setRequestMethod('GET');
+                          setRequestUrl('https://jsonplaceholder.typicode.com/posts/999');
+                          setRequestBody('');
+                        }}
+                        className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
+                      >
+                        <div className="font-medium text-gray-900">GET 404 Error</div>
+                        <div className="text-sm text-gray-600">Тест ошибки 404</div>
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                          setRequestMethod('GET');
+                          setRequestUrl('https://httpbin.org/delay/2');
+                          setRequestBody('');
+                        }}
+                        className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
+                      >
+                        <div className="font-medium text-gray-900">GET Slow</div>
+                        <div className="text-sm text-gray-600">Медленный запрос (2 сек)</div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
                   <h3 className="font-semibold text-blue-800 mb-2">🎯 Как использовать демо</h3>
                   <ol className="list-decimal pl-5 text-blue-700 space-y-1">
                     <li>Изучите интерфейс - он максимально похож на настоящий Postman</li>
+                    <li>Используйте быстрые примеры выше или настройте свой запрос</li>
+                    <li>Отправьте одиночный запрос с помощью формы</li>
                     <li>Нажмите "Запустить коллекцию" для выполнения всех тестов</li>
                     <li>Наблюдайте за результатами выполнения в реальном времени</li>
                     <li>Изучите статус-коды, время ответа и размер данных</li>
@@ -489,3 +731,4 @@ export default function PostmanDemoPage() {
     </div>
   );
 }
+
