@@ -100,6 +100,9 @@ export default function HomePage() {
                   <span className="text-sm text-gray-600">
                     Привет, {user?.username}!
                   </span>
+                  <Link href="/profile" className="btn btn-secondary">
+                    Профиль
+                  </Link>
                   <Link href="/dashboard" className="btn btn-primary">
                     Панель управления
                   </Link>

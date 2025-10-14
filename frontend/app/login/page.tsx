@@ -14,13 +14,35 @@ export default function LoginPage() {
   })
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [errors, setErrors] = useState<{[key: string]: string}>({})
   
   const { login } = useAuth()
   const router = useRouter()
 
+  const validateForm = () => {
+    const newErrors: {[key: string]: string} = {}
+    
+    if (!formData.username.trim()) {
+      newErrors.username = 'Имя пользователя обязательно'
+    }
+    
+    if (!formData.password) {
+      newErrors.password = 'Пароль обязателен'
+    }
+    
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!validateForm()) {
+      return
+    }
+    
     setLoading(true)
+    setErrors({})
 
     const success = await login(formData.username, formData.password)
     
@@ -32,10 +54,20 @@ export default function LoginPage() {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     })
+    
+    // Очищаем ошибку для этого поля при изменении
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
   }
 
   return (
@@ -80,9 +112,12 @@ export default function LoginPage() {
               required
               value={formData.username}
               onChange={handleChange}
-              className="input"
+              className={`input ${errors.username ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
               placeholder="Введите имя пользователя"
             />
+            {errors.username && (
+              <p className="mt-1 text-xs text-red-600">{errors.username}</p>
+            )}
           </div>
 
           <div>
@@ -97,7 +132,7 @@ export default function LoginPage() {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="input pr-10"
+                className={`input pr-10 ${errors.password ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                 placeholder="Введите пароль"
               />
               <button
@@ -112,6 +147,9 @@ export default function LoginPage() {
                 )}
               </button>
             </div>
+            {errors.password && (
+              <p className="mt-1 text-xs text-red-600">{errors.password}</p>
+            )}
           </div>
 
           <div className="flex items-center justify-between">
@@ -136,8 +174,8 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            disabled={loading}
-            className="btn btn-primary w-full"
+            disabled={loading || Object.keys(errors).length > 0}
+            className="btn btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <div className="flex items-center justify-center">

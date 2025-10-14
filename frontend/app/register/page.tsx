@@ -18,24 +18,66 @@ export default function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [agreed, setAgreed] = useState(false)
+  const [errors, setErrors] = useState<{[key: string]: string}>({})
   
   const { register } = useAuth()
   const router = useRouter()
 
+  const validateForm = () => {
+    const newErrors: {[key: string]: string} = {}
+    
+    // Валидация имени пользователя
+    if (!formData.username.trim()) {
+      newErrors.username = 'Имя пользователя обязательно'
+    } else if (formData.username.length < 3) {
+      newErrors.username = 'Имя пользователя должно содержать минимум 3 символа'
+    } else if (formData.username.length > 20) {
+      newErrors.username = 'Имя пользователя не должно превышать 20 символов'
+    } else if (!/^[a-zA-Z0-9_]+$/.test(formData.username)) {
+      newErrors.username = 'Имя пользователя может содержать только буквы, цифры и подчеркивания'
+    }
+    
+    // Валидация email
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email обязателен'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Введите корректный email адрес'
+    }
+    
+    // Валидация пароля
+    if (!formData.password) {
+      newErrors.password = 'Пароль обязателен'
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Пароль должен содержать минимум 6 символов'
+    } else if (strength < 2) {
+      newErrors.password = 'Пароль слишком слабый. Используйте буквы разного регистра и цифры'
+    }
+    
+    // Валидация подтверждения пароля
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = 'Подтверждение пароля обязательно'
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Пароли не совпадают'
+    }
+    
+    // Валидация согласия
+    if (!agreed) {
+      newErrors.agreed = 'Необходимо согласиться с условиями использования'
+    }
+    
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (formData.password !== formData.confirmPassword) {
-      alert('Пароли не совпадают')
-      return
-    }
-    
-    if (!agreed) {
-      alert('Необходимо согласиться с условиями использования')
+    if (!validateForm()) {
       return
     }
 
     setLoading(true)
+    setErrors({})
 
     const success = await register(formData.username, formData.email, formData.password)
     
@@ -47,10 +89,20 @@ export default function RegisterPage() {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     })
+    
+    // Очищаем ошибку для этого поля при изменении
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
   }
 
   const passwordStrength = (password: string) => {
@@ -109,14 +161,18 @@ export default function RegisterPage() {
               required
               value={formData.username}
               onChange={handleChange}
-              className="input"
+              className={`input ${errors.username ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
               placeholder="Введите имя пользователя"
               minLength={3}
               maxLength={20}
             />
-            <p className="mt-1 text-xs text-gray-500">
-              От 3 до 20 символов
-            </p>
+            {errors.username ? (
+              <p className="mt-1 text-xs text-red-600">{errors.username}</p>
+            ) : (
+              <p className="mt-1 text-xs text-gray-500">
+                От 3 до 20 символов, только буквы, цифры и подчеркивания
+              </p>
+            )}
           </div>
 
           <div>
@@ -130,9 +186,12 @@ export default function RegisterPage() {
               required
               value={formData.email}
               onChange={handleChange}
-              className="input"
+              className={`input ${errors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
               placeholder="Введите email"
             />
+            {errors.email && (
+              <p className="mt-1 text-xs text-red-600">{errors.email}</p>
+            )}
           </div>
 
           <div>
@@ -147,7 +206,7 @@ export default function RegisterPage() {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="input pr-10"
+                className={`input pr-10 ${errors.password ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                 placeholder="Введите пароль"
                 minLength={6}
               />
@@ -176,9 +235,13 @@ export default function RegisterPage() {
                     />
                   ))}
                 </div>
-                <p className="mt-1 text-xs text-gray-500">
-                  Сила пароля: {strength > 0 ? strengthLabels[strength - 1] : 'Очень слабый'}
-                </p>
+                {errors.password ? (
+                  <p className="mt-1 text-xs text-red-600">{errors.password}</p>
+                ) : (
+                  <p className="mt-1 text-xs text-gray-500">
+                    Сила пароля: {strength > 0 ? strengthLabels[strength - 1] : 'Очень слабый'}
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -195,7 +258,7 @@ export default function RegisterPage() {
                 required
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="input pr-10"
+                className={`input pr-10 ${errors.confirmPassword ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                 placeholder="Подтвердите пароль"
               />
               <button
@@ -224,33 +287,41 @@ export default function RegisterPage() {
                 </p>
               </div>
             )}
+            {errors.confirmPassword && (
+              <p className="mt-1 text-xs text-red-600">{errors.confirmPassword}</p>
+            )}
           </div>
 
-          <div className="flex items-center">
-            <input
-              id="agree-terms"
-              name="agree-terms"
-              type="checkbox"
-              required
-              checked={agreed}
-              onChange={(e) => setAgreed(e.target.checked)}
-              className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
-            />
-            <label htmlFor="agree-terms" className="ml-2 block text-sm text-gray-900">
-              Я согласен с{' '}
-              <Link href="/terms" className="text-primary-600 hover:text-primary-500">
-                условиями использования
-              </Link>{' '}
-              и{' '}
-              <Link href="/privacy" className="text-primary-600 hover:text-primary-500">
-                политикой конфиденциальности
-              </Link>
-            </label>
+          <div>
+            <div className="flex items-center">
+              <input
+                id="agree-terms"
+                name="agree-terms"
+                type="checkbox"
+                required
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className={`h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded ${errors.agreed ? 'border-red-500' : ''}`}
+              />
+              <label htmlFor="agree-terms" className="ml-2 block text-sm text-gray-900">
+                Я согласен с{' '}
+                <Link href="/terms" className="text-primary-600 hover:text-primary-500">
+                  условиями использования
+                </Link>{' '}
+                и{' '}
+                <Link href="/privacy" className="text-primary-600 hover:text-primary-500">
+                  политикой конфиденциальности
+                </Link>
+              </label>
+            </div>
+            {errors.agreed && (
+              <p className="mt-1 text-xs text-red-600">{errors.agreed}</p>
+            )}
           </div>
 
           <button
             type="submit"
-            disabled={loading || !agreed || formData.password !== formData.confirmPassword}
+            disabled={loading || Object.keys(errors).length > 0 || !agreed || formData.password !== formData.confirmPassword}
             className="btn btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
