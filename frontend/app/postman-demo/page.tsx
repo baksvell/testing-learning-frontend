@@ -53,18 +53,19 @@ export default function PostmanDemoPage() {
   });
 
   const collections = [
-    { id: '1', name: 'Наше API - Testing Platform', expanded: true, requests: [
-      { id: '1-1', name: 'GET Root - Информация об API', method: 'GET', url: '/', status: 200 },
-      { id: '1-2', name: 'GET Health - Проверка состояния', method: 'GET', url: '/health', status: 200 },
-      { id: '1-3', name: 'GET Tasks - Список задач', method: 'GET', url: '/api/tasks', status: 200 },
-      { id: '1-4', name: 'GET Task by ID - Конкретная задача', method: 'GET', url: '/api/tasks/1', status: 200 },
-      { id: '1-5', name: 'GET Stats - Статистика платформы', method: 'GET', url: '/api/stats', status: 200 },
-      { id: '1-6', name: 'GET DB Test - Тест базы данных', method: 'GET', url: '/api/database/test', status: 200 }
+    { id: '1', name: 'Быстрые примеры (мгновенно)', expanded: true, requests: [
+      { id: '1-1', name: 'GET Post by ID', method: 'GET', url: '/posts/1', status: 200 },
+      { id: '1-2', name: 'POST Create Post', method: 'POST', url: '/posts', status: 201 },
+      { id: '1-3', name: 'GET 404 Error', method: 'GET', url: '/posts/999', status: 404 },
+      { id: '1-4', name: 'GET Slow Request', method: 'GET', url: '/delay/2', status: 200 }
     ]},
-    { id: '2', name: 'Образовательные примеры', expanded: false, requests: [
-      { id: '2-1', name: 'GET Post by ID', method: 'GET', url: '/posts/1', status: 200 },
-      { id: '2-2', name: 'POST Create Post', method: 'POST', url: '/posts', status: 201 },
-      { id: '2-3', name: 'GET 404 Error', method: 'GET', url: '/posts/999', status: 404 }
+    { id: '2', name: 'Наше API - Testing Platform (медленно)', expanded: false, requests: [
+      { id: '2-1', name: 'GET Root - Информация об API', method: 'GET', url: '/', status: 200 },
+      { id: '2-2', name: 'GET Health - Проверка состояния', method: 'GET', url: '/health', status: 200 },
+      { id: '2-3', name: 'GET Tasks - Список задач', method: 'GET', url: '/api/tasks', status: 200 },
+      { id: '2-4', name: 'GET Task by ID - Конкретная задача', method: 'GET', url: '/api/tasks/1', status: 200 },
+      { id: '2-5', name: 'GET Stats - Статистика платформы', method: 'GET', url: '/api/stats', status: 200 },
+      { id: '2-6', name: 'GET DB Test - Тест базы данных', method: 'GET', url: '/api/database/test', status: 200 }
     ]}
   ];
 
@@ -111,21 +112,25 @@ export default function PostmanDemoPage() {
       // Определяем базовый URL в зависимости от коллекции
       let baseUrl = '';
       if (requestId.startsWith('1-')) {
+        // Быстрые примеры
+        if (request.url.includes('/delay/')) {
+          baseUrl = 'https://httpbin.org';
+        } else {
+          baseUrl = 'https://jsonplaceholder.typicode.com';
+        }
+      } else if (requestId.startsWith('2-')) {
         // Наши реальные API
         baseUrl = 'https://testing-learning-backend.onrender.com';
-      } else {
-        // Образовательные примеры
-        baseUrl = 'https://jsonplaceholder.typicode.com';
       }
       
       setRequestUrl(`${baseUrl}${request.url}`);
       
       if (request.method === 'POST' || request.method === 'PUT') {
-        if (requestId.startsWith('1-')) {
+        if (requestId.startsWith('2-')) {
           // Для наших API
           setRequestBody('{"solution": "Test solution", "notes": "Test notes"}');
         } else {
-          // Для образовательных примеров
+          // Для быстрых примеров
           setRequestBody('{"title": "Test", "body": "Test body", "userId": 1}');
         }
       } else {
@@ -603,7 +608,7 @@ export default function PostmanDemoPage() {
           <div className="bg-white border-b">
             <div className="flex items-center space-x-4 px-4 py-2">
               <div className="flex items-center space-x-2">
-                <span className="text-sm font-medium">Testing Platform API</span>
+                <span className="text-sm font-medium">Postman Demo - API Testing</span>
                 <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">ACTIVE</span>
               </div>
               <div className="flex-1"></div>
@@ -786,8 +791,72 @@ export default function PostmanDemoPage() {
                     <h3 className="text-lg font-semibold text-gray-900">🚀 Быстрые примеры</h3>
                   </div>
                   <div className="p-4">
-                    <div className="mb-4">
-                      <h4 className="font-medium text-gray-900 mb-2">🌐 Наши реальные API</h4>
+                    <div className="mb-6">
+                      <h4 className="font-medium text-gray-900 mb-2">⚡ Быстрые примеры (мгновенно)</h4>
+                      <p className="text-sm text-gray-600 mb-3">Для быстрого изучения принципов работы с API</p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button
+                          onClick={() => {
+                            setRequestMethod('GET');
+                            setRequestUrl('https://jsonplaceholder.typicode.com/posts/1');
+                            setRequestBody('');
+                          }}
+                          className="p-3 border border-green-200 rounded-lg hover:bg-green-50 text-left"
+                        >
+                          <div className="font-medium text-green-900">GET Post</div>
+                          <div className="text-sm text-green-600">Получить пост по ID</div>
+                        </button>
+                        
+                        <button
+                          onClick={() => {
+                            setRequestMethod('POST');
+                            setRequestUrl('https://jsonplaceholder.typicode.com/posts');
+                            setRequestBody('{"title": "Test Post", "body": "This is a test post", "userId": 1}');
+                          }}
+                          className="p-3 border border-green-200 rounded-lg hover:bg-green-50 text-left"
+                        >
+                          <div className="font-medium text-green-900">POST Create</div>
+                          <div className="text-sm text-green-600">Создать новый пост</div>
+                        </button>
+                        
+                        <button
+                          onClick={() => {
+                            setRequestMethod('GET');
+                            setRequestUrl('https://jsonplaceholder.typicode.com/posts/999');
+                            setRequestBody('');
+                          }}
+                          className="p-3 border border-green-200 rounded-lg hover:bg-green-50 text-left"
+                        >
+                          <div className="font-medium text-green-900">GET 404 Error</div>
+                          <div className="text-sm text-green-600">Тест ошибки 404</div>
+                        </button>
+                        
+                        <button
+                          onClick={() => {
+                            setRequestMethod('GET');
+                            setRequestUrl('https://httpbin.org/delay/2');
+                            setRequestBody('');
+                          }}
+                          className="p-3 border border-green-200 rounded-lg hover:bg-green-50 text-left"
+                        >
+                          <div className="font-medium text-green-900">GET Slow</div>
+                          <div className="text-sm text-green-600">Медленный запрос (2 сек)</div>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-2">🌐 Наши реальные API (может быть медленно)</h4>
+                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-3">
+                        <div className="flex items-start space-x-2">
+                          <div className="text-yellow-600 mt-0.5">⚠️</div>
+                          <div className="text-sm text-yellow-800">
+                            <strong>Внимание:</strong> Наш бэкенд работает на бесплатном хостинге Render.com. 
+                            Первый запрос может занять 10-30 секунд (холодный старт), последующие запросы быстрее. 
+                            Если не хотите ждать, используйте быстрые примеры выше.
+                          </div>
+                        </div>
+                      </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <button
                           onClick={() => {
@@ -859,47 +928,6 @@ export default function PostmanDemoPage() {
                         >
                           <div className="font-medium text-blue-900">GET DB Test</div>
                           <div className="text-sm text-blue-600">Тест базы данных</div>
-                        </button>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-medium text-gray-900 mb-2">📚 Образовательные примеры</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <button
-                          onClick={() => {
-                            setRequestMethod('GET');
-                            setRequestUrl('https://jsonplaceholder.typicode.com/posts/1');
-                            setRequestBody('');
-                          }}
-                          className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
-                        >
-                          <div className="font-medium text-gray-900">GET Post</div>
-                          <div className="text-sm text-gray-600">Получить пост по ID</div>
-                        </button>
-                        
-                        <button
-                          onClick={() => {
-                            setRequestMethod('POST');
-                            setRequestUrl('https://jsonplaceholder.typicode.com/posts');
-                            setRequestBody('{"title": "Test Post", "body": "This is a test post", "userId": 1}');
-                          }}
-                          className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
-                        >
-                          <div className="font-medium text-gray-900">POST Create</div>
-                          <div className="text-sm text-gray-600">Создать новый пост</div>
-                        </button>
-                        
-                        <button
-                          onClick={() => {
-                            setRequestMethod('GET');
-                            setRequestUrl('https://jsonplaceholder.typicode.com/posts/999');
-                            setRequestBody('');
-                          }}
-                          className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
-                        >
-                          <div className="font-medium text-gray-900">GET 404 Error</div>
-                          <div className="text-sm text-gray-600">Тест ошибки 404</div>
                         </button>
                       </div>
                     </div>

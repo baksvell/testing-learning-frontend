@@ -461,6 +461,16 @@ export default function PostmanLessonsPage() {
                   В демо Postman доступны наши реальные API эндпоинты! Вы можете тестировать настоящие запросы 
                   к нашей платформе обучения тестированию.
                 </p>
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-3">
+                  <div className="flex items-start space-x-2">
+                    <div className="text-yellow-600 mt-0.5">⚠️</div>
+                    <div className="text-sm text-yellow-800">
+                      <strong>Внимание:</strong> Наш бэкенд работает на бесплатном хостинге Render.com. 
+                      Первый запрос может занять 10-30 секунд (холодный старт), последующие запросы быстрее. 
+                      Если не хотите ждать, используйте быстрые примеры в демо.
+                    </div>
+                  </div>
+                </div>
                 <div className="space-y-2 text-sm text-green-700">
                   <div><strong>Базовый URL:</strong> https://testing-learning-backend.onrender.com</div>
                   <div><strong>Доступные эндпоинты:</strong></div>
