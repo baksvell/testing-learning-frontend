@@ -35,6 +35,14 @@ export default function PostmanDemoPage() {
   const [responseData, setResponseData] = useState<any>(null);
   const [responseHeaders, setResponseHeaders] = useState<any>(null);
   const [responseTime, setResponseTime] = useState<number>(0);
+  const [expandedCollections, setExpandedCollections] = useState<Record<string, boolean>>({
+    '1': true,
+    '2': false
+  });
+  const [history, setHistory] = useState<any[]>([]);
+  const [environments, setEnvironments] = useState<any[]>([]);
+  const [mockServers, setMockServers] = useState<any[]>([]);
+  const [flows, setFlows] = useState<any[]>([]);
 
   const collections = [
     { id: '1', name: 'To-Do API Testing', expanded: true, requests: [
@@ -50,10 +58,63 @@ export default function PostmanDemoPage() {
     ]}
   ];
 
-  const environments = [
-    { id: '1', name: 'To-Do Local', active: true },
-    { id: '2', name: 'To-Do Production', active: false }
+  const environmentsData = [
+    { id: '1', name: 'To-Do Local', active: true, variables: [
+      { key: 'baseUrl', value: 'http://127.0.0.1:8000', enabled: true },
+      { key: 'apiKey', value: 'test-key-123', enabled: true }
+    ]},
+    { id: '2', name: 'To-Do Production', active: false, variables: [
+      { key: 'baseUrl', value: 'https://api.todo.com', enabled: true },
+      { key: 'apiKey', value: 'prod-key-456', enabled: true }
+    ]}
   ];
+
+  const historyData = [
+    { id: '1', method: 'GET', url: 'https://jsonplaceholder.typicode.com/posts/1', time: '2 min ago' },
+    { id: '2', method: 'POST', url: 'https://jsonplaceholder.typicode.com/posts', time: '5 min ago' },
+    { id: '3', method: 'GET', url: 'https://httpbin.org/delay/2', time: '10 min ago' }
+  ];
+
+  const mockServersData = [
+    { id: '1', name: 'To-Do Mock Server', url: 'https://mock-server-123.postman.co', status: 'Active' },
+    { id: '2', name: 'Petstore Mock', url: 'https://mock-petstore-456.postman.co', status: 'Paused' }
+  ];
+
+  const flowsData = [
+    { id: '1', name: 'User Registration Flow', description: 'Complete user registration process', status: 'Draft' },
+    { id: '2', name: 'Order Processing Flow', description: 'Process orders from creation to completion', status: 'Published' }
+  ];
+
+  const toggleCollection = (collectionId: string) => {
+    setExpandedCollections(prev => ({
+      ...prev,
+      [collectionId]: !prev[collectionId]
+    }));
+  };
+
+  const selectRequest = (requestId: string) => {
+    setSelectedRequest(requestId);
+    const request = collections.find(c => c.requests.some(r => r.id === requestId))?.requests.find(r => r.id === requestId);
+    if (request) {
+      setRequestMethod(request.method);
+      setRequestUrl(`https://jsonplaceholder.typicode.com${request.url}`);
+      if (request.method === 'POST' || request.method === 'PUT') {
+        setRequestBody('{"title": "Test", "body": "Test body", "userId": 1}');
+      } else {
+        setRequestBody('');
+      }
+    }
+  };
+
+  const addToHistory = (method: string, url: string) => {
+    const newHistoryItem = {
+      id: Date.now().toString(),
+      method,
+      url,
+      time: 'Just now'
+    };
+    setHistory(prev => [newHistoryItem, ...prev.slice(0, 9)]); // Keep only last 10 items
+  };
 
   const sendSingleRequest = async () => {
     setIsRunningSingle(true);
@@ -110,6 +171,9 @@ export default function PostmanDemoPage() {
         url: requestUrl,
         method: requestMethod
       });
+
+      // Add to history
+      addToHistory(requestMethod, requestUrl);
 
     } catch (error: any) {
       setSingleResult({
@@ -264,62 +328,164 @@ export default function PostmanDemoPage() {
             </div>
             
             <div className="space-y-1">
-              <div className={`flex items-center space-x-2 p-2 rounded ${activeTab === 'collections' ? 'bg-purple-600' : 'hover:bg-gray-700'}`}>
+              <button 
+                onClick={() => setActiveTab('collections')}
+                className={`w-full flex items-center space-x-2 p-2 rounded ${activeTab === 'collections' ? 'bg-purple-600' : 'hover:bg-gray-700'}`}
+              >
                 <Folder className="w-4 h-4" />
                 <span className="text-sm">Collections</span>
-              </div>
-              <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-700">
+              </button>
+              <button 
+                onClick={() => setActiveTab('environments')}
+                className={`w-full flex items-center space-x-2 p-2 rounded ${activeTab === 'environments' ? 'bg-purple-600' : 'hover:bg-gray-700'}`}
+              >
                 <Globe className="w-4 h-4" />
                 <span className="text-sm">Environments</span>
-              </div>
-              <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-700">
+              </button>
+              <button 
+                onClick={() => setActiveTab('flows')}
+                className={`w-full flex items-center space-x-2 p-2 rounded ${activeTab === 'flows' ? 'bg-purple-600' : 'hover:bg-gray-700'}`}
+              >
                 <Zap className="w-4 h-4" />
                 <span className="text-sm">Flows</span>
-              </div>
-              <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-700">
+              </button>
+              <button 
+                onClick={() => setActiveTab('mock-servers')}
+                className={`w-full flex items-center space-x-2 p-2 rounded ${activeTab === 'mock-servers' ? 'bg-purple-600' : 'hover:bg-gray-700'}`}
+              >
                 <Code className="w-4 h-4" />
                 <span className="text-sm">Mock servers</span>
-              </div>
-              <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-700">
+              </button>
+              <button 
+                onClick={() => setActiveTab('history')}
+                className={`w-full flex items-center space-x-2 p-2 rounded ${activeTab === 'history' ? 'bg-purple-600' : 'hover:bg-gray-700'}`}
+              >
                 <History className="w-4 h-4" />
                 <span className="text-sm">History</span>
-              </div>
+              </button>
             </div>
           </div>
 
           <div className="px-4">
             <input 
               type="text" 
-              placeholder="Search collections" 
+              placeholder={
+                activeTab === 'collections' ? 'Search collections' :
+                activeTab === 'environments' ? 'Search environments' :
+                activeTab === 'flows' ? 'Search flows' :
+                activeTab === 'mock-servers' ? 'Search mock servers' :
+                'Search history'
+              }
               className="w-full bg-gray-700 text-white px-2 py-1 rounded text-sm"
             />
           </div>
 
           <div className="mt-4 px-4">
-            {collections.map(collection => (
-              <div key={collection.id} className="mb-2">
-                <div className="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded">
-                  <ChevronRight className="w-4 h-4" />
-                  <span className="text-sm">{collection.name}</span>
-                </div>
-                {collection.expanded && (
-                  <div className="ml-4 space-y-1">
-                    {collection.requests.map(request => (
-                      <div 
-                        key={request.id}
-                        className="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded cursor-pointer"
-                        onClick={() => setSelectedRequest(request.id)}
-                      >
-                        <span className={`px-2 py-1 rounded text-xs ${getMethodColor(request.method)}`}>
-                          {request.method}
-                        </span>
-                        <span className="text-sm text-gray-300">{request.name}</span>
+            {activeTab === 'collections' && (
+              <>
+                {collections.map(collection => (
+                  <div key={collection.id} className="mb-2">
+                    <button 
+                      onClick={() => toggleCollection(collection.id)}
+                      className="w-full flex items-center space-x-2 p-2 hover:bg-gray-700 rounded"
+                    >
+                      <ChevronRight className={`w-4 h-4 transition-transform ${expandedCollections[collection.id] ? 'rotate-90' : ''}`} />
+                      <span className="text-sm">{collection.name}</span>
+                    </button>
+                    {expandedCollections[collection.id] && (
+                      <div className="ml-4 space-y-1">
+                        {collection.requests.map(request => (
+                          <button 
+                            key={request.id}
+                            onClick={() => selectRequest(request.id)}
+                            className={`w-full flex items-center space-x-2 p-2 hover:bg-gray-700 rounded cursor-pointer ${selectedRequest === request.id ? 'bg-gray-600' : ''}`}
+                          >
+                            <span className={`px-2 py-1 rounded text-xs ${getMethodColor(request.method)}`}>
+                              {request.method}
+                            </span>
+                            <span className="text-sm text-gray-300">{request.name}</span>
+                          </button>
+                        ))}
                       </div>
-                    ))}
+                    )}
                   </div>
-                )}
+                ))}
+              </>
+            )}
+
+            {activeTab === 'environments' && (
+              <div className="space-y-2">
+                {environmentsData.map(env => (
+                  <div key={env.id} className="p-2 hover:bg-gray-700 rounded">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">{env.name}</span>
+                      <span className={`text-xs px-2 py-1 rounded ${env.active ? 'bg-green-600' : 'bg-gray-600'}`}>
+                        {env.active ? 'Active' : 'Inactive'}
+                      </span>
+                    </div>
+                    <div className="mt-1 text-xs text-gray-400">
+                      {env.variables.length} variables
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
+
+            {activeTab === 'flows' && (
+              <div className="space-y-2">
+                {flowsData.map(flow => (
+                  <div key={flow.id} className="p-2 hover:bg-gray-700 rounded">
+                    <div className="text-sm font-medium">{flow.name}</div>
+                    <div className="text-xs text-gray-400 mt-1">{flow.description}</div>
+                    <div className="flex items-center justify-between mt-2">
+                      <span className={`text-xs px-2 py-1 rounded ${flow.status === 'Published' ? 'bg-green-600' : 'bg-yellow-600'}`}>
+                        {flow.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeTab === 'mock-servers' && (
+              <div className="space-y-2">
+                {mockServersData.map(server => (
+                  <div key={server.id} className="p-2 hover:bg-gray-700 rounded">
+                    <div className="text-sm font-medium">{server.name}</div>
+                    <div className="text-xs text-gray-400 mt-1">{server.url}</div>
+                    <div className="flex items-center justify-between mt-2">
+                      <span className={`text-xs px-2 py-1 rounded ${server.status === 'Active' ? 'bg-green-600' : 'bg-gray-600'}`}>
+                        {server.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeTab === 'history' && (
+              <div className="space-y-2">
+                {[...history, ...historyData].slice(0, 10).map((item, index) => (
+                  <button 
+                    key={item.id || index}
+                    onClick={() => {
+                      setRequestMethod(item.method);
+                      setRequestUrl(item.url);
+                      setRequestBody('');
+                    }}
+                    className="w-full p-2 hover:bg-gray-700 rounded text-left"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <span className={`px-2 py-1 rounded text-xs ${getMethodColor(item.method)}`}>
+                        {item.method}
+                      </span>
+                      <span className="text-sm text-gray-300 truncate">{item.url}</span>
+                    </div>
+                    <div className="text-xs text-gray-400 mt-1">{item.time}</div>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
