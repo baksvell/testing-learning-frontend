@@ -271,9 +271,9 @@ export default function PostmanLessonsPage() {
               </h1>
             </div>
             <div className="flex items-center gap-4">
-              <Link href="/postman" className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+              <Link href="/postman-demo" className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
                 <Send className="w-4 h-4" />
-                Открыть Postman
+                Открыть демо Postman
               </Link>
               {user ? (
                 <span className="text-sm text-gray-600">Привет, {user.username}!</span>
