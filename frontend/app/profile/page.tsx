@@ -19,7 +19,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 
 export default function ProfilePage() {
-  const { user, logout, updateUser } = useAuth()
+  const { user, logout, updateUser, updateProfile } = useAuth()
   const router = useRouter()
   const [isEditing, setIsEditing] = useState(false)
   const [editData, setEditData] = useState({
@@ -73,11 +73,10 @@ export default function ProfilePage() {
     setErrors({})
 
     try {
-      // Здесь можно добавить API вызов для обновления профиля
-      // await updateProfile(editData)
-      
-      updateUser(editData)
-      setIsEditing(false)
+      const success = await updateProfile(editData)
+      if (success) {
+        setIsEditing(false)
+      }
     } catch (error) {
       console.error('Error updating profile:', error)
     } finally {

@@ -23,6 +23,7 @@ interface AuthContextType {
   register: (username: string, email: string, password: string) => Promise<boolean>
   logout: () => void
   updateUser: (userData: Partial<User>) => void
+  updateProfile: (profileData: { username?: string; email?: string }) => Promise<boolean>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -135,6 +136,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  const updateProfile = async (profileData: { username?: string; email?: string }): Promise<boolean> => {
+    try {
+      const token = Cookies.get('access_token')
+      if (!token) {
+        toast.error('Необходимо войти в систему')
+        return false
+      }
+
+      const response = await fetch(`https://testing-learning-backend.onrender.com/api/user/profile`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(profileData)
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        setUser(data.user)
+        toast.success('Профиль обновлен успешно!')
+        return true
+      } else {
+        const error = await response.json()
+        toast.error(error.detail || 'Ошибка обновления профиля')
+        return false
+      }
+    } catch (error) {
+      console.error('Profile update error:', error)
+      toast.error('Ошибка соединения')
+      return false
+    }
+  }
+
   const value: AuthContextType = {
     user,
     isAuthenticated,
@@ -142,7 +177,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     login,
     register,
     logout,
-    updateUser
+    updateUser,
+    updateProfile
   }
 
   return (
