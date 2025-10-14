@@ -453,6 +453,30 @@ export default function PostmanLessonsPage() {
                   </div>
                 </div>
               </div>
+              
+              {/* Информация о наших реальных API */}
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <h3 className="font-semibold text-green-900 mb-2">🌐 Наши реальные API</h3>
+                <p className="text-green-800 text-sm mb-3">
+                  В демо Postman доступны наши реальные API эндпоинты! Вы можете тестировать настоящие запросы 
+                  к нашей платформе обучения тестированию.
+                </p>
+                <div className="space-y-2 text-sm text-green-700">
+                  <div><strong>Базовый URL:</strong> https://testing-learning-backend.onrender.com</div>
+                  <div><strong>Доступные эндпоинты:</strong></div>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li><code>GET /</code> - Информация об API</li>
+                    <li><code>GET /health</code> - Проверка состояния</li>
+                    <li><code>GET /api/tasks</code> - Список задач</li>
+                    <li><code>GET /api/tasks/{id}</code> - Конкретная задача</li>
+                    <li><code>GET /api/stats</code> - Статистика платформы</li>
+                    <li><code>GET /api/database/test</code> - Тест базы данных</li>
+                  </ul>
+                </div>
+                <div className="mt-3 text-xs text-green-600">
+                  💡 Все API открыты для тестирования • Код доступен на GitHub • Бесплатно для обучения
+                </div>
+              </div>
             </div>
 
             {currentLesson.tasks.map((task) => (

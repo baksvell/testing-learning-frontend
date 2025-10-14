@@ -53,34 +53,36 @@ export default function PostmanDemoPage() {
   });
 
   const collections = [
-    { id: '1', name: 'To-Do API Testing', expanded: true, requests: [
-      { id: '1-1', name: 'GET Получить все задачи', method: 'GET', url: '/todos', status: 200 },
-      { id: '1-2', name: 'POST Создать задачу', method: 'POST', url: '/todos', status: 201 },
-      { id: '1-3', name: 'PUT Обновить задачу', method: 'PUT', url: '/todos/1', status: 200 },
-      { id: '1-4', name: 'PATCH Изменить статус', method: 'PATCH', url: '/todos/1/toggle', status: 200 },
-      { id: '1-5', name: 'DELETE Удалить задачу', method: 'DELETE', url: '/todos/1', status: 204 }
+    { id: '1', name: 'Наше API - Testing Platform', expanded: true, requests: [
+      { id: '1-1', name: 'GET Root - Информация об API', method: 'GET', url: '/', status: 200 },
+      { id: '1-2', name: 'GET Health - Проверка состояния', method: 'GET', url: '/health', status: 200 },
+      { id: '1-3', name: 'GET Tasks - Список задач', method: 'GET', url: '/api/tasks', status: 200 },
+      { id: '1-4', name: 'GET Task by ID - Конкретная задача', method: 'GET', url: '/api/tasks/1', status: 200 },
+      { id: '1-5', name: 'GET Stats - Статистика платформы', method: 'GET', url: '/api/stats', status: 200 },
+      { id: '1-6', name: 'GET DB Test - Тест базы данных', method: 'GET', url: '/api/database/test', status: 200 }
     ]},
-    { id: '2', name: 'Swagger Petstore', expanded: false, requests: [
-      { id: '2-1', name: 'GET /pets', method: 'GET', url: '/pets', status: 200 },
-      { id: '2-2', name: 'POST /pets', method: 'POST', url: '/pets', status: 201 }
+    { id: '2', name: 'Образовательные примеры', expanded: false, requests: [
+      { id: '2-1', name: 'GET Post by ID', method: 'GET', url: '/posts/1', status: 200 },
+      { id: '2-2', name: 'POST Create Post', method: 'POST', url: '/posts', status: 201 },
+      { id: '2-3', name: 'GET 404 Error', method: 'GET', url: '/posts/999', status: 404 }
     ]}
   ];
 
   const environmentsData = [
-    { id: '1', name: 'To-Do Local', active: true, variables: [
-      { key: 'baseUrl', value: 'http://127.0.0.1:8000', enabled: true },
-      { key: 'apiKey', value: 'test-key-123', enabled: true }
+    { id: '1', name: 'Testing Platform Production', active: true, variables: [
+      { key: 'baseUrl', value: 'https://testing-learning-backend.onrender.com', enabled: true },
+      { key: 'apiVersion', value: '2.0.0', enabled: true }
     ]},
-    { id: '2', name: 'To-Do Production', active: false, variables: [
-      { key: 'baseUrl', value: 'https://api.todo.com', enabled: true },
-      { key: 'apiKey', value: 'prod-key-456', enabled: true }
+    { id: '2', name: 'Testing Platform Local', active: false, variables: [
+      { key: 'baseUrl', value: 'http://localhost:8000', enabled: true },
+      { key: 'apiVersion', value: '2.0.0', enabled: true }
     ]}
   ];
 
   const historyData = [
-    { id: '1', method: 'GET', url: 'https://jsonplaceholder.typicode.com/posts/1', time: '2 min ago' },
-    { id: '2', method: 'POST', url: 'https://jsonplaceholder.typicode.com/posts', time: '5 min ago' },
-    { id: '3', method: 'GET', url: 'https://httpbin.org/delay/2', time: '10 min ago' }
+    { id: '1', method: 'GET', url: 'https://testing-learning-backend.onrender.com/api/tasks', time: '2 min ago' },
+    { id: '2', method: 'GET', url: 'https://testing-learning-backend.onrender.com/health', time: '5 min ago' },
+    { id: '3', method: 'GET', url: 'https://testing-learning-backend.onrender.com/api/stats', time: '10 min ago' }
   ];
 
   const mockServersData = [
@@ -105,9 +107,27 @@ export default function PostmanDemoPage() {
     const request = collections.find(c => c.requests.some(r => r.id === requestId))?.requests.find(r => r.id === requestId);
     if (request) {
       setRequestMethod(request.method);
-      setRequestUrl(`https://jsonplaceholder.typicode.com${request.url}`);
+      
+      // Определяем базовый URL в зависимости от коллекции
+      let baseUrl = '';
+      if (requestId.startsWith('1-')) {
+        // Наши реальные API
+        baseUrl = 'https://testing-learning-backend.onrender.com';
+      } else {
+        // Образовательные примеры
+        baseUrl = 'https://jsonplaceholder.typicode.com';
+      }
+      
+      setRequestUrl(`${baseUrl}${request.url}`);
+      
       if (request.method === 'POST' || request.method === 'PUT') {
-        setRequestBody('{"title": "Test", "body": "Test body", "userId": 1}');
+        if (requestId.startsWith('1-')) {
+          // Для наших API
+          setRequestBody('{"solution": "Test solution", "notes": "Test notes"}');
+        } else {
+          // Для образовательных примеров
+          setRequestBody('{"title": "Test", "body": "Test body", "userId": 1}');
+        }
       } else {
         setRequestBody('');
       }
@@ -138,11 +158,13 @@ export default function PostmanDemoPage() {
     const mockResults: RequestResult[] = [];
     
     for (let iteration = 0; iteration < newRunConfig.iterations; iteration++) {
+      const baseUrl = newRunConfig.environment === 'Testing Platform Local' ? 'http://localhost:8000' : 'https://testing-learning-backend.onrender.com';
+      
       const iterationResults = [
         {
           id: `${iteration}-1`,
           method: 'GET',
-          url: `${newRunConfig.environment === 'To-Do Local' ? 'http://127.0.0.1:8000' : 'https://api.todo.com'}/todos`,
+          url: `${baseUrl}/`,
           status: 200,
           responseTime: 45 + Math.random() * 20,
           size: '1.2 KB',
@@ -152,9 +174,9 @@ export default function PostmanDemoPage() {
         },
         {
           id: `${iteration}-2`,
-          method: 'POST',
-          url: `${newRunConfig.environment === 'To-Do Local' ? 'http://127.0.0.1:8000' : 'https://api.todo.com'}/todos`,
-          status: 201,
+          method: 'GET',
+          url: `${baseUrl}/health`,
+          status: 200,
           responseTime: 67 + Math.random() * 20,
           size: '283 B',
           tests: 2,
@@ -163,14 +185,25 @@ export default function PostmanDemoPage() {
         },
         {
           id: `${iteration}-3`,
-          method: 'PUT',
-          url: `${newRunConfig.environment === 'To-Do Local' ? 'http://127.0.0.1:8000' : 'https://api.todo.com'}/todos/1`,
-          status: newRunConfig.continueOnError ? 200 : 404,
+          method: 'GET',
+          url: `${baseUrl}/api/tasks`,
+          status: 200,
           responseTime: 12 + Math.random() * 10,
+          size: '1.5 KB',
+          tests: 1,
+          passed: 1,
+          failed: 0
+        },
+        {
+          id: `${iteration}-4`,
+          method: 'GET',
+          url: `${baseUrl}/api/stats`,
+          status: 200,
+          responseTime: 8 + Math.random() * 5,
           size: '159 B',
           tests: 1,
-          passed: newRunConfig.continueOnError ? 1 : 0,
-          failed: newRunConfig.continueOnError ? 0 : 1
+          passed: 1,
+          failed: 0
         }
       ];
       
@@ -570,8 +603,8 @@ export default function PostmanDemoPage() {
           <div className="bg-white border-b">
             <div className="flex items-center space-x-4 px-4 py-2">
               <div className="flex items-center space-x-2">
-                <span className="text-sm font-medium">To-Do API Testing</span>
-                <span className="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">ERROR</span>
+                <span className="text-sm font-medium">Testing Platform API</span>
+                <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">ACTIVE</span>
               </div>
               <div className="flex-1"></div>
               <div className="flex items-center space-x-2">
@@ -753,78 +786,122 @@ export default function PostmanDemoPage() {
                     <h3 className="text-lg font-semibold text-gray-900">🚀 Быстрые примеры</h3>
                   </div>
                   <div className="p-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      <button
-                        onClick={() => {
-                          setRequestMethod('GET');
-                          setRequestUrl('https://jsonplaceholder.typicode.com/posts/1');
-                          setRequestBody('');
-                        }}
-                        className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
-                      >
-                        <div className="font-medium text-gray-900">GET Post</div>
-                        <div className="text-sm text-gray-600">Получить пост по ID</div>
-                      </button>
-                      
-                      <button
-                        onClick={() => {
-                          setRequestMethod('POST');
-                          setRequestUrl('https://jsonplaceholder.typicode.com/posts');
-                          setRequestBody('{"title": "Test Post", "body": "This is a test post", "userId": 1}');
-                        }}
-                        className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
-                      >
-                        <div className="font-medium text-gray-900">POST Create</div>
-                        <div className="text-sm text-gray-600">Создать новый пост</div>
-                      </button>
-                      
-                      <button
-                        onClick={() => {
-                          setRequestMethod('PUT');
-                          setRequestUrl('https://jsonplaceholder.typicode.com/posts/1');
-                          setRequestBody('{"id": 1, "title": "Updated Post", "body": "This post has been updated", "userId": 1}');
-                        }}
-                        className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
-                      >
-                        <div className="font-medium text-gray-900">PUT Update</div>
-                        <div className="text-sm text-gray-600">Обновить пост</div>
-                      </button>
-                      
-                      <button
-                        onClick={() => {
-                          setRequestMethod('DELETE');
-                          setRequestUrl('https://jsonplaceholder.typicode.com/posts/1');
-                          setRequestBody('');
-                        }}
-                        className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
-                      >
-                        <div className="font-medium text-gray-900">DELETE Remove</div>
-                        <div className="text-sm text-gray-600">Удалить пост</div>
-                      </button>
-                      
-                      <button
-                        onClick={() => {
-                          setRequestMethod('GET');
-                          setRequestUrl('https://jsonplaceholder.typicode.com/posts/999');
-                          setRequestBody('');
-                        }}
-                        className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
-                      >
-                        <div className="font-medium text-gray-900">GET 404 Error</div>
-                        <div className="text-sm text-gray-600">Тест ошибки 404</div>
-                      </button>
-                      
-                      <button
-                        onClick={() => {
-                          setRequestMethod('GET');
-                          setRequestUrl('https://httpbin.org/delay/2');
-                          setRequestBody('');
-                        }}
-                        className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
-                      >
-                        <div className="font-medium text-gray-900">GET Slow</div>
-                        <div className="text-sm text-gray-600">Медленный запрос (2 сек)</div>
-                      </button>
+                    <div className="mb-4">
+                      <h4 className="font-medium text-gray-900 mb-2">🌐 Наши реальные API</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button
+                          onClick={() => {
+                            setRequestMethod('GET');
+                            setRequestUrl('https://testing-learning-backend.onrender.com/');
+                            setRequestBody('');
+                          }}
+                          className="p-3 border border-blue-200 rounded-lg hover:bg-blue-50 text-left"
+                        >
+                          <div className="font-medium text-blue-900">GET Root</div>
+                          <div className="text-sm text-blue-600">Информация о нашем API</div>
+                        </button>
+                        
+                        <button
+                          onClick={() => {
+                            setRequestMethod('GET');
+                            setRequestUrl('https://testing-learning-backend.onrender.com/health');
+                            setRequestBody('');
+                          }}
+                          className="p-3 border border-blue-200 rounded-lg hover:bg-blue-50 text-left"
+                        >
+                          <div className="font-medium text-blue-900">GET Health</div>
+                          <div className="text-sm text-blue-600">Проверка состояния API</div>
+                        </button>
+                        
+                        <button
+                          onClick={() => {
+                            setRequestMethod('GET');
+                            setRequestUrl('https://testing-learning-backend.onrender.com/api/tasks');
+                            setRequestBody('');
+                          }}
+                          className="p-3 border border-blue-200 rounded-lg hover:bg-blue-50 text-left"
+                        >
+                          <div className="font-medium text-blue-900">GET Tasks</div>
+                          <div className="text-sm text-blue-600">Список всех задач</div>
+                        </button>
+                        
+                        <button
+                          onClick={() => {
+                            setRequestMethod('GET');
+                            setRequestUrl('https://testing-learning-backend.onrender.com/api/tasks/1');
+                            setRequestBody('');
+                          }}
+                          className="p-3 border border-blue-200 rounded-lg hover:bg-blue-50 text-left"
+                        >
+                          <div className="font-medium text-blue-900">GET Task by ID</div>
+                          <div className="text-sm text-blue-600">Конкретная задача</div>
+                        </button>
+                        
+                        <button
+                          onClick={() => {
+                            setRequestMethod('GET');
+                            setRequestUrl('https://testing-learning-backend.onrender.com/api/stats');
+                            setRequestBody('');
+                          }}
+                          className="p-3 border border-blue-200 rounded-lg hover:bg-blue-50 text-left"
+                        >
+                          <div className="font-medium text-blue-900">GET Stats</div>
+                          <div className="text-sm text-blue-600">Статистика платформы</div>
+                        </button>
+                        
+                        <button
+                          onClick={() => {
+                            setRequestMethod('GET');
+                            setRequestUrl('https://testing-learning-backend.onrender.com/api/database/test');
+                            setRequestBody('');
+                          }}
+                          className="p-3 border border-blue-200 rounded-lg hover:bg-blue-50 text-left"
+                        >
+                          <div className="font-medium text-blue-900">GET DB Test</div>
+                          <div className="text-sm text-blue-600">Тест базы данных</div>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-2">📚 Образовательные примеры</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button
+                          onClick={() => {
+                            setRequestMethod('GET');
+                            setRequestUrl('https://jsonplaceholder.typicode.com/posts/1');
+                            setRequestBody('');
+                          }}
+                          className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
+                        >
+                          <div className="font-medium text-gray-900">GET Post</div>
+                          <div className="text-sm text-gray-600">Получить пост по ID</div>
+                        </button>
+                        
+                        <button
+                          onClick={() => {
+                            setRequestMethod('POST');
+                            setRequestUrl('https://jsonplaceholder.typicode.com/posts');
+                            setRequestBody('{"title": "Test Post", "body": "This is a test post", "userId": 1}');
+                          }}
+                          className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
+                        >
+                          <div className="font-medium text-gray-900">POST Create</div>
+                          <div className="text-sm text-gray-600">Создать новый пост</div>
+                        </button>
+                        
+                        <button
+                          onClick={() => {
+                            setRequestMethod('GET');
+                            setRequestUrl('https://jsonplaceholder.typicode.com/posts/999');
+                            setRequestBody('');
+                          }}
+                          className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-left"
+                        >
+                          <div className="font-medium text-gray-900">GET 404 Error</div>
+                          <div className="text-sm text-gray-600">Тест ошибки 404</div>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -855,7 +932,7 @@ export default function PostmanDemoPage() {
                   <div className="p-6 border-b">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h1 className="text-2xl font-bold text-gray-900">To-Do API Testing - Run results</h1>
+                        <h1 className="text-2xl font-bold text-gray-900">Testing Platform API - Run results</h1>
                         <div className="flex items-center space-x-4 mt-2 text-sm text-gray-600">
                           <span>Ran on {new Date().toLocaleDateString()} at {new Date().toLocaleTimeString()}</span>
                           <span>•</span>
@@ -923,11 +1000,13 @@ export default function PostmanDemoPage() {
                                     <div>
                                       <div className="font-medium text-gray-900">{result.url}</div>
                                       <div className="text-sm text-gray-600">
-                                        {result.method === 'GET' && 'Получение всех задач'}
-                                        {result.method === 'POST' && 'Создание задачи'}
-                                        {result.method === 'PUT' && 'Обновление задачи'}
-                                        {result.method === 'PATCH' && 'Изменение статуса'}
-                                        {result.method === 'DELETE' && 'Удаление задачи'}
+                                        {result.url.includes('/') && result.url.split('/').length === 4 && 'Информация об API'}
+                                        {result.url.includes('/health') && 'Проверка состояния API'}
+                                        {result.url.includes('/api/tasks') && !result.url.includes('/api/tasks/') && 'Список всех задач'}
+                                        {result.url.includes('/api/tasks/') && result.url.split('/').length > 4 && 'Конкретная задача'}
+                                        {result.url.includes('/api/stats') && 'Статистика платформы'}
+                                        {result.url.includes('/api/database/test') && 'Тест базы данных'}
+                                        {result.url.includes('jsonplaceholder') && 'Образовательный пример'}
                                       </div>
                                     </div>
                                   </div>
