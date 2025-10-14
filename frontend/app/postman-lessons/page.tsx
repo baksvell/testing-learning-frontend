@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '../../contexts/AuthContext';
-import PostmanTester from '../components/PostmanTester';
 import { 
   Globe, Send, Folder, Settings, History, Zap, CheckCircle, 
   AlertTriangle, Clock, Download, Copy, Save, Play, ChevronRight,
@@ -407,15 +406,6 @@ export default function PostmanLessonsPage() {
         {/* Practice Tab */}
         {activeTab === 'practice' && (
           <div className="space-y-6">
-            {/* Встроенный API тестер */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">🌐 Встроенный API тестер</h2>
-              <p className="text-gray-600 mb-6">
-                Используйте встроенный API тестер для выполнения практических заданий. 
-                Он работает как Postman, но интегрирован прямо в урок!
-              </p>
-              <PostmanTester />
-            </div>
 
             {currentLesson.tasks.map((task) => (
               <div key={task.id} className="bg-white rounded-lg shadow-md p-6">
