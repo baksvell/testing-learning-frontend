@@ -12,7 +12,11 @@ import {
   Award,
   Zap,
   BarChart3,
-  Clock
+  Clock,
+  Code,
+  Globe,
+  Play,
+  Settings
 } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '../../contexts/AuthContext'
@@ -99,6 +103,16 @@ export default function DashboardPage() {
     const nextLevelExp = user.level * 100
     const progress = ((user.experience - currentLevelExp) / (nextLevelExp - currentLevelExp)) * 100
     return Math.max(0, Math.min(100, progress))
+  }
+
+  const getDevToolsProgress = () => {
+    // Симулируем прогресс по DevTools (можно заменить на реальные данные)
+    return Math.floor(Math.random() * 40) + 20 // 20-60%
+  }
+
+  const getPostmanProgress = () => {
+    // Симулируем прогресс по Postman (можно заменить на реальные данные)
+    return Math.floor(Math.random() * 30) + 10 // 10-40%
   }
 
   const formatDate = (dateString: string) => {
@@ -274,17 +288,17 @@ export default function DashboardPage() {
                 Быстрые действия
               </h3>
               <div className="space-y-3">
-                <Link href="/tasks" className="btn btn-primary w-full">
-                  <Target className="w-4 h-4 mr-2" />
-                  Продолжить обучение
+                <Link href="/devtools" className="btn btn-primary w-full">
+                  <Code className="w-4 h-4 mr-2" />
+                  DevTools уроки
                 </Link>
-                <Link href="/achievements" className="btn btn-secondary w-full">
-                  <Award className="w-4 h-4 mr-2" />
-                  Мои достижения
+                <Link href="/postman-lessons" className="btn btn-primary w-full">
+                  <Globe className="w-4 h-4 mr-2" />
+                  Postman уроки
                 </Link>
-                <Link href="/leaderboard" className="btn btn-secondary w-full">
-                  <BarChart3 className="w-4 h-4 mr-2" />
-                  Рейтинг
+                <Link href="/postman-demo" className="btn btn-secondary w-full">
+                  <Settings className="w-4 h-4 mr-2" />
+                  Демо Postman
                 </Link>
                 <Link href="/profile" className="btn btn-secondary w-full">
                   <User className="w-4 h-4 mr-2" />
@@ -346,9 +360,16 @@ export default function DashboardPage() {
                 <div className="text-center py-8">
                   <Target className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-600">Пока нет активности</p>
-                  <Link href="/tasks" className="btn btn-primary mt-4">
-                    Начать обучение
-                  </Link>
+                  <div className="flex gap-2 mt-4">
+                    <Link href="/devtools" className="btn btn-primary">
+                      <Code className="w-4 h-4 mr-2" />
+                      DevTools
+                    </Link>
+                    <Link href="/postman-lessons" className="btn btn-secondary">
+                      <Globe className="w-4 h-4 mr-2" />
+                      Postman
+                    </Link>
+                  </div>
                 </div>
               )}
             </div>
@@ -366,42 +387,62 @@ export default function DashboardPage() {
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               Прогресс по категориям
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
-                { name: 'Функциональное', progress: 75, color: 'bg-primary-600' },
-                { name: 'UI/UX', progress: 60, color: 'bg-success-600' },
-                { name: 'API', progress: 45, color: 'bg-warning-600' },
-                { name: 'Безопасность', progress: 30, color: 'bg-danger-600' }
+                { 
+                  name: 'DevTools', 
+                  progress: getDevToolsProgress(), 
+                  color: 'bg-indigo-600',
+                  icon: <Code className="w-6 h-6" />,
+                  description: 'Инструменты разработчика',
+                  lessons: 6
+                },
+                { 
+                  name: 'Postman', 
+                  progress: getPostmanProgress(), 
+                  color: 'bg-blue-600',
+                  icon: <Globe className="w-6 h-6" />,
+                  description: 'Тестирование API',
+                  lessons: 5
+                }
               ].map((category, index) => (
-                <div key={index} className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-2 relative">
-                    <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
-                      <path
-                        d="M18 2.0845
-                          a 15.9155 15.9155 0 0 1 0 31.831
-                          a 15.9155 15.9155 0 0 1 0 -31.831"
-                        fill="none"
-                        stroke="#e5e7eb"
-                        strokeWidth="2"
-                      />
-                      <path
-                        d="M18 2.0845
-                          a 15.9155 15.9155 0 0 1 0 31.831
-                          a 15.9155 15.9155 0 0 1 0 -31.831"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeDasharray={`${category.progress}, 100`}
-                        className={category.color}
-                      />
-                    </svg>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-sm font-semibold text-gray-900">
-                        {category.progress}%
-                      </span>
+                <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-10 h-10 rounded-lg ${category.color} flex items-center justify-center text-white`}>
+                        {category.icon}
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-gray-900">{category.name}</h4>
+                        <p className="text-sm text-gray-600">{category.description}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-gray-900">{category.progress}%</div>
+                      <div className="text-sm text-gray-600">{category.lessons} уроков</div>
                     </div>
                   </div>
-                  <p className="text-sm text-gray-600">{category.name}</p>
+                  
+                  <div className="mb-4">
+                    <div className="flex justify-between text-sm text-gray-600 mb-1">
+                      <span>Прогресс</span>
+                      <span>{category.progress}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className={`h-2 rounded-full ${category.color}`}
+                        style={{ width: `${category.progress}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                  
+                  <Link 
+                    href={category.name === 'DevTools' ? '/devtools' : '/postman-lessons'}
+                    className="btn btn-primary w-full flex items-center justify-center"
+                  >
+                    <Play className="w-4 h-4 mr-2" />
+                    Продолжить обучение
+                  </Link>
                 </div>
               ))}
             </div>
