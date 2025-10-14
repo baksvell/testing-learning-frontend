@@ -406,6 +406,26 @@ export default function PostmanLessonsPage() {
         {/* Practice Tab */}
         {activeTab === 'practice' && (
           <div className="space-y-6">
+            {/* Демо Postman */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">🚀 Демо Postman</h2>
+              <p className="text-gray-600 mb-6">
+                Откройте полноценное демо Postman для изучения тестирования API. 
+                Интерфейс максимально приближен к настоящему Postman с полной функциональностью!
+              </p>
+              <div className="flex items-center gap-4">
+                <a 
+                  href="/postman-demo" 
+                  className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                >
+                  <Play className="w-5 h-5" />
+                  Открыть демо Postman
+                </a>
+                <div className="text-sm text-gray-500">
+                  Полноценный интерфейс • Реальные API запросы • Настройки запуска
+                </div>
+              </div>
+            </div>
 
             {currentLesson.tasks.map((task) => (
               <div key={task.id} className="bg-white rounded-lg shadow-md p-6">
