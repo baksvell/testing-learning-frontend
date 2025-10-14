@@ -43,6 +43,14 @@ export default function PostmanDemoPage() {
   const [environments, setEnvironments] = useState<any[]>([]);
   const [mockServers, setMockServers] = useState<any[]>([]);
   const [flows, setFlows] = useState<any[]>([]);
+  const [showNewRunModal, setShowNewRunModal] = useState(false);
+  const [newRunConfig, setNewRunConfig] = useState({
+    iterations: 1,
+    delay: 0,
+    environment: 'To-Do Local',
+    dataFile: '',
+    continueOnError: false
+  });
 
   const collections = [
     { id: '1', name: 'To-Do API Testing', expanded: true, requests: [
@@ -114,6 +122,73 @@ export default function PostmanDemoPage() {
       time: 'Just now'
     };
     setHistory(prev => [newHistoryItem, ...prev.slice(0, 9)]); // Keep only last 10 items
+  };
+
+  const createNewRun = () => {
+    setShowNewRunModal(true);
+  };
+
+  const startNewRun = async () => {
+    setIsRunning(true);
+    setShowResults(true);
+    setResults([]);
+    setShowNewRunModal(false);
+    
+    // Симуляция выполнения с настройками
+    const mockResults: RequestResult[] = [];
+    
+    for (let iteration = 0; iteration < newRunConfig.iterations; iteration++) {
+      const iterationResults = [
+        {
+          id: `${iteration}-1`,
+          method: 'GET',
+          url: `${newRunConfig.environment === 'To-Do Local' ? 'http://127.0.0.1:8000' : 'https://api.todo.com'}/todos`,
+          status: 200,
+          responseTime: 45 + Math.random() * 20,
+          size: '1.2 KB',
+          tests: 3,
+          passed: 3,
+          failed: 0
+        },
+        {
+          id: `${iteration}-2`,
+          method: 'POST',
+          url: `${newRunConfig.environment === 'To-Do Local' ? 'http://127.0.0.1:8000' : 'https://api.todo.com'}/todos`,
+          status: 201,
+          responseTime: 67 + Math.random() * 20,
+          size: '283 B',
+          tests: 2,
+          passed: 2,
+          failed: 0
+        },
+        {
+          id: `${iteration}-3`,
+          method: 'PUT',
+          url: `${newRunConfig.environment === 'To-Do Local' ? 'http://127.0.0.1:8000' : 'https://api.todo.com'}/todos/1`,
+          status: newRunConfig.continueOnError ? 200 : 404,
+          responseTime: 12 + Math.random() * 10,
+          size: '159 B',
+          tests: 1,
+          passed: newRunConfig.continueOnError ? 1 : 0,
+          failed: newRunConfig.continueOnError ? 0 : 1
+        }
+      ];
+      
+      mockResults.push(...iterationResults);
+      
+      // Задержка между итерациями
+      if (iteration < newRunConfig.iterations - 1 && newRunConfig.delay > 0) {
+        await new Promise(resolve => setTimeout(resolve, newRunConfig.delay * 1000));
+      }
+    }
+
+    // Анимация выполнения
+    for (let i = 0; i < mockResults.length; i++) {
+      await new Promise(resolve => setTimeout(resolve, 300));
+      setResults(prev => [...prev, mockResults[i]]);
+    }
+    
+    setIsRunning(false);
   };
 
   const sendSingleRequest = async () => {
@@ -508,7 +583,10 @@ export default function PostmanDemoPage() {
                   <Play className="w-4 h-4" />
                   <span>{isRunning ? 'Running...' : 'Run Collection'}</span>
                 </button>
-                <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm">
+                <button 
+                  onClick={createNewRun}
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm"
+                >
                   New Run
                 </button>
                 <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm">
@@ -781,11 +859,13 @@ export default function PostmanDemoPage() {
                         <div className="flex items-center space-x-4 mt-2 text-sm text-gray-600">
                           <span>Ran on {new Date().toLocaleDateString()} at {new Date().toLocaleTimeString()}</span>
                           <span>•</span>
-                          <span>Environment: To-Do Local</span>
+                          <span>Environment: {newRunConfig.environment}</span>
                           <span>•</span>
-                          <span>Iterations: 1</span>
+                          <span>Iterations: {newRunConfig.iterations}</span>
                           <span>•</span>
-                          <span>Duration: 1s 327ms</span>
+                          <span>Delay: {newRunConfig.delay}s</span>
+                          <span>•</span>
+                          <span>Continue on error: {newRunConfig.continueOnError ? 'Yes' : 'No'}</span>
                         </div>
                       </div>
                       <div className="flex items-center space-x-2">
@@ -802,52 +882,69 @@ export default function PostmanDemoPage() {
                   <div className="p-6">
                     <div className="grid grid-cols-4 gap-4 mb-6">
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-gray-900">5</div>
+                        <div className="text-2xl font-bold text-gray-900">{results.length}</div>
                         <div className="text-sm text-gray-600">All tests</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-green-600">2</div>
+                        <div className="text-2xl font-bold text-green-600">
+                          {results.filter(r => r.status >= 200 && r.status < 300).length}
+                        </div>
                         <div className="text-sm text-gray-600">Passed</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-red-600">3</div>
+                        <div className="text-2xl font-bold text-red-600">
+                          {results.filter(r => r.status >= 400).length}
+                        </div>
                         <div className="text-sm text-gray-600">Failed</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-gray-600">29ms</div>
+                        <div className="text-2xl font-bold text-gray-600">
+                          {results.length > 0 ? Math.round(results.reduce((sum, r) => sum + r.responseTime, 0) / results.length) : 0}ms
+                        </div>
                         <div className="text-sm text-gray-600">Avg. Resp. Time</div>
                       </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <h3 className="font-semibold text-gray-900 mb-4">Iteration 1</h3>
-                      {results.map((result, index) => (
-                        <div key={result.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-                          <div className="flex items-center space-x-4">
-                            <span className={`px-2 py-1 rounded text-xs font-medium ${getMethodColor(result.method)}`}>
-                              {result.method}
-                            </span>
-                            <div>
-                              <div className="font-medium text-gray-900">{result.url}</div>
-                              <div className="text-sm text-gray-600">
-                                {result.method === 'GET' && 'Получение всех задач'}
-                                {result.method === 'POST' && 'Создание задачи'}
-                                {result.method === 'PUT' && 'Обновление задачи'}
-                                {result.method === 'PATCH' && 'Изменение статуса'}
-                                {result.method === 'DELETE' && 'Удаление задачи'}
-                              </div>
+                    <div className="space-y-4">
+                      {Array.from({ length: newRunConfig.iterations }, (_, iterationIndex) => {
+                        const iterationResults = results.filter(r => r.id.startsWith(`${iterationIndex}-`));
+                        if (iterationResults.length === 0) return null;
+                        
+                        return (
+                          <div key={iterationIndex}>
+                            <h3 className="font-semibold text-gray-900 mb-4">Iteration {iterationIndex + 1}</h3>
+                            <div className="space-y-2">
+                              {iterationResults.map((result, index) => (
+                                <div key={result.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                  <div className="flex items-center space-x-4">
+                                    <span className={`px-2 py-1 rounded text-xs font-medium ${getMethodColor(result.method)}`}>
+                                      {result.method}
+                                    </span>
+                                    <div>
+                                      <div className="font-medium text-gray-900">{result.url}</div>
+                                      <div className="text-sm text-gray-600">
+                                        {result.method === 'GET' && 'Получение всех задач'}
+                                        {result.method === 'POST' && 'Создание задачи'}
+                                        {result.method === 'PUT' && 'Обновление задачи'}
+                                        {result.method === 'PATCH' && 'Изменение статуса'}
+                                        {result.method === 'DELETE' && 'Удаление задачи'}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center space-x-4 text-sm">
+                                    <span className="text-gray-600">No tests found</span>
+                                    <span className={`font-medium ${getStatusColor(result.status)}`}>
+                                      {result.status}
+                                    </span>
+                                    <span className="text-gray-600">{Math.round(result.responseTime)}ms</span>
+                                    <span className="text-gray-600">{result.size}</span>
+                                  </div>
+                                </div>
+                              ))}
                             </div>
                           </div>
-                          <div className="flex items-center space-x-4 text-sm">
-                            <span className="text-gray-600">No tests found</span>
-                            <span className={`font-medium ${getStatusColor(result.status)}`}>
-                              {result.status}
-                            </span>
-                            <span className="text-gray-600">{result.responseTime}ms</span>
-                            <span className="text-gray-600">{result.size}</span>
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -894,6 +991,99 @@ export default function PostmanDemoPage() {
           </div>
         </div>
       </div>
+
+      {/* New Run Modal */}
+      {showNewRunModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">New Run Configuration</h3>
+              <button 
+                onClick={() => setShowNewRunModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <span className="text-xl">×</span>
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Iterations
+                </label>
+                <input 
+                  type="number"
+                  min="1"
+                  max="10"
+                  value={newRunConfig.iterations}
+                  onChange={(e) => setNewRunConfig(prev => ({ ...prev, iterations: parseInt(e.target.value) || 1 }))}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2"
+                />
+                <p className="text-xs text-gray-500 mt-1">Number of times to run the collection (1-10)</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Delay between requests (seconds)
+                </label>
+                <input 
+                  type="number"
+                  min="0"
+                  max="10"
+                  value={newRunConfig.delay}
+                  onChange={(e) => setNewRunConfig(prev => ({ ...prev, delay: parseInt(e.target.value) || 0 }))}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2"
+                />
+                <p className="text-xs text-gray-500 mt-1">Add delay between requests to avoid rate limiting</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Environment
+                </label>
+                <select 
+                  value={newRunConfig.environment}
+                  onChange={(e) => setNewRunConfig(prev => ({ ...prev, environment: e.target.value }))}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2"
+                >
+                  <option value="To-Do Local">To-Do Local</option>
+                  <option value="To-Do Production">To-Do Production</option>
+                </select>
+                <p className="text-xs text-gray-500 mt-1">Choose environment for the run</p>
+              </div>
+
+              <div>
+                <label className="flex items-center space-x-2">
+                  <input 
+                    type="checkbox"
+                    checked={newRunConfig.continueOnError}
+                    onChange={(e) => setNewRunConfig(prev => ({ ...prev, continueOnError: e.target.checked }))}
+                    className="rounded"
+                  />
+                  <span className="text-sm text-gray-700">Continue on error</span>
+                </label>
+                <p className="text-xs text-gray-500 mt-1">Continue running even if some requests fail</p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end space-x-3 mt-6">
+              <button 
+                onClick={() => setShowNewRunModal(false)}
+                className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={startNewRun}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors flex items-center space-x-2"
+              >
+                <Play className="w-4 h-4" />
+                <span>Start Run</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
